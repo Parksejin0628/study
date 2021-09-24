@@ -1,0 +1,33 @@
+문제 : 12015번 문제 가장 긴 증가하는 부분 수열 2 (난이도 : 골드2)
+풀이 시간 : 54분 26초
+한줄정리 : LIS라고 불리는 가장 긴 증가하는 부분 수열 문제의 O(NlogN)풀이법을 학습한 뒤 문제를 풀이했다.
+이분탐색 중 lowerbound 알고리즘 기법을 사용했는데 공부하지 않고는 떠올리기 힘든 방법이었다.
+문제를 풀다보니 이제는 즉석에서 생각하는 것도 중요하지만, 이미 연구된 알고리즘 기법을 학습하는 것도 중요하다고 느꼈고,
+풀이가 막혀 찾아보는 것이 내 수준이 여기까지여서 찾는 것이 아니라, 문제를 풀기 전 그와 관련된 수학 공식을 배우는 것과 비슷하다는 사실을 깨달았다.
+늘 막히는 이유는 그와 관련된 지식이 부족함이 원인이었기 때문이다.
+ 
+--알고리즘 정리메모--
+[알고리즘 흐름]
+1. n, a[0~n-1]를 입력받는다. (a[1000000])
+2. LIS[0] = -1, LIS[1] = a[0]로 설정한다.
+3. 배열 a를 순환하면서 배열 LIS를 갱신한다. (updateLIS(a[i]))
+4. length를 출력한다.
+ 
+ 
+[함수 세부 내용]
+-void updateLIS(int num)-
+1. LIS[length]값과 num값을 비교한다.
+2. LIS[length] < num인 경우
+ 2.1. LIS[++length] = num;
+ 2.2. return
+3. LIS[length] > num인 경우
+ 3.1. searchLowerBound(num, 0, length)을 호출한다.
+4. return
+ 
+-void searchLowerBound(int num, int start, int end)-
+1. start<=end일 동안 다음 과정을 반복한다. (while(start<=end))
+2. mid = (start + end) / 2;
+3. LIS[mid]값과 num값을 비교한다.
+ 3.1. LIS[mid] < num인 경우 start = mid + 1;
+ 3.2. LIS[mid] >= num 인 경우 end = mid;
+4. start == mid인 경우 LIS[start] = num을 한 뒤 return 한다.

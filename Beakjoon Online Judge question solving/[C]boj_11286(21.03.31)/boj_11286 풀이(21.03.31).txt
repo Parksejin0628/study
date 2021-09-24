@@ -1,0 +1,42 @@
+문제 : 11286 절댓값 힙 (난이도 : 실버 1)
+풀이 시간 : 40분 18초
+한줄평 : 문제를 풀기 전에 다른사람의 최대힙 예제 코드를 보면서 힙을 구현하는 코드를 익힌 후 문제풀이를 진행했다.
+          확실히 이론이 탄탄해지니 알고리즘을 구상하는 것이 더 쉽고 정확했다.
+          덕분에 한 번에 문제를 맞출 수 있었으며 앞으로도 이론을 탄탄하게 하고 문제 풀이를 하면 좋겠다는 것을 느꼈다.
+          추가로 이론 중심 프로그래밍 공부를 계속해도 되는지는 확신이 없지만, 프로그래밍 실력이 늘어나는 것은 장기적으로 좋을 것이라는 판단하에
+          이론도 함께 익혀나가기로 했다.
+ 
+--- 알고리즘 정리 ---
+[알고리즘 흐름]
+1. n을 입력받은 뒤 n번만큼 다음을 반복한다.
+2. x를 입력받은 후 x값에 따라 다음 과정을 실행한다.
+ 2.1. x가 0인 경우 deleteHeap()를 호출한다.
+ 2.2. x가 0이 아닌 경우 addHeap(x)를 호출한다.
+ 
+[함수 세부내용]
+-void addHeap(int num)-
+1. absoluteDownHeap[rearIndex] = num, child = rearIndex, parent = child / 2, rearIndex++
+2. child > 1이고 compareAbsolute(child, parent)가 참인동안 다음을 반복한다.
+ 2.1. swap(child, parent)
+ 2.2. child = parent, parent = child/2
+ 
+-void deleteHeap()-
+1. rearIndex = 1인 경우 0을 출력하고 리턴한다.
+2. absoluteDownHeap[1]를 출력하고 swap(1, --rearIndex)
+3. parent = 1, child = parent*2를 한다.
+4. child+1 < rearIndex이고 compareAbsolute(child+1, child)인 경우 child ++
+5. child < rearIndex이고 compareAbsolute(child, parent)인동안 다음을 반복한다.
+ 5.1. swap(parent, child)
+ 5.2. parent = child, child = parent*2
+ 5.3. child+1 < rearIndex이고 compareAbsolute(child+1, child)인 경우 child ++
+ 
+-int compareAbsolute(int num1, int num2)-
+1. absoluteDownHeap[num1] 또는 absoluteDownHeap[num2]중 0이 있을 경우 즉시 0을 리턴한다.
+2. absoluteDownHeap[num1]과 absoluteDownHeap[num2]의 절댓값을 num1Ab, num2Ab에 저장한다.
+3. num1Ab == num2Ab인 경우 absoluteDownHeap[num1]<0이면 1, 아니면 0을 리턴한다.
+4. num1Ab<num2Ab인 경우 1를 리턴, 아니면 0을 리턴한다.
+ 
+-void swap(int num1, int num2)-
+1. temp = absoluteDownHeap[num1]
+2. absoluteDownHeap[num1] = absoluteDownHeap[num2]
+3. absolutedownHeap[num2] = temp

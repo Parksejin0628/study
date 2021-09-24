@@ -1,0 +1,28 @@
+문제 : 1927 최소 힙 (난이도 실버1)
+풀이시간 : 37분 44초
+한줄평 : 원래는 최대 힙과 원리가 매우 유사하여 빠르게 끝내고 문제 하나를 더 풀려고 했으나 
+          최대에서 최소로 바뀐것 하나 때문에 0을 고려해야하는 상황이 발생했고 생각보다 시간이 더 걸렸다.
+          오늘 하루동안 계속하여 바빳기 때문에 오늘은 아쉽지만 여기서 마무리하고자 한다.
+ 
+---알고리즘 정리---
+[알고리즘 흐름]
+1. n을 입력받고 n만큼 다음 과정을 반복한다.
+2. x를 입력받고 x값에 따라 다른 함수를 호출한다.
+ 2.1. x가 0인 경우 deleteHeap()함수를 호출한다.
+ 2.2. x가 0이 아닌 경우 addHeap(x)함수를 호출한다.
+ 
+[함수 세부내용]
+-void addHeap(int num)-
+1. downHeap[index] = num, tempIndex = index, temp = num, index++를 한다.
+2. downHeap[tempindex] > downHeap[tempindex/2] && tempIndex > 1, 비교대상이 0이 아닐 동안 다음 과정을 반복한다.
+ 2.1. downHeap[tempIndex] = downHeap[tempIndex/2]
+ 2.2. downHeap[tempIndex/2] = temp
+ 2.3. tempIndex = tempIndex/2
+ 
+-void deleteHeap()-
+1. index == 1일 경우 즉시 0을 출력하고 리턴한다.
+2. downHeap[1]값을 출력한 뒤 downHeap[1] = downHeap[--index], downHeap[index] = 0, tempIndex = 1를 한다.
+3. tempIndex*2 <= index일 동안 반복한다. (이 과정에서 비교대상이 0인 경우는 따지지 않는다.)
+ 3.1. downHeap[tempIndex*2], downHeap[tempIndex*2+1]둘 다 downHeap[tempIndex]보다 작은 경우 더 작은 노드와 교환한다.
+ 3.2. 그렇지 않은 경우 하나라도 더 작은 것이 있는 노드와 교환한다.
+ 3.3. 모두 downHeap[tempIndex]보다 큰 경우 반복을 중단한다.
