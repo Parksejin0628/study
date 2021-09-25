@@ -1,0 +1,43 @@
+문제 : 7569번 '토마토' (난이도 실버1)
+풀이시간 : 1시간 6분 23초
+한줄평 : 예전에 푼 이차원의 토마토문제를 3차원으로 넓힌 문제다. x, y, z축을 모두 사용하니 코드가 약간 복잡해져 난이도에 비해 오래걸린 느낌이 어느정도 있다.
+ 
+ 
+----알고리즘----
+14분 51초
+[핵심 아이디어]
+토마토가 1이니까 1인 토마토 찾아서 주변 1로 만들면 끝~ 
+다만, 깊이탐색으로 하기엔 어려운게 좀 많은 것도 있고 중복되는걸 찾아낼 방법이 없으니
+맨 처음 1을 모두 탐색해서 처음 퍼트릴 토마토를 정하고
+토마토를 퍼트릴 때 마다 그걸 스택에 넣으면 되겠다 쉽죠?
+마지막으로, 0의 갯수를 세어놓은다음 퍼질때마다 줄이고
+스택이 비었는데 0의 갯수가 0개가 아니면 모두 익지 못하는 상태로 한다.
+ 
+[알고리즘 흐름]
+1. m, n, h를 입력받는다.  (m : 가로 / n : 세로 / h : 높이 즉, box[m][n][h])
+ - maxM = m + 1, maxN = n + 1, maxH = h + 1로 전역변수로 저장한다.
+2. 3중 반복으로 토마토를 입력받는다.
+ - for(h~) for(n~) for(m~)반복문
+3. 토마토를 입력 받을 때 입력받은 수에 따라 다음을 실행한다.
+ 3.1. input : -1 인 경우 box[m][n][h]에 저장
+ 3.2. input : 0 인 경우 box[m][n][h]에 저장, greenTomato ++;
+ 3.3. input : 1 인 경우 stack[now][++top[now]].m = m, stack[now][top[now]].n = n, stack[now][top[now]].h = h 저장
+ (position stack[2][1000000], position은 int m, n, h를 가진 구조체)
+4.그 후 top[0] = 0 && top[1] = 0 또는 greenTomato == 0 이 될 때 까지 반복하며 다음을 실행
+ 4.1. day ++
+ 4.2. top[now]이 0이 될때까지 감소하는 반복문 실행
+ 4.3. ripeTomato(stack[now][top[now]].m, stack[now][top[now]].n, stack[now][top[now]].h, next) 실행
+ 4.4. 반복이 끝나면 temp = now, now = next, next = temp;
+5.다음의 경우에 따라 출력한다.
+ 5.1. greenTomato > 0 인 경우 -1 출력
+ 5.2. 나머지는 day 출력
+ 
+[함수 세부내용]
+-void ripeTomato(int m, int n, int h, int next)-
+1. m+1 < maxM인 경우 box[m+1][n][h]값을 탐색한다.
+ 1.1. 1이거나 -1인 경우 생략한다.
+ 1.2. 0인 경우 greentomato --, box[m+1][n][h] = 1, stack[next][++top[next]]에 m+1, n, h를 저장한다.
+2. m-1 > 0인 경우 box[m-1][n][h]값을 탐색한다.
+ 2.1. 1이거나 -1인 경우 생략한다.
+ 2.2. 0인 경우 greentomato--, box[m-1][n][h] = 1stack[next][++top[next]]에 m-1, n, h를 저장한다.
+3. n, h도 1,2 와 같이 진행한다.

@@ -1,0 +1,35 @@
+문제 : 10026번 "적록색약" (난이도 골드5)
+풀이시간 : 29분 29초
+한줄평 : 간단한 구역나누기 문제이다. 많이 풀어본 유형이라 금방 풀 수 있었다.
+ 
+ 
+----알고리즘----
+[핵심 아이디어]
+ BFS나 DFS로 구역찾는 프로그램을 적록색약이냐 아니냐로 나누면 쉽지 않을까..
+(1,1)부터 탐색하며 checkDFS_normal, checkDFS_colorWeakness가 0인 좌표가 있을 경우 searchDFS_normal, searchDFS_colorWeakness를 돌리면 될듯하다.
+물론 함수를 시작할때마다 구역의 수를 증가시키면된다.
+ 
+[알고리즘 흐름]
+1. n을 입력받는다.
+2. 이중반복을 통해 board[r][c]에 색깔값을 입력받는다.
+3. 이중반복을 통해 (1,1)~(100,100)을 탐색한다.
+ 3.1. checkDFS_normal == 0인 경우 searchDFS_normal(r, c, board[r][c]) / areaCount_normal++
+ 3.2. checkDFS_colorWeakness == 0인 경우 searchDFS_colorWeakness(r, c, board[r][c]) / areaCount_colorWeakness++
+4. areaCount_normal, areaCount_colorWeakness를 출력한다.
+ 
+[세부함수내용]
+-void searchDFS_normal(int row, int column, char color)-
+1. checkDFS_normal[row][column] = 1
+2. checkDFS_normal[row-1][column] == 0 && board[row-1][column] == color인 경우
+ 2.1. searchDFS_normal(int row-1, column, color)
+3. (row+1, column), (row, column-1), (row, column+1)도 2번 과정을 실행한다.
+ 
+-void searchDFS_colorWeakness(int row, int column, char color)-
+1. checkDFS_colorWeakness[row][column] = 1
+2. color == B인 경우
+ 2.1. checkDFS_colorWeaknessl[row-1][column] == 0 && board[row-1][column] == color인 경우
+  2.1.1. searchDFS_colorWeakness(int row-1, column, color)
+3. color == G 또는 R인 경우
+ 3.1. checkDFS_colorWeaknessl[row-1][column] == 0 && (board[row-1][column] == 'R' || board[row-1][column] == 'G') 인 경우
+  3.1.1. searchDFS_colorWeakness(int row-1, column, color)
+4. (row+1, column), (row, column-1), (row, column+1)도 2번 과정을 실행한다.

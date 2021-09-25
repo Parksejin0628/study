@@ -1,0 +1,100 @@
+문제 : 1107번 '리모컨' (난이도 : 골드 5)
+풀이시간 : 1시간 35분 43초
+한줄평 : 오랜만에 논리적으로 접근해서 푸는 문제인듯 했지만, 마음에 잘 안드는 브루트 포스 문제였다. 1시간 정도 알고리즘을 구안하다가 브루트포스 방법을 뒤늦게 깨달아서 30분만에 푼 문제이다. 골드 5도 이제는 무난하게 풀 수 있다는 사실이 좋았따
+ 
+----알고리즘----
+[핵심 아이디어]
+일부 숫자를 제외하고 가장 정답과 가까운 숫자로 접근한 뒤, +, -를 몇번 해야하는지 파악해야 하는 문제이다.
+일단 천의 자리 숫자부터 일부 숫자를 제외하고 정답채널과 비교하여 가까운 것을 찾는다.
+그다음은 백의자리, 십의자리, 일의자리 순으로 하면 된다.
+ex) 3435인데 234가 고장난 경우 
+1000 : 2435
+5000 : 1565 차이 따라서, 5를 선택한 후 시작?
+하지만, 1999 : 1436 차이이므로 앞자리가 1인 것이 유리한 경우도 있다
+따라서, 해당 숫자보다 큰 경우, 작은 경우를 나눠서 생각하는 것이 좋겠다.
+ 
+1. N이 몇자리 수인지 파악한다.
+2. N의 첫자리 수를 파악한다. (m이라 하자.)
+3. 후보1: m00000이 된다. (자릿수에 따라 달라진다. / 0은 제외되지 않은 숫자 중 가장 작은 숫자가 들어간다.)
+4. 그 후 m이 제외된 숫자인지 확인한다. 제외된 숫자가 아닌 경우 해당 수는 후보에 들어간다.
+5. m이 제외된 숫자인 경우 m-1~0을 순회하며 첫 제외되지 않는 숫자를 후보로 넣는다.
+6. 나머지는 제외된 숫자중 가장 큰 숫자로 한다.
+7. 모든 자릿수에 반복한다.
+ 
+미리 제외된 숫자중 가장 작은 숫자, 큰 숫자를 찾아놓자 (배열을 통해)
+그리고 98, 99, 100, 101, 102등 가까운 숫자는 따로 처리해야한다.
+ 
+... 아니다.
+정답 숫자에서 +1, -1씩 반복하며 수를 탐색하고, 제외된 숫자를 찾은 경우 그 값을 리턴하면 그만이다.
+ 
+[알고리즘 흐름]
+/*
+1. n을 입력받는다.
+2. m을 입력받는다.
+3. m번 반복하며 num을 입력받는다.
+ 3.1. brokenButton[num] = 1이 된다.
+4. 0~9까지 반복하며 min, max를 정한다.
+ 4.1. i < min인 경우 min = i (min 초기값 : 10)
+ 4.2. i > max인 경우 max = i (max 초기값 : -1)
+5. digits = checkDigits(n)
+6. diff = calApproximate(n, digits, min, max)을 실행한다.
+7. digits + diff를 출력한다.
+*/ 
+1. n을 입력받는다.
+ 1.1. n, 100의 수 차이를 diff에 저장해놓는다.
+2. m을 입력받는다.
+3. m번 반복하며 num을 입력받는다.
+ 3.1. brokenButton[num] = 1이 된다.
+4. temp = calApproximate(n)
+5. temp < diff인 경우 diff = temp
+6. diff출력
+ 
+ 
+[함수 세부내용]
+-int checkDigits(int num)-
+0. num < 0인 경우 600000리턴
+1. digits = 1, temp = 10
+2. 다음 과정을 반복한다.
+ 2.1. num < temp인 경우 digits를 리턴한다.
+ 2.2. num >= temp인 경우 digits ++, temp *= 10을 한다.
+ 
+/*
+-int calApproximate(int num, int digits, int min, int max)-
+1. temp = 1, temp에 10을 digits번 곱한다.
+2. digits ~ 1까지 다음 과정을 반복한다. (i)
+ 2.1. digitNum = (num % temp)%10
+ 2.2. brokenButton[digitsNum]의 값을 확인한다. 0인 경우 넘어간다.
+  2.2.1. 1인 경우
+  2.2.2. digitNum+1 ~ 9까지 순회하며 가장 먼저 brokenButton값이 0인 j를 high로 잡는다.
+  2.2.3. highApp += high * temp
+  2.2.4. digitNum-1 ~ 1까지 순회하며 가장 먼저 brokenButton값이 0인 j를 low로 잡는다.
+  2.2.5. lowApp += low * temp
+  2.2.6. 그 후 i-1~1까지 순회하며 다음을 실행한다.
+   2.2.6.1. temp /= 10
+   2.2.6.2. highApp += min * temp
+   2.2.6.3. lowApp += max * temp
+  2.2.7. diff1 = highApp - num
+  2.2.8. diff2 = num - lowApp
+  2.2.9. break;
+ 2.3. highApp, lowApp += digitsNum * temp
+ 2.4. temp /= 10 
+3. diff1, diff2중 더 작은 수를 리턴한다.
+*/
+ 
+-int calApproximate(int num)-
+1. highApp = num, lowApp = num, highDiff = -1, lowDiff = -1
+2. 다음 과정을 find == 0인 동안무한히 반복한다.
+ 2.1. checkButton(highApp)이 1인 경우 highDiff = highApp - num + checkDigits(highApp), find = 1
+ 2.2. checkButton(lowApp)이 1인 경우  lowDiff = num - lowApp + checkDigits(lowApp), find = 1\
+ 2.3. 그 외의 경우 highApp ++, lowApp --
+3. highDiff, lowDiff중 하나라도 -1인 경우 -1이 아닌 숫자 리턴
+4. 둘 다 -1이 아닌 경우 둘 중 작은 수 리턴
+ 
+-int checkButton(int num)-
+1. digits = checkDigits(num)
+2. temp = 1, 10을 digits만큼 곱한다.
+3. digits ~ 1까지 반복한다.
+ 3.1. digitNum = (num / temp) % 10;
+ 3.2. brokenButton[digitNum] == 1인 경우 -1리턴
+ 3.3. temp /= 10;
+4. 1리턴

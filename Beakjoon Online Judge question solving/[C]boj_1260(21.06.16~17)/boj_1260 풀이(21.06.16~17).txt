@@ -1,0 +1,54 @@
+문제 : 1260번 'DFS와 BFS' (난이도 실버2)
+풀이시간 : 1시간 52분 38초
+한줄평 : DFS, BFS에 대한 이해가 부족한 채로 제대로 설계하지 않아 매우 시간이 오래걸렸다. 이 문제에서는 한 정점에서 여러 정점을 탐색할 때 작은 정점부터 탐색해야하는데, 이를 알고리즘 정리 부분부터 제대로 정리하지 않아 급하게 우선순위 큐를 도입하였고, DFS는 어느정도 이해가 있었으나, BFS는 이해가 부족해 제대로된 BFS를 구현하지 못했다. 결국, 엉망인 BFS와 급하게 추가한 우선순위 큐에서 많은 논리적 오류가 발생했고, 이를 다급하게 고치려다가 코드가 매우 복잡해져서 시간이 매우 오래걸리는 악순환이 펼쳐졌다. 다음부터는 급하게 무엇인가를 추가해야 할때 침착하게 다시 알고리즘을 정리해 보는 습관을 가져야 할 것이다.
+ 
+----알고리즘----
+[핵심 알고리즘]
+BFS, DFS를 구현하면 된다.
+다만, 간선을 edge([1010][1010])에 저장하고, 각각의 top[1000]을 통해 몇개가 연결되어있는지 계산한다.
+ 
+[알고리즘 흐름]
+1. n, m, v를 입력받는다.
+2. m번 만큼 반복하며 vertex1, vertex2를 입력받는다.
+ 2.1. edge[vertex1][top[vertex1]++] = vertex2
+ 2.2. edge[vertex2][top[vertex2]++] = vertex1
+3. DFS(v)
+4. BFS(v)
+ 
+[함수 세부내용]
+-void DFS(int vertex)-
+0. checkDFS[vertex] == 1인 경우 즉시 리턴한다.
+1. vertex를 출력하고 checkDFS[vertex] = 1를 한다.
+2. checkDFS[edge[vertex][1~top[vertex]]] == 0인 경우 insertNode(edge[vertex][0~top[vertex]])
+3. deleteNode()값이 0이 나올 때 까지 DFS(insertNode)를 실행한다.
+ 
+-void BFS(int vertex)-
+1. searchQueue[++queueTop] = vertex
+2. queueTop이 -1이 아닌 동안 다음과정을 반복한다.
+3. searchQueue에 있는 값의 checkBFS값이 0인 경우 모두 insertNode함수에 넣는다.
+4. deleteNode()(temp)값이 0이 나올 때 까지 다음을 반복한다.
+ 4.0. checkBFS[temp]값이 1인 경우 continue;
+ 4.1. temp를 출력한다.
+ 4.2. edge[temp]의 값을 모두 searchQueue[++queueTop]에 저장한다.
+ 
+(minHeap을 다루는 과정에서 모든 인덱스는 top을 넘지 않는지 확인해야 한다.)
+maxHeap -> minHeap으로 수정
+ 
+-void insertNode(int num)-
+1. maxHeap[++nodeTop] = num
+2. parent = nodeTop / 2, child = nodeTop
+3. parent, child를 비교한다.
+ 3.1. parent > child인 경우 parent, child의 maxHeap값을 바꾼다. 그 후 child = parent, parent = child / 2를 실행하고 다시 비교한다.
+ 3.2. parent <= child인 경우 return한다.
+ 
+-int deleteNode()-
+0. 만약 nodeTop == 0인 경우 0을 리턴한다.
+1. min = maxHeap[1]
+2. maxHeap[1] = maxHeap[nodeTop--]
+3. parent = 1, child = parent*2
+4. 다음 과정을 반복한다.
+ 4.1. child+1 <= nodeTop인 경우 child, child+1를 비교한다. 만약 child + 1이 더 작은 경우 child++
+ 4.2. parent, child를 비교한다.
+  4.2.1. parent > child 인 경우 parent, child의 maxHeap값을 바꾸고 parent = child, child = parent * 2를 하고 반복한다.
+  4.2.2. parent <= child인 경우 반복을 그만둔다.
+5. min을 리턴한다.

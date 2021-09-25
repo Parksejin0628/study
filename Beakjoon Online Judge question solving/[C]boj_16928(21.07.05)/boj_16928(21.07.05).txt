@@ -1,0 +1,52 @@
+문제 : 16928번 '뱀과 사다리 게임' (난이도 실버1)
+풀이시간 : 35분 59초
+한줄평 : 100번 정점까지 도달하는 가장 짧은 경로를 찾는 BFS문제였다. 뱀을 탈 경우 무조건 손해라는 생각, check변수를 두지 않은 안일함 때문에 생각보다 시간이 걸렸지만 쉬운문제엿다.
+ 
+ 
+----알고리즘-----
+[핵심 아이디어]
+당연하지만 사다리는 최대한 이용하면서 뱀은 최대한 피하는 방향으로 움직여야 한다.
+일단 특별한 경우가 없을 경우 무조건 6씩 이동하는 것이 베스트이다.
+주사위 6 안에 뱀이나 사다리가 있을 경우, 특별한 경우를 체크하는 것이 베스트이다.
+6안에 사다리가 있을 경우, 사다리를 탔을 때 하고 안 탔을 때 하고 구분하는 것이 좋을 것이다.
+ > 만약 6칸 뒤에 10칸을 더 올라갈 수 있는 사다리가 있어 탔는데, 사실 7칸 뒤에 80칸을 올라갈 수 있는 사다리가 있으면 일부로 안타는 것이 맞다.
+뱀은 무조건 피하는게 좋을 것이다.
+따라서, 6칸안에 사다리가 있을 경우 사다리를 탄 경우의 수, 사다리가 없는 칸 중에 가장 큰 칸에 간 경우의 수를 따지는 것이 좋다.
+또한, BFS를 이용하여 문제를 푸는 것이 좋을 것이다.
+ 
+정리하자면
+1. 6칸 안에 사다리나 뱀이 있는지 확인한다.
+2. 만약 뱀이 있는 경우 주사위 후보에서 해당 칸을 제외한다.
+3. 만약 사다리가 있는 경우 해당 사다리를 타는 경우를 하나 추가하고, 주사위 후보에서 해당 칸을 제외한다.
+4. 주사위 후보 중 가장 큰 값을 이동하는 경우를 추가한다.
+5. 주사위 값이 100을 넘는 값이 처음으로 등장하는 경우, 그 경우가 최솟값이다.
+ 
+[알고리즘 흐름(메인함수)]
+1. n, m을 입력받는다.
+2. 1~n번 반복한다.(i)
+ 2.1. input[0], input[1]를 입력받는다.
+ 2.2. board[input[0]] = 1로 한다.
+ 2.3. ladder[input[0]] = input[1]로 한다.
+3. 1~m번 반복한다.(i)
+ 2.1. input[0], input[1]를 입력받는다.
+ 2.2. board[input[0]] = 2로 한다.
+ 2.3. snake[input[0] = input[1]로 한다.
+4. game()를 출력한다.
+ 
+[세부 함수내용]
+-int game()-
+1. searchStack[2][110] = {0}, stackTop[2] = {-1, -1}, now = 0, next = 1, temp = 0, level = 0, candidate_max = 0, vertex = 0, checkBFS[110] = {0}을 선언한다.
+2. searchStack[now][++stackTop[now]] = 1
+3. stackTop[now] != -1인 동안 반복한다.
+ 3.1. stackTop[now] != -1인 동안 반복한다.
+  3.1.1. vertex = searchStack[now][stackTop[now]--]
+  3.1.2. checkBFS[vertex] == 1인 경우 continue;
+  3.1.3. vertex >= 100인 경우 return level
+  3.1.4. checkBFS[vertex] = 1
+  3.1.5. 1~6까지 반복한다. (candidate)
+   3.1.5.1. board[vertex + candidate] == 1인 경우 searchStack[next][++stackTop[next]] = ladder[vertex + candidate]
+   3.1.5.2. board[vertex + candidate] == 2인 경우 saerchStack[next][++stackTop[next]] = snake[vertex + candidate]
+   3.1.5.3. 나머지 경우 candidate_max = candidate;
+  3.1.6. searchStack[next][++stackTop[next]] = vertex + candidate_max
+ 3.2. level++
+ 3.3. now, next 교체

@@ -1,0 +1,69 @@
+문제 : 9019번 "DSLR" (난이도 골드5)
+풀이시간 : 1시간 5분 18초
+한줄평 : 복잡해보이지만 DSLR을 사용하니 은근히 간단한 문제였다. 비효율적으로 보이는 알고리즘이었지만, 제한시간이 6초이기에 쉬운 문제였던 느낌이다. 여전히 문자열 다루는게 서툴러서 시간이 생각보다 오래걸렸다.
+ 
+ 
+ 
+----알고리즘----
+[핵심 아이디어]
+각 명령어에 따른 결과를 모두 저장하고 다시 결과들에 명령어를 대입하는 BFS를 사용해서 풀 수 있을 듯 하다.
+BFS를 할 때 탐색할 값과 여태까지 저장된 명령어를 함께 스택에 넣으면 될 듯 하다.
+정리하면
+1. searchStack에 초기값을 넣는다, checkBFS를 체크한다.
+2. D, S, L, R명령어를 적용해본 뒤 checkBFS에 없는 결과라면 searchStack에 결과, 명령어를 넣는다.
+ ex) searchStack[next][++stackTop[next] = {3245, "D"}
+3. 탐색도중 정답과 같은 값이 나온 경우 저장된 명령어를 출력한다.
+ 
+[알고리즘 흐름]
+1. testcase를 입력받는다. 그 후 2번이후의 과정을 testcase만큼 반복한다.
+2. initNum, targetNum을 입력받는다.
+3. searchAnswer(initNum, targetNum)을 통해 정답인 명령어를 구한다.
+4. 해당 명령어를 출력한다.
+ 
+[세부 함수 내용]
+-void searchAnswer(int firstNum, int targetNum)-
+1. stack searchStack[2][50000] ={{0, 0}}, top = -1, level = -1, checkBFS[10000] = {0}, 
+2. searchStack[now][++top[now]] = {firstNum, ""}
+3. top[now] > -1인 동안 반복한다.
+ 3.1. level++
+ 3.2. top[now] > -1인 동안 반복한다.
+  3.2.1. temp = D(searchStack[now][top[now]].num)
+  3.2.2. checkBFS[temp] !=0인 경우 다음을 실행한다.
+   3.2.2.1. 만약 temp == targetNum인 경우 
+    3.2.2.1.1. strcpy(answer, searchStack[now][top].command)
+    3.2.2.1.2. return;
+   3.2.2.2. searchStack[next][++top[next]].num = temp
+   3.2.2.3. searchStack[next][top[next]].command[level] = 'D'
+   3.2.2.4. checkDFS[temp] = 1
+  3.2.3. 과정 3.1, 3.2에서 temp, 3.2.2.3의 문자만을 변화하면서 반복한다.
+   3.2.3.1. temp = S(searchStack[now][top[now]].num / 'S'
+   3.2.3.2. temp = L(searchStack[now][top[now]].num / 'L'
+   3.2.3.3. temp = R(searchStack[now][top[now]].num / 'R'
+  3.2.4. top[now] --;
+ 3.3. now, next 체인지
+ 
+-int D(int num)-
+1. temp = num*2
+2. 만약 temp>9999인 경우 temp %= 10000
+3. return temp
+ 
+-int S(int num)-
+1. temp = num - 1
+2. 만약 temp < 0인 경우 temp = 9999
+3. return temp
+ 
+-int L(int num)-
+1. d1 = num/1000
+2. d2 = (num/100)% 10
+3. d3 = (num/10) % 10
+4. d4 = num%10
+5. temp = d2*1000 + d3*100 + d4*10 + d1
+6. return temp
+ 
+-int R(int num)-
+1. d1 = num/1000
+2. d2 = (num/100)% 10
+3. d3 = (num/10) % 10
+4. d4 = num%10
+5. temp = d4*1000 + d1*100 + d2*10 + d3
+6. return temp
