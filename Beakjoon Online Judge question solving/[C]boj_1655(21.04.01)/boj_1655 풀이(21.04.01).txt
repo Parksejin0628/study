@@ -1,0 +1,25 @@
+문제 : 1655번 가운데를 말해요 (난이도 골드 2)
+문제 풀이 시간 : 1시간 40분 30초 
+한줄평 : 최대힙과 최소힙을 양쪽에 두는 이진트리 형태로 푸는 문제였다. 아이디어는 검색해서 참고한 뒤 풀었는데 아이디어 생각할 만 했던 것 같아 조금 아쉽지만
+          대충보고 아이디어를 정리한 것을 보아 나쁘지 않았다고 생각한다. 참고한 아이디어는 오직 max, mid, min아이디어 뿐이었으니 말이다.
+          사지방 환경이 열악하여 1시간 10분 이후 시간은 정확하진 않지만 대충 30분정도 더 한것 같다. 다음부터는 아이디어부분을 조금만 고민하자.
+          이번문제에서도 논리적이지 못한 알고리즘으로 시작하여서 시간이 오래걸린것같다.
+ 
+ 
+---알고리즘 정리---
+[알고리즘 흐름]
+1. n을 입력받고 다음과정을 n번만큼 반복한다.
+2. num을 입력받는다. 그 후 addHeap(num)를 호출한다.
+ 
+[함수 세부내용]
+-void addHeap(int num)-
+1.mid = 11111인 경우 mid = num, mid를 호출한 뒤 리턴한다.
+2.mid와 num을 비교한 뒤 비교 결과에 따라 다음 과정을 실행한다.
+ 2.1. mid < num인 경우 rightHeapAccount++, addRightHeap(num)
+ 2.2. mid <= num인 경우 leftHeapAccount++, addLeftHeap(num)
+3. leftHeapAccount와 rightHeapAccount를 비교한다.
+  3.1. leftHeapAccount > rigftHeapAccount인 경우 addRightHeap(mid), mid = leftHeap[1], deleteLeftHeap()
+  3.2. leftHeapAccount+1 < rightHeapAccount인 경우 addLeftHeap(mid), mid = rightHeap[1], deleteRightHeap()
+4. mid를 출력한다.
+ 
+-add(delete)RightHeap, add(delete)LeftHeap은 기존 최소힙, 최대힙을 구현한다.

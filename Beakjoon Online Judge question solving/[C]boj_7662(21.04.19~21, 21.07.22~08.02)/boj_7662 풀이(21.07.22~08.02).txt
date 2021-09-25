@@ -1,0 +1,144 @@
+문제 : 7662번 "이중 우선순위 큐" (난이도 골드 5)
+풀이시간 : 약 7시간
+한줄평 : 따져보면 그렇게 어려운 문제는 아니었는데, 어렵게 접근하다보니 많이 꼬여서 고생을 꽤 많이한 문제이다. 알고리즘은 간단하게 최소힙, 최대힙을 합치고 각 힙에 들어있는 같은 노드끼리 연결짓은 포인터 하나를 추가하고 한쪽이 삭제되면 반대쪽도 삭제된 것 처럼 구현하는 것이었는데, 삭제 과정에서 남아있는 노드찌꺼기가 문제를 일으켰다. 몇가지 경우의 수를 생각해보고 작동과정을 천천히 따져보면 해결할 수 있었을텐데.. int, long long 자료형의 문제, 100만의 경우의 수가 들어올 경우의 문제라고 고정관념을 가지고 문제를 찾으려 하여 오랫동안 고생한 것 같다. 다음부터는 너무 극한의 상황을 의심하지 말고, 나의 알고리즘을 의심해보고 천천히 과정을 밟아보는 습관을 기르도록 하자.
+ 
+ 
+ 
+----알고리즘----
+[핵심아이디어]
+최소힙, 최대힙을 동시에 사용하면 이중 우선순위 큐를 구현할 수 있다.
+데이터를 삽입할때 최소힙, 최대힙 모두 데이터를 사용한다.
+이 때 각 데이터에는 서로 반대되는 힙의 해당 데이터 인덱스값을 저장한다.
+예를들어, 최소힙 3번째 인덱스, 최대힙 11번재 인덱스에 들어간 값이 있다고 가정하면
+최소힙의 데이터는 인덱스 11값을 저장해놓고, 최대힙의 데이터는 인덱스 3값을 저장해놓는다.
+그 후, 데이터를 삭제할 때 인덱스값이 변하면 반대쪽 데이터에도 해당 정보를 제공하면 된다.
+그리고, 만약 한쪽 힙에서 해당 데이터가 삭제된경우, 반대쪽 데이터의 존재여부를 담당하는 변수를 false로 바꿔놓으면
+다른 힙에서도 마치 제거된 것 처럼 실행할 수 있다.
+즉, 만약 최소힙에서 숫자를 제거하는데, 최소힙의 1순위 데이터의 존재가 false라면, 해당데이터를 삭제하고도 다시 삭제연산을 한다.
+ 
+typedef struct Data
+ int 값
+ struct Data* 반대편 힙의 포인터값
+ int 반대편 힙의 인덱스값
+ int 존재여부
+data;
+ 
+[알고리즘 흐름]
+리 오류를 찾기위해 처음 알고리즘과는 많이 다르게 결과가 나왔다. 참고만 하자
+0. testcase를 입력받는다. 모든 과정을 testcase만큼 반복해서 실행한다.
+1. k를 입력받는다. 다음 과정을 k번만큼 반복한다.
+2. command를 입력받는다. 입력값에 따라 다음을 실행한다.
+ 2.1. command == I인 경우
+  2.1.1. value를 입력받는다.
+  2.1.2. inqueue(value)를 실행한다.
+ 2.2. command == D인 경우
+  2.2.1. value를 입력받는다.
+  2.2.2. value == 1인 경우 dequeue_max()를 실행한다.
+  2.2.3. value == -1인 경우 dequeue_min()를 실행한다.
+3. queue_max[1].exist == 0인 동안 dequeue_max()를 계속해서 실행한다.
+ 3.1. 만약 top_max == 0인 경우 break한다.
+4. queue_min[1].exist == 0인 동안 dequeue_min()를 계속해서 실행한다.
+ 4.1. 만약 top_min == 0인 경우 break한다.
+5. 만약 top_max == 0인 경우 EMPTY를 출력하고 continue한다.
+6. queue_max[1].value, queue_min[1].value를 출력한다.
+7. top_max = 0, top_min = 0
+ 
+[세부 함수내용]
+-void inqueue(int value)-
+0. int child = 0, int parent = 0, int temp = 0를 선언한다.
+1. queue_max[++top_max].value = value, queue_max[top_max].oppositePointer = queue_min, queue_max[top_max].oppositeIndex = ++top_min, queue_max[top_max].exist = 1, temp = top_max
+2. child = top_max, parent = child / 2, temp = child;
+3. queue_max[child].value > queue_max[parent].value인 동안 반복한다.
+ 3.1. changeIndex(queue_max, parent, child)를 실행한다.
+ 3.2. child = parent, parent = child / 2, temp = child;
+4. queue_min[top_min].value = value, queue_min[top_min].oppositePointer = queue_max, queue_min[top_min].oppositeIndex = temp, queue_max[top_min].exist = 1
+5. child = top_min, parent = child / 2
+6. queue_min[child].value < queue_min[parent].value인 동안 반복한다.
+ 6.1. changeIndex(queue_min, parent, child)
+ 6.2. child = parent, parent = child / 2
+ 
+-void dequeue_max()-
+0. data temp = queue_max[1], int child = 0, int parent = 0
+1. 다음 과정들을 반복한다.
+2. 만약 top_max == 0인 경우 return한다.
+3. temp = queue_max[1]
+4. queue_max[1] = queue_max[top_max--]
+5. parent = 1, child = parent * 2;
+6. child + 1 <= top_max && queue_max[child].value < queue_max[child+1].value인 경우 child = child+1
+7. queue_max[parent] < queue_max[child]인 동안 반복
+ 7.1. changeIndex(queue_max, parent, child)
+ 7.2. parent = child, child = parent * 2
+ 7.3. child + 1 <= top_max && queue_max[child].value < queue_max[child+1].value인 경우 child = child+1
+8. temp.exist == 1인 경우 
+ 8.1. temp.oppositePointer[temp.oppositeIndex].exist = 0;
+  !! temp.oppositePointer[temp.oppositeIndex].oppositeIndex = 1000010으로 바꿔야 한다.
+ 8.2. 반복종료
+ 
+-void dequeue_min()-
+0. data temp = queue_min[1], int child = 0, int parent = 0
+1. 다음 과정들을 반복한다.
+2. 만약 top_min == 0인 경우 return한다.
+3. temp = queue_min[1]
+4. queue_min[1] = queue_min[top_min--]
+5. parent = 1, child = parent * 2;
+6. child + 1 <= top_min && queue_min[child].value > queue_min[child+1].value인 경우 child = child+1
+7. queue_min[parent] > queue_min[child]인 동안 반복
+ 7.1. changeIndex(queue_min, parent, child)
+ 7.2. parent = child, child = parent * 2
+ 7.3. child + 1 <= top_min && queue_min[child].value > queue_min[child+1].value인 경우 child = child+1
+8. temp.exist == 1인 경우 
+ 8.1. temp.oppositePointer[temp.oppositeIndex].exist = 0;
+!! temp.oppositePointer[temp.oppositeIndex].oppositeIndex = 1000010으로 바꿔야 한다. 
+ 8.2. 반복종료
+ 
+-void changeIndex(data *queue, index1, index2)-
+1. data temp; data *tempPointer
+2. temp = queue[index1]
+3. queue[index1] = queue[index2]
+4. queue[index2] = temp;
+5. tempPointer = queue[index1].oppositePointer
+6. tempPointer[queue[index1].oppositeIndex].oppositeIndex = index1
+7. tempPointer = queue[index2].oppositePointer
+8. tempPointer[queue[index2].oppositeindex].oppositeIndex = index2
+
+ 
+[코드]
+ /* 
+알고리즘 : 이중 우선순위 큐를 최소힙, 최대힙을 동시에 이용하여 구현하였습니다.
+기본 원리는 한쪽 힙에서 한 노드의 삭제연산이 일어나면, 반대쪽에 있는 같은 노드에도 삭제를 실행합니다.
+노드의 정보를 담고있는 구조체 Data는 4개의 정보를 담고 있습니다.
+1. value : 값
+2. exist : 존재여부 /  값이 0인 경우 이미 삭제된 노드라고 판단합니다.
+3. oppositePointer : 반대쪽 힙 배열의 시작주소
+4. oppsiteIndex : 반대쪽 힙 배열에 있는 같은노드의 인덱스 값
+ 
+함수의 경우 4개가 있습니다.
+inqueue(long long value)
+ - 값 입력, 최대힙과 최소힙에 새로운 원소를 추가합니다.
+   그 후 최대힙, 최소힙을 정렬합니다. 
+dequeue_max 
+ - 최대힙의 첫번째 노드(최대값)를 제거합니다.
+   그 후 최소힙에 있는 같은 노드의 exist값을 0으로 만듭니다. (삭제)
+   만약 첫번째 노드의 exist값이 0이었다면, 삭제 연산을 한번 더 진행합니다. 
+dequeue_min
+ - 최소힙의 첫번째 노드를 제거합니다. 
+   그 후 최대힙에 있는 노드의 exist값을 0으로 만듭니다. (삭제)
+   만약 첫번째 노드의 exist값이 0이었다면, 삭제 연산을 한번 더 진행합니다.
+  삭제 연산에서 반대편 힙에 있는 같은 노드를 탐색은 
+  해당 노드의 oppositeIndex를 이용하여 O(1)만에 탐색합니다. 
+changeIndex(data *queue, int index1, int index2)
+ - 해당 힙(queue)의 노드 2 개의 위치를 바꿉니다.
+   그 후 반대편 힙에 있는 같은 노드의 oppositeIndex값도 바꿔줍니다. 
+   (노드의 위치가 바뀌었기 때문에) 
+   
+I연산에서는 inqueue함수를
+D 1 연산에서는 dequeue_max함수를
+D -1 연산에서는 dequeue_min함수를
+힙 정렬 과정에서 노드의 위치를 바꿀 때는 changeIndex를 이용합니다.
+ 
+모든 연산이 끝난 후에는 최대힙과 최소힙의 첫번째 노드의 exist값이 1이 될 때 까지
+삭제연산을 반복합니다. 
+ 
+그 후 최대힙과 최소힙의 첫번째 노드를 출력하여 최대값, 최소값을 출력합니다.
+만약, 큐가 비어있을 경우에는 EMPTY를 출력하도록 합니다. 
+*/

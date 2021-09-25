@@ -1,0 +1,55 @@
+문제 : 7662번 '이중 우선순위 큐' (난이도 골드 5)
+풀이시간 : 2시간 1분 19초 (풀이중)
+한줄평 : 
+----------알고리즘 정리---------- 
+[알고리즘 흐름]
+0.testcase를 입력받고 그만큼 모든 과정을 반복한다.
+1.k를 입력받고 다음 과정을 반복한다.
+2.command를 입력받고 입력받은 커맨드에 따라 함수를 호출한다.
+ 2.1. command == 'I'인 경우 num을 입력받고 inputMaxQueue(num), inputMinQuque(num)을 실행한다.
+ 2.2. command == 'D'인 경우 num을 입력받고 num에 따라 함수를 호출한다.
+  2.2.0. count == 0인 경우 continue
+  2.2.1. num == 1인 경우 deleteMaxQueue()를 실행한다.
+  2.2.2. num == -1인 경우 deleteMinQueue()를 실행한다. 
+3. maxQueue[1], minQueue[1]를 출력한다.
+ 
+[함수 세부내용]
+-void inputMaxQuque(int num)-
+1. maxQuque[maxRearIndex] = num, child = maxRearIndex++, parent = child / 2를 한다.
+2. maxQuque[parent] < maxQuque[child]인 동안 다음을 반복한다.
+ 2.1. maxQuque[parent], maxQuque[child]를 스왑한다.
+ 2.2. child = parent, parent = child / 2
+3. count++
+ 
+-void inputMinQuque(int num)-
+1. minQuque[mixRearIndex] = num, child = minRearIndex++, parent = child / 2를 한다.
+2. minQuque[parent] > minQuque[child]인 동안 다음을 반복한다.
+ 2.1. minQuque[parent], minQuque[child]를 스왑한다.
+ 2.2. child = parent, parent = child
+3.count++ 
+ 
+-void deleteMaxQueue()-
+0.count <= 0인 경우 return
+1.temp = maxQueue[1], parent = 1;
+2.maxQueue[1] = maxQueue[maxRearIndex--], child = parent * 2, child + 1 < maxRearIndex && child + 1 > child 인 경우 child ++
+3.maxQueue[child] >= maxQueue[parent]
+ 3.1. child, parent 스왑
+ 3.2. parent = child, child = parent * 2
+ 3.3. child + 1 < maxRearIndex && child + 1 > child 인 경우 child ++
+4.invalidMaxQuque[temp] > 0인 경우 -- 한 후 deleteMaxQueue() 재귀호출
+5.아닌 경우 invalidMinQueue[temp] <= ++, count --
+ 
+-void deleteMinQueue()-
+0.count <= 0인 경우 return
+1.temp = minQueue[1], parent = 1;
+2.minQueue[1] = minQueue[minRearIndex--], child = parent * 2, child + 1 < minRearIndex && child + 1 > child 인 경우 child ++
+3.maxQueue[child] >= maxQueue[parent]
+ 3.1. child, parent 스왑
+ 3.2. parent = child, child = parent * 2
+ 3.3. child + 1 < minRearIndex && child + 1 > child 인 경우 child ++
+4.invalidMinQuque[temp] > 0인 경우 -- 한 후 deleteMinQueue() 재귀호출
+5.아닌 경우 invalidMaxQueue[temp] <= ++, count --
+ 
+ 
+핵심 알고리즘 : 최소힙, 최대힙에서 숫자를 제거하고 배열을 하나 선정하여 delete[n] +=하도록 한다. 나중에 다른 힙에서 top숫자(m이라 하자)가 
+delete[m] > 0인 경우 이미 삭제된 숫자이므로 삭제한 뒤 삭제연산을 끝내지 않고 다시 시도한다.

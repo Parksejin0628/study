@@ -1,0 +1,29 @@
+문제 : 1074번 'Z' (난이도 실버 1)
+풀이시간 : 56분 51초(진행중)
+한줄평 : 간단한 쿼드트리 문제였다. 하지만, 이 아이디어를 떠올린 것에 대해 확실히 성장함을 느낄 수 있었다.
+          그리고 n <= x <= m 과 같은 형태의 부동식은 c언어에 없다는 것을 명심하자
+ 
+--알고리즘 정리--
+x, y좌표로 나눠서 생각하자
+크게 4등분을 하면서 Z자?
+처음엔 2^n에서 어느부분에 속해있는지 파악하고 n을 점점 줄여가면서 수를 더해간다
+ex ) (4, 7)에있을 경우 2^3구역 파악 1구역 : 1~4, 1~4 2구역 : 5~8, 1~4 3구역 : 1~4, 5~8
+3구역에 있는 것을 파악했으니 (4*4)*2를 더한 뒤 2^2구역 파악
+ 
+[알고리즘 흐름]
+1.n, r, c를 입력 받는다.
+2.checkQuadrant(square2(n-1), 0, 0)를 출력한다.
+ 
+[함수 세부내용]
+-checkQuadrant(int size, int startX, int startY)-
+0. size가 0일 경우 리턴한다.
+1. r,c 값과 다음을 비교한 뒤 실행한다.
+ 1.1. startX <= r <= startX + square2(size) - 1 && startY <= c <= startY + square2(size)인 경우
+ return checkQuadrant(size - 1, startX, startY)
+ 1.2. startX + square2(size) <= r <= startX + 2*square2(size)-1 && startY <= c <= startY + square2(size)인 경우
+ return (square2(size) * square2(size)) + checkQuadrant(size - 1, startX + square2(size), startY)
+ 1.3. startX <= r <= startX + square2(size) - 1 && startY + square2(size) <= c <= startY + 2*square2(size)-1인 경우
+ return 2*(square2(size) * square2(size)) + checkQuadrant(size - 1, startX, startY + square2(size))
+ 1.4. startX + square2(size) <= r <= startX + 2*square2(size)-1 &&startY + square2(size) <= c <= startY + 2*square2(size)-1인 경우
+ return = 3*(square2(size) * square2(size)) + checkQuadrant(size - 1, startX + square2(size), startY + square2(size))
+맨위로

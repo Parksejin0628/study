@@ -1,0 +1,18 @@
+문제 : 2606번 (난이도 실버 3)
+풀이 시간 : 35분 27초
+한줄평 : 간단한 BFS문제였다. BFS문제의 기본유형이라고 생각한다.
+ 
+ 
+----알고리즘 정리----
+[알고리즘 흐름]
+1. n, m을 입력받는다.
+2. m번 만큼 반복하며 다음을 실행한다.
+ 2.1. cpt1, cpt2를 입력받는다.
+ 2.2. connect[cpt1][rear[cpt1]++] = cpt2
+ 2.3. connect[cpt2][rear[cpt2]++] = cpt1 
+3. quque[0] = 1를 하고 다음 과정을 frontIndex == rearIndex까지 반복한다.
+ 3.1. connect[quque[frontIndex]][0~rear[quque[frontIndex]]]를 체크한다.
+ 3.2. 만약 checkBFS[quque[frontIndex]] == 0 일 경우 quque에 추가한다.
+ 3.3. checkBFS[quque[frontIndex]] = 1;
+ 3.4. account ++;
+4.account를 출력한다.

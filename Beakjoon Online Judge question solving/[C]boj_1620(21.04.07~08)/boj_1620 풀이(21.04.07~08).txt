@@ -1,0 +1,20 @@
+문제 : 1620번 '나는야 포켓몬 마스터 이다솜' (난이도 실버4)
+풀이시간 : 1시간 43분 10초 
+한줄평 : 시간단축을 위해 병합정렬을 하되 문자순서로 하는 문제였다. 병합정렬을 strcmp로 비교하여 하면 됐으나 i>mid || j>end에서 k++하는 것을 잊어 꽤 애먹었다. 다음부터는 신경쓰자
+
+--알고리즘 정리---
+ 
+[알고리즘 흐름]
+1. n, m을 입력받는다.
+2. n번 만큼 반복하며 pokemon[i]를 입력받는다.
+3. mergeSort(0, n-1)를 통해 sortedPokemon[]를 계산한다.
+4. m번 만큼을 반복하며 input을 입력받는다.
+ 4.1. input이 숫자로 시작할 경우 pokemon[number]를 출력한다.
+ 4.2. input이 문자로 시작할 경우 이분탐색을 통해 숫자를 찾아낸다.
+  4.2.1. start = 0, end = n, mid = (start + end)/2
+  4.2.2. strcmp(input, sortedPokemon[mid])의 값에 따라 start, end 값 조정 혹은 출력
+ 
+[함수 세부내용]
+-void mergeSort(int start, int end)
+0. start>end인 경우 즉시 리턴한다.
+1. 평소와 같은 병합정렬을 하되 인덱스끼리 비교할때는 strcmp를 이용한다

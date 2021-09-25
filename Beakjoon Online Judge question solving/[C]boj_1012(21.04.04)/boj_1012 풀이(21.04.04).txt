@@ -1,0 +1,25 @@
+문제 : 1012번 유기농 배추 (난이도 실버 2)
+풀이 시간 : 1시간 3분 54초 (풀이중)
+한줄평 : 처음엔 간단한 문제인 줄 알았으나 간단하게 생각하여 오히려 논리에 어긋나게되었다. 방심하지말고 주의하자
+ 
+--알고리즘 정리--
+[알고리즘 흐름]
+0. t를 입력받은 뒤 t만큼 다음 과정을 반복한다.
+1. m, n, k를 입력받는다.
+2. k만큼 반복하여 x, y를 입력받고 cabbage[x+1][y+1][0] = 1로 한다.
+3. checkCabbage(m, n)를 호출한 뒤 출력한다.
+4. cabbage를 초기화한다.
+ 
+[함수 세부내용]
+1.cabbage[1~m][1~n]을 돌며 다음을 반복한다.
+2.cabbage[i][j][0]이 1일 경우
+ 2.1. cabbage[i][j-1][1] = 1인 경우 cabbage[i][j][1] = 1, continue한다.
+ 2.2. cabbage[i][j+1][1] = 1인 경우 cabbage[i][j][1] = 1, continue한다.
+ 2.3. cabbage[i-1][j][1] = 1인 경우 cabbage[i][j][1] = 1, continue한다.
+ 2.4. cabbage[i+1][j][1] = 1인 경우 cabbage[i][j][1] = 1, continue한다.
+ 2.5. 모두 아닌 경우 cabbage[i][j][1] = 1, account++;
+3.account를 리턴한다.
+ 
++ 2번항목을 checkSide(int x, int y)함수로 따로 둔 뒤 각 if문에 맞을 경우
+ if문에 맞는 좌표로 재귀하여 (ex : checkSide(x+1, y)) 
+ 모양 상관 없이 갯수 세는 것이 용이하게 하였다.

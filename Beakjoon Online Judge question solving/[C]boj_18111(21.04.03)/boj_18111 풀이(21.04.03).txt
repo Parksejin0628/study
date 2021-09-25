@@ -1,0 +1,18 @@
+문제 : 18111번 마인크래프트 (난이도 실버 3)
+풀이 시간 : 33분 36초
+한줄평 : 오랜만에 특별한 알고리즘이나 자료구조 없이 순수한 논리력으로 푼 문제라서 기분이 상쾌했다.
+ 
+---알고리즘 정리---
+[알고리즘 흐름]
+1. n, m, b를 입력 받는다.
+2. n, m번 만큼 이중반복하여 land[i][j]를 입력받는다. (land[550][550]) 이때 입력받으며 최솟값, 최댓값을 확인한다.
+3. 최솟값 ~ 최댓값까지 temp = flatland(i), min < temp 인 경우 min = temp, height = i / min = temp면 height = i
+4. min 출력
+ 
+[함수 세부내용]
+-int flatland(int height)-
+1.land[0~n-1], [0~m-1]를 돌며 조건에 따라 실행한다.
+2.land[i][j] == height인 경우 continue
+3.land > height인 경우 sum += (land - height)*2 , block += land - height
+4.land < height인 경우 sum += height - land, useBlock += height - land
+5.만약 block < useBlock인 경우 -1리턴 / 아닐 경우 sum 리턴

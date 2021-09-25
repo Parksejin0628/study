@@ -1,0 +1,43 @@
+문제 : 1697번 '숨바꼭질' (난이도 실버1)
+풀이시간 : 2시간 9분 7초 (풀이중)
+한줄평 : BFS를 익힌상태였으면 쉽게 풀 수 있는 문제였으나 BFS에 대한 개념이 전혀 없으니 아이디어 조차 떠올리기 힘들어서 시간을 많이 소비한 문제이다. BFS로 풀어야 하는 문제를 DFS로 풀려고 시도했으니 시간초과가 났고, DFS에서 수정하면 시간이 될 줄 알고 계속 시도했기 때문이다. 이번 문제를 통해 개념을 익혀야 한다는 것을 확실히 뼈저리게 느꼈고, 자료구조를 공부해야 할 이유를 찾게 되었다.
+ 
+---알고리즘 정리---
+[알고리즘 흐름]
+1. n, k를 입력받는다.
+2. faster(n, k, 1)
+3. fastTime[k]를 출력한다.
+ 
+[함수 세부내용]
+-void faster(int now, int target, int time)-
+01. fastTime[now] !=0 && fastTime[now] < time 인 경우 return한다.
+02. fastTime[now] = time
+1.다음 조건에 따라 재귀함수로 호출한다.
+ 1.1. now < target인 경우 faster(now * 2, target, time+1)
+ 1.2. closer((now-1) * 2, now * 2, target)가 0인 경우 faster(now - 1, target, time+1)
+ 1.3. closer((now+1) * 2, now * 2, target)가 0인 경우 faster(now + 1, target, time+1)
+ 
+-int closer(int num1, int num2, int criteria)-
+1. temp1 = criteria - num1 만약 음수면 -1를 곱한다.
+2. temp2 = criteria - num2 만약 음수면 -1를 곱한다.
+3. temp1이 작으면 0, temp2가 작으면 1를 반환한다.
+ 
+ 
+1. + 1인 경우 : +1를 했을 때 더 가까워지는 경우
+2. - 1 인 경우 -1를 했을 때 더 가까워지는 경우 혹은 -1 * 2를 하면 더 가까워 지는 경우
+3. * 2 인 경우 현재 보다 *2를 했을 때 더 가까워 지는 경우
+ 
+ 
+-----BFS를 익힌 후-----
+[알고리즘 흐름]
+1. n, k를 입력받는다.
+2. level = 0, quque[0][level] = n, frontIndex[level] = 0, rearIndex[level]= 0을 한다.
+3. frontIndex[level] ~ rearIndex[level]까지 다음을 실시한다.
+ 3.1. time ++;
+ 3.2. 만약 level이 0(1)이라면 quque[i][level]의 +1, -1, *2를 각각 quque[rearIndex[1(0)]++]에 넣는다. 이 때 checkBFS = 0이어야 한다.
+ 3.3. 만약 순환중에 k와 같은 것이 발생할 경우 time출력 후 종료
+ 
+[함수 세부내용]
+1. n + 1, n - 1, n * 1를 quque에 넣는다.
+2. quque를 빼면서 각자의 1번을 실시한다.
+3. 1번을 실시하면서 k가 있을 경우 그것이 최소값이다
