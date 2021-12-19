@@ -1,9 +1,14 @@
 #include<stdio.h>
 
+void print_ary(int *pa);
+void print_ary_n(int *pa, int size);
+void input_ary(int *pa, int size);
+
 int main(void)
 {
 	int ary[5] = {0, 1, 2, 3, 4};
 	int second[5] = {5, 6, 7, 8, 9};
+	int third[8] = {10, 11, 12, 13, 14, 15, 16, 17};
 	int *pa;
 	int *pb;
 	
@@ -59,10 +64,53 @@ int main(void)
 	printf("pb - pa : %d\n", pb - pa);
 	//주소끼리의 뺄셈은 주소값의 차 / 자료형 임을 나타낸다. 
 	
+	printf("\n(7)\n");
+	print_ary(ary);
+	//10.2.1의 배열의 값을 출력하는 함수
+	
+	printf("\n(8)\n");
+	print_ary_n(third, 8);
+	//10.2.2의 배열 요소의 개수가 다른 배열도 출력하는 함수
+	
+	printf("\n(9)\n");
+	input_ary(second, 5);
+	print_ary_n(second, 5);
+	//10.2.3의 배열에 값을 입력하는 함수 
+	
 	
 	scanf("%d");
 	
 	return 0;
+}
+
+void print_ary(int *pa)
+{
+	printf("배열의 값 : "); 
+	for(int i=0; i<5; i++)
+	{
+		printf("%d ", pa[i]);
+	}
+	printf("\n");
+}
+
+void print_ary_n(int *pa, int size)
+{
+	printf("배열의 값 : ");
+	for(int i=0; i<size; i++)
+	{
+		printf("%d ", pa[i]);
+	}
+	printf("\n");
+}
+
+void input_ary(int *pa, int size)
+{
+	for(int i=0; i<size; i++)
+	{
+		printf("입력할 %d번째 값 : ", i+1);
+		scanf("%d", pa+i);
+	}
+	printf("\n");
 }
 
 /*
