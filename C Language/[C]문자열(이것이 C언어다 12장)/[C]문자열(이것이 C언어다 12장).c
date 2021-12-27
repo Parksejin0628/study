@@ -1,5 +1,7 @@
 #include<stdio.h>
-#include<string.h>
+#include<string.h> 
+
+char *strcpy_custom(char* str1, char* str2); 
 
 int main(void)
 {
@@ -75,17 +77,73 @@ int main(void)
 	fgets(str3, 20, stdin);
 	printf("scanf로 입력했을 때 문자열의 길이 : %d / gets로 입력했을 때 문자열의 길이 : %d / fgets로 입력했을 때 문자열의 길이 : %d\n", strlen(str1), strlen(str2), strlen(str3));
 	//개행문자를 널문자로 변환하는 scanf와 gets는 문자열의 길이가 같지만, 개행문자를 보존한채로 널문자를 추가하는 fgets는 문자열의 길이가 1 더 길다. 
+	printf("\n(8)\n");
 	printf("gets를 통한 출력 : ");
 	puts(str3);
 	printf("fgets를 통한 출력 : ");
 	fputs(str3, stdout);
 	//puts, fputs모두 공백을 포함하여 출력한다. puts는 자동으로 줄을 넘기고 fgets는 넘기지 않는다. (개행문자가 살아있는 str3를 출력하므로 gets는 2번, fgets는 1번 개행이 된다.) 
+	printf("\n(9)\n");
+	printf("현재 str1 : %s\n", str1);
+	printf("현재 str2 : %s\n", str2);
+	strcpy(str1, str2);
+	printf("strcpy(str1, str2)이후 str1 : %s / str2 : %s\n", str1, str2);
+	strcpy(str3, "orange");
+	printf("현재 str3 : %s\n", str3);
+	strncpy(str1, str3, 2);
+	strncpy(str2, str3, 4);
+	printf("strncpy를 통해 str1에는 세 번째 인수를 2, str2에는 세 번째 인수를 4로 했을 때 결과\n");
+	printf("str1 : %s\nstr2 : %s\n", str1, str2);
+	//strcpy를 통해 첫 번째 인수에 (배열 혹은 포인터) 두 번째 인수 문자열 값을 복사할 수 있다. strncpy는 지정된 개수만 복사할 수 있다.
+	printf("\n(10)\n");
+	strcpy(str1, "apple");
+	strcpy(str2, "banana");
+	printf("현재 str1 : %s, str2 : %s\n", str1, str2);
+	strcpy_custom(str1, str2);
+	printf("직접 구현한 strcpy를 사용한 후 str1 : %s, str2 : %s\n", str1, str2);
+	//strcpy 직접 구현 
+	printf("\n(11)\n");
+	strcpy(str1, "strawberry");
+	printf("str1 : %s, str2 : %s\n", str1, str2);
+	printf("str1의 문자열 길이 : %d, str2의 문자열 길이 : %d", strlen(str1), strlen(str2));
+	//strlen(str)을 통하여 문자열의 길이를 구할 수 있다. 
+	printf("\n(12)\n"); 
+	strcpy(str1, "delicous");
+	strcpy(str2, "delicous");
+	strcpy(str3, "ApplePie");
+	printf("현재 str1 : %s, str2 : %s, str3 : %s\n", str1, str2, str3);
+	strcat(str1, str3);
+	strncat(str2, str3, 5);
+	printf("strcat를 적용한 str1 : %s, strncat를 통해 str3을 5글자만 이어붙인 str2 : %s\n", str1, str2);
+	//strcat, strncat를 통해 문자열 뒤에 문자열을 이어 붙일 수 있다. strncat는 지정된 개수만 이어붙인다. 
+	printf("\n(13)\n");
+	strcpy(str1, "apple");
+	strcpy(str2, "banana");
+	printf("현재 str1 : %s, str2 : %s\n", str1, str2);
+	printf("strcmp(str1, str2)의 값 : %d\n", strcmp(str1, str2));
+	strcpy(str2, "applePie");
+	printf("현재 str1 : %s, str2 : %s\n", str1, str2);
+	printf("strcmp(str1, str2)의 값 : %d / strncmp(str1, str2, 5)의 값 : %d\n", strcmp(str1, str2), strncmp(str1, str2, 5));
+	//strcmp를 통해 두 문자열을 비교할 수 있으며 strncmp를 통해 지정된 개수의 문자만 비교할 수 있다. 
 	
 	
 	
 	scanf("%d");
 	
 	return 0;
+}
+
+char *strcpy_custom(char *str1, char *str2)
+{
+	int i=0;
+	
+	for(i=0; str2[i]!='\0'; i++)
+	{
+		str1[i] = str2[i];
+	}
+	str1[i] = '\0';
+	
+	return str2;
 }
 /*
 [12장 문자열]
