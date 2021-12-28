@@ -9,20 +9,26 @@ int main(void)
 	int i = 0;
 	
 	printf("문장 입력 : ");
-	scanf("%s", sentence);
+	gets(sentence);
 	while(1)
 	{
 		printf("검색할 문자열 입력 (종료는 end) : ");
-		scanf("%s", input);
+		gets(input);
 		if(strcmp(input, "end") == 0)
 		{
 			break;
 		}
-		for(int i=0; sentence[i] = '\0'; i++)
+		for(int i=0; sentence[i] != '\0'; i++)
 		{
-			if(strncmp(sentence + i, input, ))
+			//printf("check1 : %s / %s - %d, %d\n", sentence+i, input, strncmp(sentence + i, input, strlen(input)), strlen(input));
+			if(strncmp(sentence + i, input, strlen(input)) == 0)
+			{
+				result ++;
+				i += (strlen(input)-1);
+			}
 		}
-		printf("검색결과 : %d\n", result); 
+		printf("검색결과 : %d개\n", result); 
+		result = 0;
 	}
 	
 	scanf("%d");
