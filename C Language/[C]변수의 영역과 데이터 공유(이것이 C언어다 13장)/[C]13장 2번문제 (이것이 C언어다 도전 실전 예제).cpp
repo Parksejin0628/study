@@ -49,7 +49,12 @@ void set(int h, int m)
 void show(void)
 {
 	if(hour<10)	printf("0");
-	printf("%d:%d(%s)\n", (hour%12), min, (hour < 12) ? "AM" : "PM");
+	if(hour==12)	printf("12:");
+	else	printf("%d:", (hour%12));
+	if(min<10)	printf("0");
+	printf("%d", min);
+	if(hour>11)		printf("(PM)\n");
+	else	printf("(AM)\n");
 	
 	return;
 }
