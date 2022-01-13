@@ -1,74 +1,55 @@
 #include<stdio.h>
 #include<string.h>
+#include<stdlib.h>
 
-int input_name(char (*name)[20]);
-void print_name(char (*name)[20], int cnt);
-int check_overlap_name(char *input, char (*name)[20], int cnt);
 
 int main(void)
 {
-	char name[10][20];
-	int cnt;
+	int i = 0;
+	int cnt = 0;
+	int input_donation;
+	char input_name[20];
+	int *donation;
+	char **name;
+	int sum = 0;
 	
-	cnt = input_name(name);
-	print_name(name, cnt);
+	donation = (int*)malloc(sizeof(int));
+	name = (char**)malloc(sizeof(char));
+	
+	while(1)
+	{
+		printf("이름 : ");
+		scanf("%s", input_name);
+		if(strcmp(input_name, "end") == 0)
+		{
+			break;
+		}
+		printf("기부금 : ");
+		scanf("%d", &input_donation);
+		cnt++;
+		donation = (int*)realloc(donation, cnt * sizeof(int));
+		name = (char**)realloc(name, cnt * sizeof(char*));
+		name[cnt-1] = (char*)malloc(strlen(input_name)+1);
+		donation[cnt-1] = input_donation;
+		sum += input_donation;
+		strcpy(name[cnt-1], input_name);
+	}
+	for(i=0; i<cnt; i++)
+	{
+		printf("%d. %s %d\n", i+1, name[i], donation[i]);
+	}
+	printf("평균 기부액 : %d", sum / cnt);
+	
+	free(name);
+	free(donation);
 	
 	scanf("%d");
 	
 	return 0;
 }
 
-int input_name(char (*name)[20])
-{
-	char input[20] = {'\0'};
-	int cnt = 0;
-	
-	while(1)
-	{
-		printf("이름 : ");
-		gets(input);
-		if(strcmp(input, "end")==0 || cnt > 9)
-		{
-			printf("# 총 %d명이 입력되었습니다.\n", cnt);
-			break;
-		}
-		if(check_overlap_name(input, name, cnt) == 0)
-		{
-			strcpy(name[cnt], input);
-			cnt++;
-		}
-		else
-		{
-			printf("# 이름이 이미 등록되었습니다!\n");
-		}
-	}
-	
-	return cnt;
-}
-int check_overlap_name(char *input, char (*name)[20], int cnt)
-{
-	int i = 0;
-	for(i=0; i<cnt; i++)
-	{
-		if(strcmp(input, name[i]) == 0)	return 1;
-	}
-	return 0;
-}
-
-void print_name(char (*name)[20], int cnt)
-{
-	int i = 0;
-	for(i=0; i<cnt; i++)
-	{
-		printf("%s\n", name[i]);
-	}
-	
-	return;
-}
-
 
 /*
-도전 1 방명록 프로그램
- - 키보드로 이름을 반복 입력한 후 입력된 모든 이름을 출력합니다. 이름은 최대 10명까지 입력할 수 있으며 같은 이름이 입력되면 중복 메시지를 출력하고 end가 입력되면 입력을 끝냅니다.
-   이름을 저장할 2차원 char 배열은 main 함수에 작성하고 이름을 입력하는 함수, 중복 여부를 검사하는 함수, 출력하는 함수를 작성하여 완성합니다.  
+도전 1 기부금 관리 프로그램
+ - 자서단체에 기부하는 사람들의 명단과 금액을 입력한 후에 평균 기부액을 출력합니다. 기부하는 사람의 수는 제한이 없으며 이름으로 'end'를 입력하면 입력을 종료합니다. 
 */ 

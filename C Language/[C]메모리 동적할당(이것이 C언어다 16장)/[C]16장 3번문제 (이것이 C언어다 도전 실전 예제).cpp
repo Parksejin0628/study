@@ -1,103 +1,61 @@
 #include<stdio.h>
 #include<string.h>
-
-void init_intro(char (*intro)[80], char **pint);
-int input_intro(char (*intro)[80]);
-void sort_intro(char **pint, int cnt);
-void print_intro(int mode, void *vp, int cnt); 
+#include<stdlib.h>
 
 int main(void)
 {
-	char intro[10][80];
-	char *pint[10];
-	int cnt;
+	char **word;
+	char input_word[80]; 
+	char last = '\0';
+	int cnt = 0;
+	int i = 0;
+	int overlap = 0;
 	
-	init_intro(intro, pint);
-	cnt = input_intro(intro);
-	sort_intro(pint, cnt);
-	print_intro(1, pint, cnt);
-	print_intro(0, intro, cnt);
+	word = (char**)malloc(sizeof(char*));
+	
+	while(1)
+	{
+		printf("단어 입력 : ");
+		scanf("%s", input_word);
+		if(strcmp(input_word, "end") == 0)	break;
+		if(input_word[0] != last && cnt != 0)
+		{
+			printf("# 단어 잇기가 불가능합니다!\n");
+			continue;
+		}
+		for(i=0; i<cnt; i++)
+		{
+			if(strcmp(word[i], input_word) == 0)
+			{
+				overlap = 1;
+			}
+		}
+		if(overlap)
+		{
+			printf("# 이미 존재하는 단어입니다!\n");
+			overlap = 0;
+			continue;
+		}
+		cnt++;
+		word = (char**)realloc(word, cnt * sizeof(char*));
+		word[cnt-1] = (char*)malloc(strlen(input_word) + 1);
+		last = input_word[strlen(input_word)-1]; 	
+		
+		strcpy(word[cnt-1], input_word);
+	} 
+	for(i=0; i<cnt; i++)
+	{
+		printf("%s ", word[i]);
+	}
 	
 	scanf("%d");
 	
 	return 0;
 }
 
-void init_intro(char (*intro)[80], char **pint)
-{
-	int i = 0;
-	for(i=0; i<10; i++)
-	{
-		pint[i] = intro[i];
-	}
-	
-	return;
-}
-
-int input_intro(char (*intro)[80])
-{
-	int cnt = 0;
-	char input[80];
-	
-	while(1)
-	{
-		printf("인사말 입력 : ");
-		gets(input);
-		if(strcmp(input, "end") == 0 || cnt >= 10)
-		{
-			return cnt;
-		}
-		strcpy(intro[cnt++], input);
-	}
-	
-	return cnt;
-}
-
-void sort_intro(char **pint, int cnt)
-{
-	int i = 0;
-	int j = 0;
-	char *temp;
-	for(i=0; i<cnt; i++)
-	{
-		for(j=i+1; j<cnt; j++)
-		{
-			if(strcmp(pint[i], pint[j]) > 0)
-			{
-				temp = pint[i];
-				pint[i] = pint[j];
-				pint[j] = temp;
-			}
-		}
-	}
-}
-
-void print_intro(int mode, void *vp, int cnt)
-{
-	int i = 0;
-	if(mode==1)
-	{
-		printf("# 사전순으로 출력...\n");
-		for(i=0; i<cnt; i++)
-		{
-			printf("%s\n", *((char**)vp + i));
-		}
-	}
-	else	
-	{
-		printf("# 입력순으로 출력...\n");
-		for(i=0; i<cnt; i++)
-		{
-			printf("%s\n", (char*)vp + (80*i));
-		}
-	}
-	
-	return;
-}
-
 
 /*
-도전 3 인사말 정렬 프로그램
- - 키보드로 인사말을 입력한 후에 사전순으로 정렬하여 출력합니다. 이어서 입력한 순서대로 다시 한 번 출력합니다.
-   정렬은 입력한 문자열을 바꾸지 않고 포이터 배열의 연결 순서를 바꾸어 구현합니다. 
+도전 3 끝말 잇기 프로그램
+ - 단어를 입력하여 끝말 잇기를 합니다. 이미 입력된 단어와 끝말 잇기가 되지 않는 단어는 확인하여 제외합니다. end를 입력하면 입력을 끝내고 그 동안 입력한 모든 단어를 차례로 출력합니다.
+  입력한 단어는 그 길이에 맞는 동적 할당 영역에 저장하며 입력 가능한 단어 수는 최대 100개로 제한합니다. 
 */ 
