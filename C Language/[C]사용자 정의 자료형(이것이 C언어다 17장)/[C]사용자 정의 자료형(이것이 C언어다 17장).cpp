@@ -2,15 +2,44 @@
 #include<stdlib.h>
 #include<string.h>
 
+struct pet
+{
+	char name[20];
+	int age;
+};
+
 struct intro
 {
-	int age;
-	double height;
+	char name[20];			//이름 
+	int age;				//나이 
+	double height;			//키 
+	char *introduce;		//소갯말 
+	pet dog;				//애완동물의 정보 
 };
+
+struct change
+{
+	int num1;
+	int num2;
+}; 
+
+struct bitField
+{
+	unsigned int bool1 : 2;
+	unsigned int bool2 : 2;
+	unsigned int : 0;			//해당 메모리 단위 블록에 나머지 비트를 모두 패딩비트로 만듦	
+};
+
+struct change changeValue(struct change c1);
 
 int main(void)
 {
 	struct intro s1;
+	struct intro s2;
+	struct pet cat = {"kitty", 4};
+	struct change c1;
+	struct bitField bitF = {0, 1};
+	
 	
 	printf("(1)\n");
 	printf("나이 : ");
@@ -19,12 +48,62 @@ int main(void)
 	scanf("%lf", &s1.height); 
 	printf("나이 : %d\n키 : %.1wlf\n", s1.age, s1.height);
 	//struct를 통해 구조체를 선언하며 . 연산자를 통해 멤버에 접근한다. 
+	printf("\n(2)\n"); 
+	printf("이름 : ");
+	scanf("%s", s1.name);
+	printf("한줄 소갯말 : ");
+	fgetc(stdin);
+	s1.introduce = (char*)malloc(80*sizeof(char));
+	gets(s1.introduce);
+	printf("애완 동물의 이름 : ");
+	scanf("%s", s1.dog.name);
+	printf("애완 동물의 나이 : ");
+	scanf("%d", &s1.dog.age);
+	printf("이름 : %s\n", s1.name);
+	printf("한줄 소갯말 : %s\n", s1.introduce);
+	printf("애완 동물의 이름 : %s\n", s1.dog.name);
+	printf("애완 동물의 나이 : %d\n", s1.dog.age);
+	// 구조체 멤버로 배열, 포인터, 이미 선언된 다른 구조체도 사용할 수 있다. 
+	printf("\n(3)\n");
+	s2 = s1;
+	printf("[s1 복사본]\n");
+	printf("이름 : %s\n", s2.name);
+	printf("나이 : %d\n", s2.age);
+	printf("키 : %.1lf\n", s2.height);
+	printf("애완 동물의 이름 / 나이 : %s / %d\n", s2.dog.name, s2.dog.age);
+	printf("한줄소개 : %s\n", s2.introduce);
+	// 구조체 멤버끼리 대입 연산을 하면 각 멤버에 맞춰 알아서 대입이 된다. 
+	printf("\n(4)\n");
+	printf("고양이 이름 : %s\n", cat.name);
+	printf("%s 나이 : %d\n", cat.name, cat.age);
+	// 구조체 변수 선언과 동시에 초기화가 가능하다. 
+	printf("\n(5)\n");
+	printf("순서를 바꿀 두 값 : ");
+	scanf("%d %d", &c1.num1, &c1.num2);
+	c1 = changeValue(c1);
+	printf("순서를 바꾼 두 값 : %d %d\n", c1.num1, c1.num2);
+	// 구조체 변수를 매개변수로 주고 구조체 변수를 반환받으면 포인터 없이 두 값을 바꾸는 함수를 만들 수 있다. 
+	printf("\n(6)\n");
+	printf("bitF값 : %u %u\n", bitF.bool1, bitF.bool2);
+	printf("bitF의 크기 : %d\n", sizeof(bitF));
+	//비트 필드 구조체를 통해 사용할 비트를 결정할 수 있다. 실제로 bitF는 int형을 3개나 사용했지만 4바이트만을 할당했다. 
 	
 	fgetc(stdin);
+	
+	free(s1.introduce);
 	scanf("%d");
 	return 0;
 }
 
+struct change changeValue(struct change c1)
+{
+	int temp;
+	temp = c1.num1;
+	c1.num1 = c1.num2;
+	c1.num2 = temp;
+	
+	return c1;
+}
 
 /*
 [17장 사용자 정의 자료형]
@@ -59,4 +138,40 @@ int main(void)
 		> 만약, 문자열 포인터를 사용할 경우 포인터에 동적할당으로 공간을 할당한 후 문자열을 저장해야 한다.
 	- 구조체 멤버로 다른 구조체도 사용할 수 있다.
 		> 단, 해당 구조체보다 먼저 선언된 구조체여야 한다. 
+		> 구조체 멤버의 멤버에 접근할 때도 .을 사용한다.
+			ex)intro.school.grade = 1;
+17.1.3 구조체 변수의 초기화와 대입 연산
+	- 구조체 변수도 선언과 동시에 초기화가 가능하다. 하지만, 여러 개의 멤버를 초기화 해야 하므로 배열처럼 중괄호로 묶고 각 멤버의 형태에 맞는 값으로 초기화한다.
+		ex) struct student s1 = {22, 2.5};
+	- 구조체 변수끼리 대입 연산을 사용할 경우 각 멤버들을 다른 구조체 변수에 복사한다.
+		ex) s1 = s2연산의 경우 s1.num = s2.num; s1.grade=s2.grade와 같다.
+	- 구조체 선언과 동시에 변수 선언과 초기화도 가능하다. (초기화를 안 할 경우 함수 밖에 있는 구조체는 모두 0으로 자동 초기화된다.)
+		ex) struct student
+			{
+				int id;
+				char name[20];
+				double grade;
+		} s1 = {315, "홍길동", 2.4}; 
+17.1.4 구조체 변수를 함수 매개변수에 사용하기
+	- 구조체 변수를 함수의 매개변수로 주거나 반환받을 수 있다.
+	- 따라서, 구조체 변수를 이용하면 함수에서 여러 개의 값을 구조체로 묶어 동시에 반환할 수 있다.
+	- 구조체 변수를 이용해 포인터 없이 두 변수의 값을 바꾸는 함수를 만들 수 있다. (실습5) 
+17.1.5 비트 필드 구조체
+	- 0과 1을 저장하는 int형 값이 10개 있는 구조체는 너무 많은 공간을 낭비하게 된다.
+		> 이런 낭비를 피하기 위해 비트 필드 구조체를 활용할 수 있다.
+		> 비트 필드 구조체는 멤버의 크기를 비트 단위로 설정할 수 있다.
+	- 비트 필드 구조체는 멤버가 사용할 비트 수를 콜론 옆에 표시함으로써 선언한다.
+		ex) struct number
+			{
+				unsigned int num1 : 2	(비트 필드 구조체) 
+				int num2 : 4
+			}
+		> 자료형은 정수형만 사용하며 멤버가 가질 수 있는 최대 비트 수를 결정한다.
+			ex) unsigned int형은 최대 32비트까지 저장할 수 있다.
+				unsigned char은 최대 8비트까지 저장할 수 있다.
+		> 자료형의 크기를 넘어서 할당하는 멤버는 새로운 단위 블록에 할당한다. 
+			ex) 만약 unsigned int형에 35비트를 선언하면 새로운 단위 블록에 3비트를 할당하여 총 64비트 / 8바이트를 사용하게 된다. 
+	- 비트 필드 구조체에 멤버의 이름을 생략하면 해당 비트는 사용하지 않는 패딩 비트가 된다.
+		> 특히 이름이 없는 멤버의 비트 수가 0인 경우 해당 블록의 나머지 비트는 모두 패딩 비트가 된다. 
+
 */ 	
