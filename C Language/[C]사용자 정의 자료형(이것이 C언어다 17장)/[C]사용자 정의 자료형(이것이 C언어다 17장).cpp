@@ -31,6 +31,7 @@ struct bitField
 };
 
 struct change changeValue(struct change c1);
+void printName(struct intro *sl); 
 
 int main(void)
 {
@@ -39,6 +40,8 @@ int main(void)
 	struct pet cat = {"kitty", 4};
 	struct change c1;
 	struct bitField bitF = {0, 1};
+	struct intro *ps1;
+	struct intro slist[2];
 	
 	
 	printf("(1)\n");
@@ -87,9 +90,24 @@ int main(void)
 	printf("bitF값 : %u %u\n", bitF.bool1, bitF.bool2);
 	printf("bitF의 크기 : %d\n", sizeof(bitF));
 	//비트 필드 구조체를 통해 사용할 비트를 결정할 수 있다. 실제로 bitF는 int형을 3개나 사용했지만 4바이트만을 할당했다. 
+	printf("\n(7)\n");
+	ps1 = &s1;
+	printf("포인터를 통해 구한 이름 : %s\n", (*ps1).name);
+	printf("포인터를 사용하고 ->연산자를 사용해 구한 이름 : %s\n", ps1->name);
+	// 구조체 포인터에 구조체의 주소를 입력하면 구조체 전체를 사용할 수 있다. 또한, ->연산자를 통해 매번 괄호를 치는 번거러움을 방지할 수 있다. 
+	printf("\n(8)\n");
+	strcpy(s2.name, "mawdae");
+	s2.age = 2; 
+	slist[0] = s1;
+	slist[1] = s2;
+	printf("첫 번째 배열 요소의 값 - 이름 : %s / 나이 : %d / 키 : %.1lf / 애완동물의 이름 : %s / 애완동물의 나이 : %d / 한줄소개 : %s\n", slist[0].name, slist[0].age, slist[0].height, slist[0].dog.name, slist[0].dog.age, slist[0].introduce);
+	printf("두 번째 배열 요소의 값 - 이름 : %s / 나이 : %d / 키 : %.1lf / 애완동물의 이름 : %s / 애완동물의 나이 : %d / 한줄소개 : %s\n", slist[1].name, slist[1].age, slist[1].height, slist[1].dog.name, slist[1].dog.age, slist[1].introduce);	
+	// 구조체 배열을 사용할 수 있으며 배열처럼 구조체에 접근하되 구조체처럼 멤버에 접근한다. 
+	printf("\n(9)\n");
+	printName(slist);
+	// 구조체 배열의 이름을 매개변수로 보내는 함수  
 	
 	fgetc(stdin);
-	
 	free(s1.introduce);
 	scanf("%d");
 	return 0;
@@ -104,6 +122,14 @@ struct change changeValue(struct change c1)
 	
 	return c1;
 }
+
+void printName(struct intro *sl)
+{
+	printf("첫 번째 이름 : %s\n", sl[0].name);
+	printf("두 번째 이름 : %s\n", (sl + 1)->name);	
+	
+	return;
+} 
 
 /*
 [17장 사용자 정의 자료형]
@@ -173,5 +199,23 @@ struct change changeValue(struct change c1)
 			ex) 만약 unsigned int형에 35비트를 선언하면 새로운 단위 블록에 3비트를 할당하여 총 64비트 / 8바이트를 사용하게 된다. 
 	- 비트 필드 구조체에 멤버의 이름을 생략하면 해당 비트는 사용하지 않는 패딩 비트가 된다.
 		> 특히 이름이 없는 멤버의 비트 수가 0인 경우 해당 블록의 나머지 비트는 모두 패딩 비트가 된다. 
-
+<17.2 구조체 활용, 공용체, 열거형>
+17.2.1 구조체 포인터와 -> 연산자
+	- 구조체 변수는 그 안에 여러 개의 변수를 가지고 있으나 그 자신은 단지 하나의 변수이다.
+	- 따라서, 구조체 변수에 주소 연산자를 사용하면 특정 멤버가 아닌 구조체 변수 전체의 주소가 구해진다.
+		> 구조체 포인터에 구조체 변수의 주소를 저장하면 구조체 변수 전체를 가리킨다.
+	- 구조체 포인터에 *연산을 사용하면 기리키는 구조체 변수를 사용할 수 있다.
+		ex) (*ps).kor 
+		> 문제는 멤버에 접근하는 . 연산자가 * 연산자보다 우선순위가 높다는 점이다. 이는, 포인터를 괄호로 묶지 않으면 논리적 오류가 발생한다.
+		> -> 연산자를 사용하면 괄호로 묶지 않고도 구조체 포인터가 가리키는 멤버에 접근할 수 있다.
+			ex)ps->kor
+17.2.2 구조체 배열
+	- 구조체 그 자체는 하나의 변수로 취급되므로 배열을 선언할 수 있다.
+	- 구조체 배열을 초기화하는 방법은 배열을 초기화하는 방법과 같다. 단, 배열의 요소가 구조체이므로 중괄호 쌍을 2개 사용한다. 
+		ex) struct intro list[5] = { {...}, {...}, ... };
+	- 구조체 배열의 배열 요소를 사용할 때도 첨자를 사용하되 멤버에 접근할 때는 . 연산자를 추가로 사용한다.
+		ex)list[4].age = 4; 
+17.2.3 구조체 배열을 처리하는 함수
+	- 배열의 이름이 첫 번째 요소의 주소이므로 구조체 배열의 이름은 첫 번째 구조체 변수를 가리킨다.
+	- 따라서, 구조체 배열의 이름을 인수로 하는 함수는 구조체 포인터를 매개변수로 선언한다. 
 */ 	
