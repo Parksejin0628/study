@@ -30,6 +30,16 @@ struct bitField
 	unsigned int : 0;			//해당 메모리 단위 블록에 나머지 비트를 모두 패딩비트로 만듦	
 };
 
+union score
+{
+	int score_int;
+	double score_double;
+}; 
+
+enum numbers {NUM1 = 5, NUM2, NUM3 = 12, NUM4};
+
+typedef struct intro Intro;
+
 struct change changeValue(struct change c1);
 void printName(struct intro *sl); 
 
@@ -42,6 +52,9 @@ int main(void)
 	struct bitField bitF = {0, 1};
 	struct intro *ps1;
 	struct intro slist[2];
+	union score sc;
+	enum numbers nb;
+	Intro s3;
 	
 	
 	printf("(1)\n");
@@ -106,6 +119,24 @@ int main(void)
 	printf("\n(9)\n");
 	printName(slist);
 	// 구조체 배열의 이름을 매개변수로 보내는 함수  
+	printf("\n(10)\n");
+	sc = {75};
+	printf("열거형을 75로 초기화했을 때 두 값 : %d / %lf\n", sc.score_int, sc.score_double);
+	sc.score_double = 75.7;
+	printf("열거형을 75.7로 초기화했을 때 두 값 : %d / %lf\n", sc.score_int, sc.score_double);
+	// 열거형의 경우 한 멤버의 값이 정해지면 다른 멤버는 사실상 사용할 수 없다.
+	printf("\n(11)\n");
+	nb = NUM1;
+	printf("열거형의 첫번째  값 : %d ", nb);
+	nb = NUM3;
+	printf("열거형 세번째 값 : %d", nb);
+	//열거형을 통해 정수에 이름을 붙여 사용할 수 있으며 초기값도 설정 가능하다. 
+	printf("\n(12)\n");
+	s3.age = 12;
+	s3.height = 33.2;
+	strcpy(s3.name, "Mr.P");용 
+	printf("typedef를 사용한 구조체 나이 : %d / 체중 : %.1lf / 이름 : %s", s3.age, s3.height, s3.name);
+	//tpyedef를 사용해 구조체 이름을 간편하게 바꾼 후 사 
 	
 	fgetc(stdin);
 	free(s1.introduce);
@@ -218,4 +249,45 @@ void printName(struct intro *sl)
 17.2.3 구조체 배열을 처리하는 함수
 	- 배열의 이름이 첫 번째 요소의 주소이므로 구조체 배열의 이름은 첫 번째 구조체 변수를 가리킨다.
 	- 따라서, 구조체 배열의 이름을 인수로 하는 함수는 구조체 포인터를 매개변수로 선언한다. 
+17.2.4 자기 참조 구조체
+	- 자기 참조 구조체는 자신의 구조체를 가리키는 포인터를 멤버로 가진다.
+	- 개별적으로 할당된 구조체 변수들을 포인터로 연결하여 관련된 데이터를 하나로 묶어 관리하는 연결 리스트에서 사용한다.
+17.2.5 공용체
+	- 공용체는 선언 방식이 구조체와 비슷하다. 하지만, 저장공간을 할당하는 방식이 전혀 다르다.
+		> 공용체는 모든 멤버가 하나의 저장 공간을 같이 사용한다.
+		> 즉, 하나의 멤버를 사용하면 다른 멤버의 값도 같이 변하는 셈이므로 다른 멤버를 사용할 수 없다. 
+	- 공용체는 예약어 union을 사용하여 구조체와 유사하게 선언한다.
+		ex) union student
+			{
+				int num;
+				double grade;
+			};
+	- 공용체를 선언할 때 할당되는 저장 공간의 크기는 멤버 중에서 크기가 가장 큰 멤버로 결정된다.
+	- 공용체 변수를 초기화 할 때 중괄호를 사용하여 첫 번째 멤버만 초기화한다.
+	- 공용체는 여러 멤버가 하나의 저장 공간을 공유하므로 메모리를 절약할 수 있고 같은 공간에 저장된 값을 여러 가지 형태로 사용할 수 있는 장점이 있다.
+	- 하지만, 공용체 멤버는 언제든지 다른 멤버에 의해 값이 변할 수 있으므로 항상 각 멤버의 값을 확인해야 하는 단점이 있다. 
+17.2.6 열거형
+	- 열거형은 변수에 저장할 수 있는 정수 값을 기호로 정의하여 나열한다.
+		ex)	enum season {SPRING, SUMMER, FALL, WINTER};
+		> 이 때 각 멤버들은 0부터 차례로 하나씩 큰 정수를 의미한다. 즉, SPRING == 0 / FALL == 2이다.
+	- 열거형 멤버의 초기값은 원하는 값으로 다시 설정할 수 있다. 
+		ex) enum season {SPRING = 5, SUMMER, FALL = 10, WINTER}; 
+		> 새로 설정된 멤버 이후의 멤버들은 설정된 멤버보다 하나씩 큰 정수로 바뀐다. 즉, SUMMER == 6 / WINTER == 11 
+	- 열거형을 통해 정수를 정의하면 프로그램에 해당 정수 대신 특정 이름을 사용할 수 있으므로 훨씬 읽기 쉬운 코드를 만들 수 있다. 
+17.2.7 typedef를 사용한 형 재정의
+	- typedef로 자료형을 재정의하면 짧고 쉬운 이름을 사용할 수 있다.
+		> 구조체, 공용체, 열거형은 항상 예약어와 함께 사용해야 하는데 typedef를 사용하면 자료형의 이름을 간단하게 바꿀 수 있다.
+	- typedef는 'typedef 자료형이름 새자료형이름' 처럼 사용한다.
+		ex) typedef unsigned int abc;
+		ex) typedef struct student Student;
+		> 보통 일반 변수 이름과 구분하기 위해 재정의된 자료형의 이름을 대문자로 쓰기도 한다.
+	- 형 선언과 동시에 재정의하는 방법도 있다.
+		ex) typedef struct
+			{
+				int num;
+				double grade;
+		}Student;
+17.2.8 구조체, 공용체, 열거형을 사용한 프로그램 
+	- 실습 참고 
+	 
 */ 	
