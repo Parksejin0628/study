@@ -2,54 +2,91 @@
 #include<string.h>
 #include<stdlib.h>
 
+struct money_box
+{
+	int w500;
+	int w100;
+	int w50;
+	int w10;
+};
+
+typedef struct money_box MoneyBox;
+
+void init(MoneyBox *s);
+void save(MoneyBox *s, int unit, int cnt);
+int total(MoneyBox *s);
 
 int main(void)
 {
-	int i = 0;
-	int cnt = 0;
-	int input_donation;
-	char input_name[20];
-	int *donation;
-	char **name;
-	int sum = 0;
+	MoneyBox moneybox;
+	int unit;
+	int cnt;
 	
-	donation = (int*)malloc(sizeof(int));
-	name = (char**)malloc(sizeof(char));
+	init(&moneybox);
 	
 	while(1)
 	{
-		printf("이름 : ");
-		scanf("%s", input_name);
-		if(strcmp(input_name, "end") == 0)
+		printf("동전의 금액과 개수 : ");
+		scanf("%d", &unit);
+		if(unit <= 0)
 		{
 			break;
 		}
-		printf("기부금 : ");
-		scanf("%d", &input_donation);
-		cnt++;
-		donation = (int*)realloc(donation, cnt * sizeof(int));
-		name = (char**)realloc(name, cnt * sizeof(char*));
-		name[cnt-1] = (char*)malloc(strlen(input_name)+1);
-		donation[cnt-1] = input_donation;
-		sum += input_donation;
-		strcpy(name[cnt-1], input_name);
+		scanf("%d", &cnt);
+		save(&moneybox, unit, cnt);
 	}
-	for(i=0; i<cnt; i++)
-	{
-		printf("%d. %s %d\n", i+1, name[i], donation[i]);
-	}
-	printf("평균 기부액 : %d", sum / cnt);
 	
-	free(name);
-	free(donation);
+	//printf("check\n");
+	printf("총 저금액 : %d\n", total(&moneybox));
 	
 	scanf("%d");
 	
 	return 0;
 }
 
+void init(MoneyBox *s)
+{
+	*s = {0, 0, 0, 0};
+	
+	return;
+}
+
+void save(MoneyBox *s, int unit, int cnt)
+{
+	if(unit == 500)
+	{
+		s->w500 += cnt;
+	}
+	else if(unit == 100)
+	{
+		s->w100 += cnt;
+	}
+	else if(unit == 50)
+	{
+		s->w50 += cnt;
+	}
+	else if(unit == 10)
+	{
+		s->w10 += cnt;
+	}
+	
+	return;
+}
+
+int total(MoneyBox *s)
+{
+	int sum = 0;
+	
+	sum += s->w500 * 500;
+	sum += s->w100 * 100;
+	sum += s->w50 * 50;
+	sum += s->w10 * 10;
+	
+	return sum;
+}
+
 
 /*
-도전 1 기부금 관리 프로그램
- - 자서단체에 기부하는 사람들의 명단과 금액을 입력한 후에 평균 기부액을 출력합니다. 기부하는 사람의 수는 제한이 없으며 이름으로 'end'를 입력하면 입력을 종료합니다. 
+도전 1 저금통 프로그램
+ - 저금할 동전의 금액과 개수를 반복 입력하여 저금통에 저금합니다. 금액으로 0 또는 음수가 입력되면 입력을 마치고 총 저축액을 출력합니다. 
 */ 
