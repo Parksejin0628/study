@@ -6,8 +6,121 @@
 int main(void)
 {
 	FILE *fp;
+	FILE *fp2;
+	int ch;
+	char test[20]; 
 	
 	printf("(1)\n");
+	fp = fopen("test.txt", "r");
+	if(fp == NULL)
+	{
+		printf("파일이 열리지 않았습니다.\n");
+		return 1;
+	}
+	printf("파일이 열렸습니다.\n");
+	fclose(fp);
+	//fopen함수를 통해 파일을 열 수 있으며 fclose함수를 통해 파일을 닫을 수 있다. 
+	
+	printf("\n(2)\n");
+	fp = fopen("test.txt", "r");
+	if(fp == NULL)
+	{
+		printf("파일이 열리지 않았습니다.(2)\n");
+		return 1;
+	}
+	ch = fgetc(fp);
+	while(ch != EOF)
+	{
+		putchar(ch);
+		ch = fgetc(fp);
+	}
+	fclose(fp);
+	//fgetc 함수를 통해 파일로 부터 데이터를 불러올 수 있다.
+	
+	printf("\n(3)\n");
+	fp = fopen("test.txt", "w");
+	if(fp == NULL)
+	{
+		printf("파일이 열리지 않았습니다.(3)\n");
+		return 1;
+	}
+	strcpy(test, "test sentence\n");
+	for(int i=0; test[i]!='\0'; i++)
+	{
+		fputc(test[i], fp);
+	}
+	fclose(fp);
+	fp = fopen("test.txt", "r");
+	if(fp == NULL)
+	{
+		printf("파일이 열리지 않았습니다.(3-2)\n");
+		return 1;
+	}
+	ch = fgetc(fp);
+	while(ch != EOF)
+	{
+		putchar(ch);
+		ch = fgetc(fp);
+	}
+	fclose(fp);
+	//fputc함수를 통해 파일에 데이터를 출력할 수 있다.
+	
+	printf("\n(4)\n");
+	fp = fopen("test.txt", "w");
+	if(fp == NULL)
+	{
+		printf("파일이 열리지 않았습니다.(4-1)\n");
+		scanf("%d");
+		return 1;
+	}
+	fp2 = fopen("test.txt", "r"); 
+	if(fp2 == NULL)
+	{
+		printf("파일이 열리지 않았습니다.(4-2)\n");
+		scanf("%d");
+		return 1;
+	}
+	strcpy(test, "overlap test\n");
+	for(int i=0; test[i] != '\0'; i++)
+	{
+		fputc(test[i], fp);
+	}
+	fseek(fp2, 0, SEEK_SET);
+	ch = fgetc(fp2);
+	if(ch == EOF)	printf("check!\n");
+	while(ch != EOF)
+	{
+		putchar(ch);
+		ch = fgetc(fp2);
+	}
+	fclose(fp);
+	fclose(fp2);
+	// 같은 파일을 다른 파일포인터에서 열면 나중에 연 파일 포인터가 제대로 작동을 안한다. 
+	
+	printf("\n(5)\n");
+	fp = fopen("test.txt", "w+");
+	if(fp == NULL) 
+	{
+		printf("파일이 열리지 않았습니다. (5)\n");
+	}
+	strcpy(test, "test Sentence");
+	for(int i=0; test[i] != '\0'; i++)
+	{
+		fputc(test[i], fp);
+	}
+	rewind(fp);
+	ch = fgetc(fp);
+	while(!feof(fp))
+	{
+		putchar(ch);
+		ch = fgetc(fp);
+	}
+	printf("\n");
+	fseek(fp, -5, SEEK_END);
+	ch = fgetc(fp);
+	putchar(ch);
+	fclose(fp);
+	// + 모드 개방, rewind함수, fseek함수, feof함수 응용 
 	
 	scanf("%d");
 	return 0;
@@ -50,8 +163,9 @@ int main(void)
 		> 프로그램이 스트림 파일에 임시 저장하게 함으로써 어떤 입출력 장치가 와도 코드를 수정할 필요가 없이 운영체제가 하드웨어 특성에 따라 연결을 하도록 한다. 
 18.1.3 문자 입력 함수 fgetc
 	- fgetc 함수를 통해 파일에서 하나의 문자를 입력하여 반환한다. (이때 함수 포인터에 있는 파일은 "r"모드로 열어야 한다.) 
-		> 원형 : int fgetc(FILE *); 
+		> 원형 : int fgetc(FILE *);
 		ex) ch = fgetc(fp);
+		> 파일의 끝을 알리는 EOF가 -1이기 때문에 int형을 반환한다. 따라서, fgetc함수를 받는 변수는 int형이어야 한다. (형 축소 형변환은 위험하다.) 
 	- fgetc는 호출할 때 마다 반환되는 문자가 이전에 반환한 문자 다음에 있는 문자를 반환하기 때문에 파일의 데이터를 모두 읽어올 수 있다.
 		> fgetc 함수가 스트림 파일의 버퍼에서 데이터를 가져올 때 버퍼의 크기만큼 데이터를 한꺼번에 가져와 저장한다. (데이터 크기가 버퍼보다 작은 경우 모든 데이터를 가져온다.) 
 		> 그 후 fgetc 함수는 첫번째 문자를 반환한다.
@@ -104,6 +218,23 @@ int main(void)
 		> w+ : 텍스트 파일의 내용을 지우고 읽거나 쓰기 위해 개방
 		> a+ : 텍스트 파일을 읽거나 파일의 끝에 추가하기 위해 개방
 		> rb+, wb+, ab+ : 위 기능들이 바이너리 파일에서 작동  
+	- 입력과 출력을 서로 전환할 때 마다 버퍼에 데이터가 있을 경우 입출력 순서가 꼬이기에 fseek 함수나 rewind 함수를 통해 버퍼를 비워줘야 한다. 
+	- + 모드는 수시로 메모리를 비워줘야 하고 버퍼에서 입/출력을 모두 관여함에 따라 문제가 발생할 수 있기 때문에 잘 이용하지 않는다. 
 	- fseek 함수를 통해 버퍼의 데이터를 전부 하드디스크로 출력한 뒤?(버퍼를 비운 다음으로 해석) 위치 지시자를 옮길 수 있다.
-		> 원형 :  
+		> 원형 : int fseek(FILE *stream, long offset, int whence);
+		> 해석 : int fseek(파일 포인터, 옮기는 정도, 기준);
+		> 의미 : stream 파일의 버퍼에서 whence 기준으로 offset만큼 위치 지시자를 옮긴다.
+		> 기타 : 위치 이동에 실패하면 0, 성공하면 0이 아닌 값을 반환한다.
+		ex) fseek(fp, 0, SEEK_SET);
+	- whence에 들어가는 값은 다음과 같다.
+		> SEEK_SET(0) : 파일의 처음, 오프셋 값으로 양수만 가능하다.
+		> SEEK_CUR(1) : 파일의 현재 위치, 오프셋 값으로 양수와 음수 모두 가능하다.
+		> SEEK_END(2) : 파일의 끝, 오프셋 값으로 음수만 가능하다. 
+	- rewind(FILE *stream)의 경우 위치 지시자를 시작 위치로 옮기며 버퍼의 내용을 하드디스크로 출력하는 함수이다.
+		> fseek(fp, 0, SEEK_SET);와 rewind(fp)는 같은 의미이다.
+	- feof 함수는 스트림 파일의 데이터를 모두 읽었는지 확인할 수 있다.
+		> 원형 : int feof(FILE *stream)
+		> 해석 : int feof(파일 포인터)
+		> 의미 : stream 파일의 현재 위치가 파일의 끝이면 0이 아닌 값을 반환하고 끝이 아니면 0을 반환한다.
+		> 입력 함수가 데이터 입력에 실패한 이후 실패한 것을 알 수 있으므로 입력 함수 다음에 사용한다. 
 */ 	
