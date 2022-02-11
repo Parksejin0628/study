@@ -7,8 +7,16 @@ int main(void)
 {
 	FILE *fp;
 	FILE *fp2;
+	FILE *ifp;
+	FILE *ofp;
+	char *res;
 	int ch;
 	char test[20]; 
+	char sentence[200];
+	int res2;
+	int rank;
+	char nick[20];
+	int score;
 	
 	printf("(1)\n");
 	fp = fopen("test.txt", "r");
@@ -122,6 +130,47 @@ int main(void)
 	fclose(fp);
 	// + 모드 개방, rewind함수, fseek함수, feof함수 응용 
 	
+	printf("\n(6)\n");
+	ifp = fopen("input.txt", "r");
+	ofp = fopen("output.txt", "w");
+	if(ifp == NULL || ofp == NULL)
+	{
+		printf("파일이 열리지 않았습니다.(6)\n");
+		scanf("%d");
+		return 1;
+	}	
+	res = fgets(sentence, sizeof(sentence), ifp);
+	while(res != NULL)
+	{
+		printf("입력받은 문자열 : %s", sentence);
+		fputs(sentence, ofp);
+		res = fgets(sentence, sizeof(sentence), ifp);
+	}
+	fclose(ifp);
+	fclose(ofp);
+	// fgets, fputs을 통한 파일 문자열 단위 입출력 / 문자포인터 변수를 통해 fgets에서 문자열 끝을 알 수 있다. 
+	
+	printf("\n(7)\n");
+	ifp = fopen("inputData.txt", "r");
+	ofp = fopen("outputData.txt", "w");
+	if(ifp == NULL || ofp == NULL)
+	{
+		printf("파일이 열리지 않았습니다.(7)\n");
+		scanf("%d");
+		return 1;
+	}
+	printf("순위 \t\t닉네임 \t\t점수\n");
+	res2 = fscanf(ifp, "%d %s %d", &rank, nick, &score);
+	while(res2 != EOF)
+	{
+		printf("%d %20s %13d\n", rank, nick, score);
+		fprintf(ofp, "%d %s %d\n", rank, nick, score);
+		res2 = fscanf(ifp, "%d %s %d", &rank, nick, &score);
+	}
+	fclose(ifp);
+	fclose(ofp);
+	// fscanf, fprintf를 통한 형변환 데이터 입출력
+	 
 	scanf("%d");
 	return 0;
 }
@@ -237,4 +286,47 @@ int main(void)
 		> 해석 : int feof(파일 포인터)
 		> 의미 : stream 파일의 현재 위치가 파일의 끝이면 0이 아닌 값을 반환하고 끝이 아니면 0을 반환한다.
 		> 입력 함수가 데이터 입력에 실패한 이후 실패한 것을 알 수 있으므로 입력 함수 다음에 사용한다. 
+<18.2 다양한 파일 입출력 함수>
+18.2.1 한 줄씩 입출력하는 fgets와 fputs
+	- 파일에서 '한 줄'씩 입력할 때는 fgets 함수를 사용한다.
+		> 원형 : char *fgets(char *, int, FILE *);
+		> 해석 : char *fgets(입력할 배열, 배열의 크기, 파일 포인터)
+		> 의미 : 파일 포인터가 지정하는 개방된 파일에서 공백을 포함해 한 줄씩 읽어 배열의 저장한다. 만약, 한 줄의 크기가 배열의 크기보다 크면 배열의 크기까지 (배열의 크기 -1, 마지막은 NULL문자)만 입력한다. 
+		ex) fgets(str, sizeof(str), ifp);
+	- fgets 함수는 줄의 끝에 있는 개행문자(\n)까지 입력한다.
+		> 우리가 메모장에 엔터를 입력할 경우 모니터에는 다음 줄로 넘어간 화면을 보여주지만 실제로는 \n이 저장되는 것이다.
+		> 즉, 엔터를 쳐서 다음 줄로 넘긴 곳은 fgets함수가 \n을 받아들인다.
+		> str[strlen(str) - 1] = '\0'와 같은 형식으로 개행 문자를 생략할 수 있다. 하지만, 이러한 경우 마지막에 엔터를 치지 않은 문장에서는 개행문자가 존재하지 않으므로 마지막 문자가 제거될 수 있다.
+	- fgets 함수는 입력을 마친 후 입력한 배열의 주소를 다시 반환한다. (char *) 
+		> 만약, 파일에서 더 이상 읽을 데이터가 없는 경우 NULL을 반환한다.
+		> 이를 이용해 char *형 포인터 변수에 fgets 함수의 반환값을 받음으로써 파일의 데이터를 모두 읽었는지 판단할 수 있다. 
+		> EOF가 아니고 NULL이다. 만약 EOF였으면 char*이 아닌 int*을 반환했을 것이다. 
+	- 문자열을 파일에 출력할 때는 fputs 함수를 사용한다.
+		> 원형 : int fputs(const char*, FILE *);
+		> 해석 : int fputs(문자열, 파일 포인터);
+		> 의미 : 문자열을 개방된 파일에 출력한다.
+		ex) fputs(str, ofp);
+	- fputs 함수는 출력에 성공하면 0 또는 출력한 문자의 수를 반환한다. (시스템에 따라 다르다.)
+		> 출력에 실패한 경우 EOF을 반환한다.
+	- fgets, fputs 모두 stdin, stdout을 쓰면 gets, puts처럼 사용할 수 있다. 그러나, 훨씬 안전하므로 fgets, fputs를 사용하는 것이 좋다.
+18.2.2 다양한 형태로 입출력하는 fscanf, fprintf  
+	- 파일에 저장된 문자열을 숫자로 변환하여 입력할 때는 fscanf 함수를 사용한다.
+		> 원형 : int fscanf(FILE *, const char *, ...);
+		> 해석 : int fscanf(파일 포인터, 변환 문자가 들어가는 문자열, 변환 문자에 대응하는 값을 저장할 변수들...);
+		> 의미 : 지정된 파일에서 변환 문자 형식에 따라 데이터를 변환하여 변수에 저장한다.
+		> 파일에 사용하는 scanf함수라고 생각하면 된다.
+		ex) fscanf(ifp, "%s %d %d %d", name, &kor, &eng, &mat);
+	- fscanf함수는 변환 문자에 따라 데이터를 변환하여 저장할 수 있기 때문에 정수, 실수와 같은 숫자를 입력할 때 많이 사용한다.
+		> txt파일에서 입력되는 데이터는 모두 문자형이다. 따라서, 숫자가 입력되더라도 숫자 형태의 문자가 입력될 뿐이다.
+		> 숫자 형태의 문자는 숫자 작업을 하기 어렵기 때문에 정수 혹은 실수로 변환해주어야 하는데 이를 fscanf가 해결해준다.
+	- fscanf 함수가 파일의 데이터를 모두 읽으면 EOF를 반환한다. (int)
+		> 이를 이용해 int형 변수에 fscanf 함수의 반환값을 받음으로써 파일의 데이터를 모두 읽었는지 판단할 수 있다. 
+	- 정수, 실수형 데이터를 파일에 출력할 때는 fprintf 함수를 사용한다.
+		> 원형 : int fprintf(FILE *, const char*, ...);
+		> 해석 : int fprintf(파일 포인터, 변환 문자가 들어가는 문자열, 변환 문자에 대응하는 값을 가진 변수들...);
+		> 의미 : 지정된 파일로 변환 문자 형식에 따라 변환된 데이터를 출력한다.
+		> 파일에 사용하는 printf함수라고 생각하면 된다.
+		ex) fprintf(ofp, "%s%d%7.1lf\n", name, tot, avg);
+	- fprintf 함수는 변환 문자에 따라 데이터를 문자형으로 변환하여 출력할 수 있기 때문제 정수, 실수와 같은 숫자를 출력할 때 많이 사용한다. 
+	 
 */ 	

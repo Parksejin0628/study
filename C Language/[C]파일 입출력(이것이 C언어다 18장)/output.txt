@@ -1,0 +1,3 @@
+This is test sentence.
+Second sentence is no problem.
+It's final sentence and don't input newline(\n).
