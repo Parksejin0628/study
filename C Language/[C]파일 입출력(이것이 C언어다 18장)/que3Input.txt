@@ -1,3 +1,24 @@
-This is test sentence.
-Second sentence is no problem.
-It's final sentence and don't input newline(\n).
+book1
+1.62 150
+book2
+3.2 -15
+book3
+2.0 80
+book1
+1.8 75
+book4
+2.5 95
+book5
+3.15 125
+book2
+3.2 50
+book1
+1.8 -25
+book2
+3.2 50
+book4
+2.5 -5
+book4
+2.5 29
+book3
+2.0 -35
