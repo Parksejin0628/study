@@ -8,6 +8,7 @@
 #define VER 7
 #define BOOL
 
+void divisionTestFunc();
 
 int main(void)
 {
@@ -42,7 +43,9 @@ int main(void)
 	#else
 		#error BOOL이 선언되지 않음!
 	#endif
-	//조건부 컴파일 지시자 사용 
+	//조건부 컴파일 지시자 사용
+	printf("\n(6)\n");
+	divisionTestFunc(); 
 	
 	 
 	scanf("%d");
@@ -136,7 +139,7 @@ int main(void)
 		> warning(disable:경고번호) : 해당 경고번호의 경고 메시지를 표시하지 않음
 		> 외에도 많은 지시명이 있다. 
 
-<19.2 분할 컴파일>
+<19.2 분할 컴파일>  - 현재 컴퓨터에서는 프로젝트를 실행할 수 없으므로 차후에 학습한다. 
 19.2.1 분할 컴파일 방법
 19.2.2 분할 컴파일에서 extern과 static의 용도
 19.2.3 헤더 파일의 필요성과 중복 문제 해결 방법 
