@@ -1,67 +1,71 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#define FEMALE
+#define LEVEL 5 
 
-int checkOverlap(char (*registeredWord)[25], char *word);
 
 int main(void)
 {
-	char registeredWord[10][25];
-	char inputWord[25];
-	FILE *afp;
-	FILE *bfp;
-	FILE *cfp;
+	double sum;
+	#if LEVEL == 3
+		double height[3];
 	
-	afp = fopen("que2A.txt", "r");
-	bfp = fopen("que2B.txt", "r");
-	cfp = fopen("que2C.txt", "w");
+		printf("단계별 키 입력(3단계) : ");
+		scanf("%lf %lf %lf", height, height+1, height+2);
+		#ifdef MALE
+			double standard[3] = {49.4, 74.8, 85.0};
+		#endif
 	
-	if(afp == NULL || bfp == NULL || cfp == NULL)
-	{
-		printf("error!\n");
-	}
-	//printf("check0\n");
-	for(int i=0; feof(afp) == 0; i++)
-	{
-		//printf("check1\n");
-		fgets(registeredWord[i], 25, afp);
-	}
-	//printf("check0\n");
-	while(feof(bfp) == 0)
-	{
-		//printf("check2\n");
-		fgets(inputWord, 25, bfp);
-		if(checkOverlap(registeredWord, inputWord) == 0)
+		#ifdef FEMALE
+			double standard[3] = {50.1, 76.0, 86.2};
+		#endif
+		printf("단계별 표준키와 차이 : ");
+		for(int i=0; i<3; i++)
 		{
-			fputs(inputWord, cfp);
+			printf("%.1lf ", height[i] - standard[i]);
+			sum += height[i] - standard[i];
 		}
-	}
-	fclose(afp);
-	fclose(bfp);
-	fclose(cfp);
+		printf("\n");
+		printf("차이 평균 : %.1lf", sum / 3);
+	
+	#elif LEVEL == 5
+		double height[5];
+	
+		printf("단계별 키 입력(5단계) : ");
+		scanf("%lf %lf %lf %lf %lf", height, height+1, height+2, height+3, height+4);
+	
+		#ifdef MALE
+			double standard[5] = {49.4, 66.3, 74.8, 79.9, 85.0};
+		#endif
+	
+		#ifdef FEMALE
+			double standard[5] = {50.1, 67.6, 76.0, 81.2, 86.2};
+		#endif
+		printf("단계별 표준키와 차이 : ");
+		for(int i=0; i<5; i++)
+		{
+			printf("%.1lf ", height[i] - standard[i]);
+			sum += height[i] - standard[i];
+		}
+		printf("\n");
+		printf("차이 평균 : %.1lf", sum / 5);
+	#endif
+	
+	
 	
 	scanf("%d");
 	
 	return 0;
 }
 
-int checkOverlap(char (*registeredWord)[25], char *word)
-{
-	for(int i=0; strcmp(registeredWord[i], "\0") != 0; i++)
-	{
-		if(strcmp(registeredWord[i], word) == 0)
-		{
-			return 1;
-		}
-		//printf("check3\n");
-	}
-	
-	return 0;
-}
-
 
 /*
-도전 2 단어 검출 프로그램
- - 텍스트 파일에서 등록된 단어 이외의 단어를 찾아 새로운 파일에 출력합니다.
-   모든 단어의 길이는 최대 20자, 등록 단어 수는 최대 10개로 제한하며 검출 대상 단어 수는 제한이 없습니다. 
+도전 2 신체 발육 검사 프로그램
+ - 24개월까지 아이의 키를 단계별로 입력하여 표준키와 비교한 후 단계별 키의 차이와 차이의 평균을 출력합니다. 
+  표준키는 다음 기준을 사용하고 전처리 단계에서 매크로명의 정의에 따라 선택되도록 조건부 컴파일로 작성합니다. 
+  > 남자 아이 3단계 발육 표준 키 : 49.4 74.8 85.0
+  > 남자 아이 5단계 발육 표준 키 : 49.4 66.3 74.8 79.9 85.0
+  > 여자 아이 3단계 발육 표준 키 : 50.1 76.0 86.2 
+  > 여자 아이 5단계 발육 표준 키 : 50.1 67.6 76.0 81.2 86.2 
 */ 
