@@ -64,6 +64,7 @@ int main(void)
 	scanf("%lf", &s1.height); 
 	printf("나이 : %d\n키 : %.1wlf\n", s1.age, s1.height);
 	//struct를 통해 구조체를 선언하며 . 연산자를 통해 멤버에 접근한다. 
+	
 	printf("\n(2)\n"); 
 	printf("이름 : ");
 	scanf("%s", s1.name);
@@ -80,6 +81,7 @@ int main(void)
 	printf("애완 동물의 이름 : %s\n", s1.dog.name);
 	printf("애완 동물의 나이 : %d\n", s1.dog.age);
 	// 구조체 멤버로 배열, 포인터, 이미 선언된 다른 구조체도 사용할 수 있다. 
+	
 	printf("\n(3)\n");
 	s2 = s1;
 	printf("[s1 복사본]\n");
@@ -89,25 +91,30 @@ int main(void)
 	printf("애완 동물의 이름 / 나이 : %s / %d\n", s2.dog.name, s2.dog.age);
 	printf("한줄소개 : %s\n", s2.introduce);
 	// 구조체 멤버끼리 대입 연산을 하면 각 멤버에 맞춰 알아서 대입이 된다. 
+	
 	printf("\n(4)\n");
 	printf("고양이 이름 : %s\n", cat.name);
 	printf("%s 나이 : %d\n", cat.name, cat.age);
 	// 구조체 변수 선언과 동시에 초기화가 가능하다. 
+	
 	printf("\n(5)\n");
 	printf("순서를 바꿀 두 값 : ");
 	scanf("%d %d", &c1.num1, &c1.num2);
 	c1 = changeValue(c1);
 	printf("순서를 바꾼 두 값 : %d %d\n", c1.num1, c1.num2);
 	// 구조체 변수를 매개변수로 주고 구조체 변수를 반환받으면 포인터 없이 두 값을 바꾸는 함수를 만들 수 있다. 
+	
 	printf("\n(6)\n");
 	printf("bitF값 : %u %u\n", bitF.bool1, bitF.bool2);
 	printf("bitF의 크기 : %d\n", sizeof(bitF));
 	//비트 필드 구조체를 통해 사용할 비트를 결정할 수 있다. 실제로 bitF는 int형을 3개나 사용했지만 4바이트만을 할당했다. 
+	
 	printf("\n(7)\n");
 	ps1 = &s1;
 	printf("포인터를 통해 구한 이름 : %s\n", (*ps1).name);
 	printf("포인터를 사용하고 ->연산자를 사용해 구한 이름 : %s\n", ps1->name);
 	// 구조체 포인터에 구조체의 주소를 입력하면 구조체 전체를 사용할 수 있다. 또한, ->연산자를 통해 매번 괄호를 치는 번거러움을 방지할 수 있다. 
+	
 	printf("\n(8)\n");
 	strcpy(s2.name, "mawdae");
 	s2.age = 2; 
@@ -116,21 +123,25 @@ int main(void)
 	printf("첫 번째 배열 요소의 값 - 이름 : %s / 나이 : %d / 키 : %.1lf / 애완동물의 이름 : %s / 애완동물의 나이 : %d / 한줄소개 : %s\n", slist[0].name, slist[0].age, slist[0].height, slist[0].dog.name, slist[0].dog.age, slist[0].introduce);
 	printf("두 번째 배열 요소의 값 - 이름 : %s / 나이 : %d / 키 : %.1lf / 애완동물의 이름 : %s / 애완동물의 나이 : %d / 한줄소개 : %s\n", slist[1].name, slist[1].age, slist[1].height, slist[1].dog.name, slist[1].dog.age, slist[1].introduce);	
 	// 구조체 배열을 사용할 수 있으며 배열처럼 구조체에 접근하되 구조체처럼 멤버에 접근한다. 
+	
 	printf("\n(9)\n");
 	printName(slist);
 	// 구조체 배열의 이름을 매개변수로 보내는 함수  
+	
 	printf("\n(10)\n");
 	sc = {75};
 	printf("열거형을 75로 초기화했을 때 두 값 : %d / %lf\n", sc.score_int, sc.score_double);
 	sc.score_double = 75.7;
 	printf("열거형을 75.7로 초기화했을 때 두 값 : %d / %lf\n", sc.score_int, sc.score_double);
 	// 열거형의 경우 한 멤버의 값이 정해지면 다른 멤버는 사실상 사용할 수 없다.
+	
 	printf("\n(11)\n");
 	nb = NUM1;
 	printf("열거형의 첫번째  값 : %d ", nb);
 	nb = NUM3;
 	printf("열거형 세번째 값 : %d", nb);
 	//열거형을 통해 정수에 이름을 붙여 사용할 수 있으며 초기값도 설정 가능하다. 
+	
 	printf("\n(12)\n");
 	s3.age = 12;
 	s3.height = 33.2;
