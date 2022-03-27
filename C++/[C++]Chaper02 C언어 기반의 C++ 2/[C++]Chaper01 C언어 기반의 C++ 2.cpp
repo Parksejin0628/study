@@ -1,14 +1,26 @@
 #include<iostream>
+#include<cstring>
+#include<ctime>
+#include<cstdlib> 
 
 using std::cout;
 using std::cin;
 using std::endl;
 
+typedef struct __Point
+{
+	int xpos;
+	int ypos;
+}Point;
+
 void que2_1();
 void que2_2();
+void que2_3(); 
+void que2_4();
 void add(int &num);
 void change(int &num); 
 void SwapPointer(int *(&ptr1), int *(&ptr2));
+Point& PntAdder(const Point &p1, const Point &p2);
 
 int main(void)
 {
@@ -16,6 +28,8 @@ int main(void)
 	
 	//que2_1();
 	//que2_2();
+	//que2_3();
+	//que2_4();
 	
 	cin>>input;
 	
@@ -63,6 +77,72 @@ void que2_2()
 	cout<<"참조자 형태 : "<<*ref<<endl; 
 }
 
+void que2_3()
+{
+	// 2차원 평면상에서의 좌표를 표현할 수 있는 구조체를 정의한다. 그 뒤  Point& pntAdder(const Point &p1, const Point &p2); 형태의 함수를 정의하여 두 점의 합을 계산하도록 한다.
+	// 단, 구조체 Point 관련 변수의 선언은 무조건 new 연산자를 이용해 진행하며 할당된 메모리 공간의 소멸도 철저해야 한다.
+	Point *point1 = new Point;
+	Point *point2 = new Point;
+	point1->xpos = 3;
+	point1->ypos = 5;
+	point2->xpos = 4;
+	point2->ypos = 8;
+	 
+	Point &result = PntAdder(*point1, *point2);
+	cout<<"덧셈 결과 : ("<<result.xpos<<", "<<result.ypos<<")"<<endl;
+	
+	delete point1;
+	delete point2;
+	delete &result;
+	
+	
+	return;
+}
+
+void que2_4()
+{
+	// 문제 1 : strlen, strcat, strcpy, strcmp를 호출하는 예제를 만들되 C++헤더를 선언해서 만들어보자. C언어에서는 string.h에 선언되어있다. 
+	char *name1 = new char[30];
+	char *name2 = new char[30];
+	
+	strcpy(name1, "dog");
+	strcpy(name2, "elephant");
+	cout<<"1번과 2번중 더 이름이 긴 것은 : ";
+	if(strlen(name1) > strlen(name2))
+	{
+		cout<<name1<<endl;
+	}
+	else
+	{
+		cout<<name2<<endl;
+	}
+	cout<<"두 이름이 같나요? : ";
+	if(strcmp(name1, name2) == 0)
+	{
+		cout<<"네!"<<endl;
+	}
+	else
+	{
+		cout<<"아니요!"<<endl;
+	}
+	strcat(name1, name2);
+	cout<<"이름 융합! : "<<name1<<endl;
+	
+	// 문제 2 : rnad, srand, time을 이용해서 0이상 100미만의 난수를 총 5개 생성하는 예제를 만들되 C++의 헤더를 선언해서 작성해보자. (time : time.h / rand, srand : stdlib.h)
+	int *num = new int[5]; 
+	srand(time(NULL));
+	cout<<"렌덤 5개 숫자 : ";
+	for(int i=0; i<4; i++)
+	{
+		num[i] = rand() % 100;
+		cout<<num[i]<<", ";
+	}
+	num[4] = rand() % 100;
+	cout<<num[4]<<endl;
+	
+	 
+}
+
 void add(int &num)
 {
 	num++;
@@ -87,7 +167,14 @@ void SwapPointer(int *(&ptr1), int *(&ptr2))
 	return;
 }
 
-
+Point& PntAdder(const Point &p1, const Point &p2)
+{
+	Point *result = new Point;
+	result->xpos = p1.xpos + p2.xpos;
+	result->ypos = p1.ypos + p2.ypos;
+	
+	return *result;
+}
 /*
 [C언어 기반의 C++ 2]
 2.1. Chapter 02의 시작에 앞서
@@ -175,4 +262,12 @@ void SwapPointer(int *(&ptr1), int *(&ptr2))
  3) 힙에 할당된 변수를 포인터를사용하지 않고도 접근하기
   - C++에서는 new 연산자를 이용해 할당된 메모리 공간도 변수로 간주하여 참조자의 선언이 가능하도록 한다.
   	ex) int *ptr = new int; / int &ref = *ptr; / ref = 20; (O) (이처럼 포인터를 사용하지 않고도 힙 영역에 접근했다는 사실이 중요하다.) 
+  	
+2.6. C++에서 C언어의 표준함수 호출하기 
+ 1) C++에서 기존 C언어에서 사용하던 라이브러리는 C언어에서 사용하던 헤더파일 이름에서 확장자인 .h를 빼고 앞에 c를 붙이면 C++에서 호환하는 헤더파일 이름이 된다.
+ 	ex) stdio.h -> cstdio / string.h -> cstring
+	ex) #include<cmath>
+ 2) C++의 헤더를 선언해야 하는 이유
+  - C++에서 C 라이브러리를 지원해주는 이유는 하위 버전과의 호환성을 위해서이다.
+  - C라이브러리를 C++ 문법에 맞추어 바꿨기 때문에 C++의 표준헤더를 사용하는 것이 좋다. 
 */ 
