@@ -1,14 +1,19 @@
 #pragma once
 
+#include<iostream>
+
 using std::cin;
 using std::cout;
 using std::endl;
 
-class testClass
+void testPrint()
 {
-	public:
-		int num1 = 0;
-		int num2 = 2;
-		int num3 = 4;
-		void testPrint();
-};
+	cout<<"첫 번째 숫자 : "<<3<<endl;
+	cout<<"두 번째 숫자 : "<<5<<endl;
+	cout<<"세 번째 숫자 : "<<7<<endl;
+	
+	return;
+}
+
+//void testPrint();
+

@@ -10,8 +10,8 @@ int main(void)
 	int num = 0;
 	
 	cout<<"파일 분할 테스트"<<endl;
-	testClass.testPrint(); 
-	testClass.testPrint();
+	testPrint(); 
+	testPrint();
 	cout<<"성공"<<endl;
 	
 	cin>>num;
