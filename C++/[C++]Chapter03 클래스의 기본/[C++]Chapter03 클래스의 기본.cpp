@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cstring>
 
 using std::cin;
 using std::cout;
@@ -27,12 +28,39 @@ struct Point
 	}
 };
 
+class Calculator
+{
+	private:
+		int countAdd;
+		int countMin;
+		int countMul;
+		int countDiv;
+	public:
+		double Add(double num1, double num2);
+		double Min(double num1, double num2);
+		double Mul(double num1, double num2);
+		double Div(double num1, double num2);	
+		void init();
+		void ShowOpCount();
+};
+
+class Printer
+{
+	private:
+		char savedString[50];
+	public:
+		void SetString(char* string);
+		void ShowString();	
+};
+
 void que3_1();
+void que3_2();
 
 int main(void) 
 {
 	int num;
 	que3_1();
+	que3_2();
 	
 	cin>>num;
 	
@@ -54,6 +82,89 @@ void que3_1()
 	pos1.ShowPosition();
 	 
 	return;
+}
+
+void que3_2()
+{
+	/*
+	문제1 : 계산기 기능의 Calculator 클래스를 정의해 보자. 기본적으로 지니는 기능은 덧셈, 뺄셈, 곱셈 그리고 나눗셈이며, 연산을 할때마다 어떠한 연산을 몇 번 수행했는지 기록되어야 한다.
+	 	    단, 멤버변수는 private로, 멤버함수는 public으로 선언하자. 
+	*/
+	Calculator cal;
+	cal.init();
+	cout<<"3.2 + 2.4 = "<<cal.Add(3.2, 2.4)<<endl;
+	cout<<"3.5 / 1.7 = "<<cal.Div(3.5, 1.7)<<endl;
+	cout<<"2.2 - 1.5 = "<<cal.Min(2.2, 1.5)<<endl;
+	cout<<"4.9 / 1.2 = "<<cal.Div(4.9, 1.2)<<endl;
+	cal.ShowOpCount(); 
+	
+	/*
+	문제2 : 문자열 정보를 내부에 저장하는 Printer라는 이름의 클래스를 디자인하자. 이 클래스의 두가지 기능은 문자열 저장, 문자열 출력이다.
+	        멤버변수는 private으로, 멤버함수는 public으로 선언하자. 
+	*/
+	Printer pnt;
+	pnt.SetString("Hello world!");
+	pnt.ShowString();
+	
+	pnt.SetString("I love C++");
+	pnt.ShowString();
+	
+	return;
+}
+
+double Calculator::Add(double num1, double num2)
+{
+	countAdd++;
+	return num1 + num2;
+}
+
+double Calculator::Min(double num1, double num2)
+{
+	countMin++;
+	return num1 - num2;
+}
+
+double Calculator::Mul(double num1, double num2)
+{
+	countMul++;
+	return num1 * num2;
+}
+
+double Calculator::Div(double num1, double num2)
+{
+	countDiv++;
+	return num1 / num2;
+}
+
+void Calculator::init()
+{
+	countAdd = 0;
+	countMin = 0;
+	countMul = 0;
+	countDiv = 0;
+}
+
+void Calculator::ShowOpCount()
+{
+	cout<<"덧셈:"<<countAdd;
+	cout<<" 뺄셈:"<<countMin;
+	cout<<" 곱셈:"<<countMul;
+	cout<<" 나눗셈:"<<countDiv;
+	cout<<endl;
+	
+	return; 
+}
+
+void Printer::SetString(char* string)
+{
+	strcpy(savedString, string);
+	
+	return;
+}
+
+void Printer::ShowString()
+{
+	cout<<savedString<<endl;
 }
 
 /*
@@ -131,6 +242,42 @@ void que3_1()
 	    Car.cpp에는 Accel()함수에 대한 정의가 담겨져 있다.
   - 만약 멤버함수에 인라인 함수가 있을 경우 해당 인라인 함수의 정의 부분은 선언부분과 같은 파일에 있어야 한다.
    > 인라인 함수는 컴파일하는 과정에서 함수의 몸체 부분이 선언 부분을 대체하는데, 파일을 분리해둘 경우 컴파일 할 때 대체할 몸체부분이 없으므로 오류가 발생한다. 
+   
+3.3. 객체지향 프로그래밍의 이해
+ 1) 객체지향 프로그래밍이란?
+  - C++은 객체지향 언어이다. 따라서, 객체지향에 대한 이해가 필요하고 이에 앞서 객체에 대한 이해가 필요하다.
+  - 객체(Object)란 우리 주변에 존재하는 모든 사물, 물건 등 대상을 의미한다. 
+  	ex) 나는 친구와 밥을 먹는다. 에서 객체는 나, 친구, 밥 이다.
+  - 객체지향 프로그램밍에서는 현실에 존재하는 객체를 등장시키고 객체의 행위도 실체화 시키는 프로그래밍이다. 
+  	ex) 객체 지향 프로그래밍에서는 '친구' 라는 객체를 등장시키고 '밥을 먹다'라는 객체의 행위까지 실체화 시킨다.
+ 2) 객체의 구성
+  - 객체는 크게 상태(state)와 행동(behavior)으로 구성되어있다.
+   > 상태(state) : 객체의 상태정보, 데이터 등을 의미한다. 주로 멤버변수로 표현된다. 
+   	ex) 친구의 '나이', '몸무게' 
+   > 행동(behavior) : 객체의 행동, 기능 등을 의미한다. 주로 멤버함수로 표현된다.
+    ex) 친구가 하는 행동인 '밥먹기', '걷기'
+ 3) 객체의 정의 
+  - 객체를 생성하기 위해서는 객체의 틀을 정의할 필요가 있다. 이는 우리가 앞서 배운 클래스이다.
+   > 클래스는 멤버변수와 멤버함수를 갖고 있는데 이는 각각 객체에서 상태(state), 행동(behavior)을 가리킨다.
+  - 객체 즉, 클래스를 정의할 때 상수로써 사용하기 위한 변수가 필요할텐데 이 때는 변수를 대문자로 선언한다.
+  	ex) int APPLE_PRICE;
+   > const로 상수화 하고 싶지만 그럴 수 없다. 상수는 선언과 동시에 초기화를 해야하지만, 클래스는 멤버변수의 선언에서 초기화를 허용하지 않는다. 
+   > 이는 나중에 생성자에서 답을 찾을 수 있을 것이다. 
+  - 객체 즉, 클래스에서는 접근 지시 제어자를 사용하지 않은 경우 기본적으로 private로 선언되기 때문에 private를 따로 명시하지 않고 생략하는 경우도 있다.
+ 4) 객체의 생성
+  - 정의한 클래스의 이름으로 함수를 호출하는 것은 불가능하다. 가능해 보이지만 이는 객체가 아닌 객체의 '틀'이기 때문이다.
+  - 따라서, 클래스의 접근 혹은 호출을 위해서는 객체를 생성해야 한다.
+  - C++에서 정의하는 객체생성 방법은 두 가지이다.
+   > 일반적인 변수의 선언 방식
+   	ex) ClassName objname;
+   > 동적 할당방식(new)
+    ex) ClassName *ptrObj = new ClassName;
+ 5) 메시지 전달(Message Passing)
+  - 하나의 객체가 또다른 객체에 메시지를 전달하는 방법은 함수를 통해 이루어진다.
+  - 함수의 매개변수에 다른 객체를 포함시켜 함수를 호출시키는 방법이다.
+  	ex) FruitBuyer::BuyApples(FruitSeller &seller, int money)
+	  여기서 &seller를 통해 다른 객체를 호출한다.
+  - 이러한 형태의 함수 호출을 '메시지 전달(Message Passing)'이라고 한다. 
  
 
 
