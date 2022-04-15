@@ -1,67 +1,142 @@
 #include<iostream>
-using std cout;
-using std cin;
-using std endl;
+using std::cout;
+using std::cin;
+using std::endl;
 
-class FruitSeller
+namespace FruitClass_h
 {
-private:
-	int APPLE_PRICE;
-	int numOfApples;
-	int myMoney;
-		
-public:
-	void InitMembers(int price, int num, int money)
+	//FruitClass.h
+	class FruitSeller
 	{
-		APPLE_PRICE = price;
-		numOfApples = num;
-		myMoney = money;
+	private:
+		int APPLE_PRICE;
+		int numOfApples;
+		int myMoney;
+		
+	public:
+		void InitMembers(int price, int num, int money);
+		int SaleApples(int money);
+		void ShowSalesResult() const;	
+		bool setNumOfApples(int num);
+		bool setMyMoney(int num);
+		int getNumOfApples() const;
+		int getMyMoney() const;
+	};
+
+	class FruitBuyer
+	{
+		int myMoney;
+		int numOfApples;
+	
+	public:
+		void InitMembers(int money);
+		bool BuyApples(FruitSeller &seller, int money);
+		void ShowBuyResult() const;
+		bool setNumOfApples(int num);
+		bool setMyMoney(int num);
+		int getNumOfApples() const;
+		int getMyMoney() const;
+	};
+	
+	
+	
+	//FruitClass.cpp
+	//FruitSeller
+	void FruitSeller::InitMembers(int price, int num, int money)
+	{
+			APPLE_PRICE = price;
+			numOfApples = num;
+			myMoney = money;
 	}
-	int SaleApples(int money)
+	int FruitSeller::SaleApples(int money)
 	{
 		int num = money / APPLE_PRICE;
 		numOfApples -= num;
 		myMoney += money;
-		
+			
 		return num;
 	}
-	void ShowSalesResult()
+	void FruitSeller::ShowSalesResult() const
 	{
 		cout<<"남은 사과: "<<numOfApples<<endl;
-		cout<<"판매 수익: "<<myMoney<<endl;<<endl;
+		cout<<"판매 수익: "<<myMoney<<endl<<endl;
 	}
-};
-
-class FruitBuyer
-{
-	int myMoney;
-	int numOfApples;
 	
-public:
-	void InitMembers(int price, int num, int money)
+	//FruitBuyer
+	void FruitBuyer::InitMembers(int money)
 	{
 		myMoney = money;
 		numOfApples = 0;
 	}
-	void BuyApples(FruitSeller &seller, int money)
+	bool FruitBuyer::BuyApples(FruitSeller &seller, int money)
 	{
+		if(money < 0)
+		{
+			cout<<"잘못된 입력입니다."<<endl;
+			return false;
+		}
 		numOfApples += seller.SaleApples(money);
 		myMoney -= money;
+		
+		return true;
 	}
-	void ShowBuyResult()
+	void FruitBuyer::ShowBuyResult() const
 	{
 		cout<<"현재 잔액: "<<myMoney<<endl;
 		cout<<"사과 개수: "<<numOfApples<<endl<<endl; 
 	}
-};
+}
+
+namespace Ring_h
+{
+	//ring.h
+	class Point
+	{
+	private:
+		int xpos, ypos;
+	public:
+		void Init(int x, int y);
+		void ShowPointInfo() const;
+	};
+	class Circle
+	{
+	private:
+		
+	public:
+		void ShowCircleInfo() const;
+	};
+	class Ring
+	{
+		
+	};
+	
+	
+	
+	//ring.cpp
+	//Point
+	void Point::Init(int x, int y)
+	{
+		xpos = x;
+		ypos = y;
+	}
+	void Point::ShowPointInfo() const
+	{
+		cout<<"["<<xpos<<", "<<ypos<<"]"<<endl;
+	}
+	
+}
+using namespace FruitClass_h; //#include"FruitSeller.h"
+using namespace Ring_h; //#include"ring.h"
 
 void que4_1();
+void que4_2(); 
 
 int main(void)
 {
 	int num = 0;
 	
 	que4_1();
+	que4_2();
 	
 	cin>>num; 
 	
@@ -74,8 +149,6 @@ void que4_1()
 	 문제 : Chapter03에서 제시한 과일장수 시뮬레이션 예제 FruitSaleSim1.cpp에서 정의한 두 클래스의 멤버변수를 0보다 작은 수를 전달할 수 없는 조건을 추가하자.
 	        그리고 예제의 안전성을 높일 수 있도록 일부 함수를 const로 선언해보자. 
 	*/	 
-	//현재 기존 예제를 가져온것까지 진행
-	//문제의 해결을 진행함과 동시에 코드의 가독성이 증가되도록 작업할 것 
 	FruitSeller seller;
 	seller.InitMembers(1000, 20, 0);
 	FruitBuyer buyer;
@@ -87,6 +160,28 @@ void que4_1()
 	cout<<"과일 구매자의 현황"<<endl;
 	buyer.ShowBuyResult(); 
 		
+	return;
+}
+
+void que4_2()
+{
+	/*
+	문제 : Point 클래스를 기반으로 하여 (문제에서 제공하는 클래스) 원을 의미하는 Circle 클래스를 정의하자.
+	 	   Circle 객체에는 좌표상의 위치 정보(원의 중심좌표)와 반지름의 길이 정보를 저장 및 출력할 수 있어야 한다.
+		   그리고 정의한 Circle 클래스를 기반으로 Ring 클래스도 정의하자. 링은 두 개의 원으로 표현 가능하므로(바깥쪽 원과 안쪽 원), 두 개의 Circle 객체를 기반으로 정의가 가능하다.
+		   참고로 안쪽 원과 바깥쪽 원의 중심좌표가 동일하다면 두께가 일정한 링을 표현하는 셈이 되며, 중심좌표가 동일하지 않다면 두께가 일정하지 않은 링을 표현하는 셈이 된다.
+		   다음 문장에서 Init의 함수호출을 통해 전달된 1, 1, 4는 안쪽 원의 정보에 해당하며 (X, Y, 반지름), 이어서 전달된 2, 2, 9는 바깥쪽 원의 정보에 해당한다.
+		   실행결과는 책에 예시와 같거나 유사해야 한다. 캡슐화에 따라 답이 달라지니 클래스를 정의할 때 캡슐화를 고민해보자. 그리고 나의 코드와 답을 비교해보자. 
+	메모
+	 - 목적은 Ring 클래스를 정의하는 것이다. 
+	 - 반지는 각각 안쪽 원과 바깥쪽 원이 존재하기에 Circle 객체 2개가 필요할 것이다. 
+	 - Circle안에 반지름, 위치 정보를 출력하는 기능을 넣는 것이 좋을 것이며 이는 Point클래스에서 해소할 수 있다. 
+	*/
+	//현재 Circle, Ring 객계체 설계 및 구현을 해야 하는 단 
+	Ring ring;
+	ring.init(1, 1, 4, 2, 2, 9);
+	ring.ShowRingInfo();
+	
 	return;
 }
 
