@@ -95,7 +95,7 @@ namespace Ring_h
 	private:
 		int xpos, ypos;
 	public:
-		void Init(int x, int y);
+		Point(int x, int y);
 		void ShowPointInfo() const;
 	};
 	
@@ -105,7 +105,7 @@ namespace Ring_h
 		Point pos;
 		int radius;
 	public:
-		void Init(int x, int y, int rad);
+		Circle(int x, int y, int rad);
 		void ShowCircleInfo() const;
 	};
 	
@@ -115,7 +115,7 @@ namespace Ring_h
 		Circle innerCircle;
 		Circle outterCircle;
 	public:
-		void Init(int iX, int iY, int iRad, int oX, int oY, int oRad);
+		Ring(int iX, int iY, int iRad, int oX, int oY, int oRad);
 		void ShowRingInfo() const;
 	};
 	
@@ -123,10 +123,9 @@ namespace Ring_h
 	
 	//ring.cpp
 	//Point
-	void Point::Init(int x, int y)
+	Point::Point(int x, int y) : xpos(x), ypos(y)
 	{
-		xpos = x;
-		ypos = y;
+		
 	}
 	void Point::ShowPointInfo() const
 	{
@@ -134,10 +133,9 @@ namespace Ring_h
 	}
 	
 	//Circle
-	void Circle::Init(int x, int y, int rad)
+	Circle::Circle(int x, int y, int rad) : pos(x, y), radius(rad)
 	{
-		pos.Init(x, y);
-		radius = rad;
+		
 	}
 	void Circle::ShowCircleInfo() const
 	{
@@ -146,10 +144,9 @@ namespace Ring_h
 	}
 	
 	//Ring
-	void Ring::Init(int iX, int iY, int iRad, int oX, int oY, int oRad)
+	Ring::Ring(int iX, int iY, int iRad, int oX, int oY, int oRad) : innerCircle(iX, iY, iRad), outterCircle(oX, oY, oRad)
 	{
-		innerCircle.Init(iX, iY, iRad);
-		outterCircle.Init(oX, oY, oRad);
+		
 	}
 	void Ring::ShowRingInfo() const
 	{
@@ -165,6 +162,7 @@ using namespace Ring_h; //#include"ring.h"
 
 void que4_1();
 void que4_2(); 
+void que4_3();
 
 int main(void)
 {
@@ -172,6 +170,7 @@ int main(void)
 	
 	que4_1();
 	que4_2();
+	que4_3();
 	
 	cin>>num; 
 	
@@ -219,11 +218,20 @@ void que4_2()
 	  > 멤버함수 : Init(int iX, int iY, int iRadius, int oX, int oY, int oRadius) / ShowRingInfo() 
 	*/
 	//현재 Circle, Ring 객계체 설계 및 구현을 해야 하는 단 
-	Ring ring;
-	ring.Init(1, 1, 4, 2, 2, 9);
+	Ring ring(1, 1, 4, 2, 2, 9);
+	//ring.Init(1, 1, 4, 2, 2, 9);
 	ring.ShowRingInfo();
 	
+	//주석처리 된 부분은 que4_3을 위해 수정한 것이다. 
 	return;
+}
+
+void que4_3()
+{
+	/*
+	문제1 : 앞에 제시한 que4_2의 클래스에 생성자를 정의해보자. 
+	*/
+	//문제 2부터 공부  
 }
 
 
@@ -300,6 +308,44 @@ void que4_2()
   > SimpleClass *ptr = new SimpleClass;
   > SimpleClass *ptr = new SimpleClass();
  - 따라서, 매개변수가 없는 객체를 생성할 때는 괄호를 생략하는 습관을 들이자.
- 
- 멤버 이니셜라이저부터 하면 된다. 
+3. 멤버 이니셜라이저 
+ - 생성자에서 멤버변수를 선언과 동시에 초기화할 수 있는 기능이다. (객체의 경우 생성자를 호출한다는 의미이다.) 
+  > 생성자 몸체에서 멤버변수를 초기화할 경우 선언과 초기화를 별도의 문장에서 하는 것으로 인식한다. 
+ - 생성자 뒤에 : 변수/객체(값/인자) 형식으로 사용한다.
+ 	ex) SimpleClass(int num) : val(30) 				(변수 초기화) 
+ 	ex) SimpleClass(int num) : otherClass(20, 30)	(객체 초기화, 멤버변수로 이용되는 객체의 생성자를 호출한다는 의미) 
+ - 멤버 이니셜라이저를 이용하다 보면 생서아즈이 몸체 부분이 비는 경우가 종종 발생한다. 
+4. 멤버 이니셜라이저의 이점
+ - 프로그래머는 일반적으로 이니셜라이저를 통해서 멤버변수를 초기화한다. 이는 다음 두 가지 이점 때문이다.
+  1) 초기화의 대상을 명확히 인식할 수 있다. : 생성자 몸체부분에 num = 1로 하는 것보다 멤버 이니셜라이저를 사용하는게 초기화한다는 의미를 좀 더 명확하게 줄 수 있다. 
+  2) 성능에 약간의 이점이 있다. : 후에 설명할 수 있다.
+ - 멤버 이니셜라이저는 멤버변수 선언과 동시에 초기화하기 때문에 const 변수 및 참조자 선언이 가능하다!
+  > 반대로 말하자면, const 변수를 사용하면 무조건 멤버 이니셜라이저를 사용해야 한다.
+  	ex) const int APPLE_PRICE; ... SimpleClass() : APPLE_PRICE(30)
+  > 참조자 또한 선언과 동시에 참조를 해야하기 때문에 멤버 이니셜라이저를 사용해야 한다.
+  	ex) class BBB{ AAA &ref ... BBB(AAA &r) : ref(r) ... };
+5. 디폴트 생성자 및 생성자 심화
+ - 객체의 생성과정은 다음 3단계로 이루어진다.
+  1단계) 메모리 공간의 할당
+  2단계) 이니셜라이저를 이용한 멤버변수(객체)의 초기화
+  3단계) 생성자의 몸체부분 실행
+ - 모든 객체는 위의 세가지 과정중 메모리 공간 할당과 생성자의 호출까지 완료되어야 객체라고 할 수 있다. (이니셜라이저는 생략이 가능하다.)
+  > 즉, 객체가 되기 위해서는 반드시 하나의 생성자가 호출되어야 한다. 
+ - 따라서, 생성자가 없는 객체에도 디폴트 생성자라는 것이 자동으로 삽입된다. (아무런 기능을 수행하지 않는다.)
+  > 생성자가 없는 경우에만 삽입되기 때문에 디폴트 생성자를 함수 오버로딩으로 사용하려는 목적은 불가능하다.
+  > malloc 함수는 메모리 공간만 할당하기 때문에 생성자를 호출하지 않는다. 따라서, malloc 함수로 할당한 객체는 사실 객체가 아니기 때문에 malloc을 사용해서는 안된다.
+ - 일반적으로, 생성자들은 객체의 생성이 클래스 외부에서 발생하기 때문에 public이지만, 클래스 내부에서만 생성자를 생성하는 경우에는 private로 선언이 가능하다.
+  > 예를 들어, 함수 오버로딩을 통해 클래스 내부에서만 사용되는 생성자를 만든 경우 그 생성자는 private로 선언해도 된다.
+  > 이러한 private 생성자 선언은 객체의 생성방법을 제한하고자 하는 경우에 매우 유용하게 사용된다. 즉, 정보은닉에 도움이 된다. 
+  	ex) static 메소드를 사용하여 객체의 생성이 필요하지 않는 경우 실수로 객체를 선언하는 것을 방지하기 위해 사용
+	ex) 프로그램에서 해당 객체를 하나만 사용하고 이 하나를 전부 공유해서 사용하는 경우 처음 객체 하나를 생성하는 멤버함수를 만든 후 객체를 선언하지 못하도록 하기 위해 사용 (싱클톤 기법) 
+	ex) 두 개의 인자를 사용하는 생성자이지만 외부로부터 하나의 인자만 받고 싶을 때 public으로 하나의 인자를 받는 생성자를 선언하고 private로 두 개의 인자를 받는 생성자를 선언하여 클래스 내에서 생성자 호츨
+6. 소멸자
+ - 생성자와 반대로 객체가 소멸할 때 딱 한 번 호출되는 함수이다.
+ - 클래스의 이름과 동일하게 함수의 이름을 설정하되 함수 앞에 '~'를 붙인다.
+ 	ex) ~SimpleClass()
+ - 소멸할 때 호출되기에 매개변수가 없고 반환도 없으며 따라서 반환형도 선언하지 않는다. 따라서, 함수 오버로딩과 디폴트 값 설정이 불가능하다.
+ - 생성자와 마찬가지로 객체에 소멸자가 없으면 디폴트 소멸자가 삽입된다.
+ - 보통 클래스 내에서 new 연산을 통해 메모리를 할당한 경우 클래스가 소멸하며 delete를 사용해 메모리를 반납할 때 사용한다. 
+	  
 */
