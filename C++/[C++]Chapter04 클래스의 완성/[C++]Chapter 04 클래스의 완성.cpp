@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cstring>
 using std::cout;
 using std::cin;
 using std::endl;
@@ -157,8 +158,81 @@ namespace Ring_h
 	}
 	
 }
+
+namespace NameCard_h
+{
+	//NameCard.h
+	namespace COMP_POS
+	{
+		enum {CLERK = 1, SENIOR, ASSIST, MANAGER};
+	}
+	
+	class NameCard
+	{
+	private:
+		char *name;
+		char *company;
+		char *callNum;
+		int rank;
+	public:
+		NameCard(char *inputName, char *inputCompany, char *inputCallNUm, int inputRank);
+		void ShowNameCardInfo() const;
+		~NameCard();
+	};
+	
+	//NameCard.cpp
+	NameCard::NameCard(char *inputName, char *inputCompany, char *inputCallNum, int inputRank) : rank(inputRank)
+	{
+		int len;
+		len = strlen(inputName) + 1;
+		name = new char[len];
+		strcpy(name, inputName);
+		
+		len = strlen(inputCompany) + 1;
+		company = new char[len];
+		strcpy(company, inputCompany);
+		
+		len = strlen(inputCallNum) + 1;
+		callNum = new char[len];
+		strcpy(callNum, inputCallNum);
+	}
+	
+	void NameCard::ShowNameCardInfo() const
+	{
+		cout<<"이름: "<<name<<endl;
+		cout<<"회사: "<<company<<endl;
+		cout<<"전화번호: "<<callNum<<endl;
+		cout<<"직급: ";
+		if(rank == 1)
+		{
+			cout<<"사원"<<endl; 
+		}
+		else if(rank == 2)
+		{
+			cout<<"주임"<<endl; 
+		}
+		else if(rank == 3)
+		{
+			cout<<"대리"<<endl; 
+		}
+		else if(rank == 4)
+		{
+			cout<<"과장"<<endl; 
+		}
+		cout<<endl;
+	}
+	
+	NameCard::~NameCard()
+	{
+		delete []name;
+		delete []company;
+		delete []callNum;
+	}
+} 
+
 using namespace FruitClass_h; //#include"FruitSeller.h"
 using namespace Ring_h; //#include"ring.h"
+using namespace NameCard_h; //#include"NameCard.h"
 
 void que4_1();
 void que4_2(); 
@@ -229,9 +303,21 @@ void que4_2()
 void que4_3()
 {
 	/*
-	문제1 : 앞에 제시한 que4_2의 클래스에 생성자를 정의해보자. 
+	문제1 : 앞에 제시한 que4_2의 클래스에 생성자를 정의해보자. (완료) 
+	문제2 : 명함을 의미하는 NameCard 클래스를 정의해보자. 이 클래스에는 성명, 회사이름, 전화번호, 직급이라는 정보가 담겨져 있어야 한다.
+	        단, 직급 정보를 제외한 나머지는 문자열의 형태로 저장을 하되, 길이에 딱 맞는 메모리 공간을 할당 받는 형태로 정의하자.(동적 할당하라는 의미)
+			그리고 직급 정보는 int형 멤버변수르르 선언해서 저장을 하되, 다음 enum 선언을 활용해야 한다. enum{CLERK, SENIOR, ASSIST, MANAGER};
+			위의 enum 선언에서 정의된 상수는 순서대로 사원, 주임, 대리, 과장을 뜻한다.
+			다음 코드를 참고하여 이 문제에서 원하는 형태대로 NameCard 클래스를 완성해보자. 
 	*/
-	//문제 2부터 공부  
+	NameCard manClerk("Lee", "ABCEng", "010-1111-2222", COMP_POS::CLERK);
+	NameCard manSENIOR("Hong", "OrangeEng", "010-3333-4444", COMP_POS::SENIOR);
+	NameCard manAssist("Kim", "SoGoodComp", "010-5555-6666", COMP_POS::ASSIST);
+	manClerk.ShowNameCardInfo();
+	manSENIOR.ShowNameCardInfo();
+	manAssist.ShowNameCardInfo();
+	
+	return;
 }
 
 
