@@ -125,6 +125,10 @@ int main(void)
 			cout<<"잘못된 선택입니다."<<endl; 
 		}
 	}
+	for(int i=0; i<clientIndex-1; i++)
+	{
+		delete clients[i];
+	}
 	cin>>choice;
 	
 	return 0;
@@ -191,7 +195,7 @@ void deposit()
 	}
 	cout<<"입금할 금액 : ";
 	cin>>input;
-	clients[index].setMoney(input);
+	clients[index]->setMoney(input);
 	cout<<"성공적으로 처리되었습니다."<<endl;
 	
 	return;
@@ -219,7 +223,7 @@ void withdraw()
 	{
 		cout<<"입금할 금액 : ";
 		cin>>input;
-		if(!clients[index].setMoney(-input))
+		if(!clients[index]->setMoney(-input))
 		{
 			cout<<"잔액보다 큰 금액입니다. 다시 입력해 주십시오."<<endl;
 			continue;
@@ -235,7 +239,7 @@ void checkMoneyOfClients()
 	cout<<"[계좌정보 전체 출력]"<<endl; 
 	for(int i=0; i<clientIndex; i++)
 	{
-		clients[i].showClientInfo();
+		clients[i]->showClientInfo();
 	}
 	cout<<"모든 정보가 출력되었습니다."<<endl;
 	
@@ -246,7 +250,7 @@ int searchID(int number)
 {
 	for(int i=0; i<clientIndex; i++)
 	{
-		if(clients[i].checkID(number))
+		if(clients[i]->checkID(number))
 		{
 			return i;
 		}
