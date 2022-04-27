@@ -1,10 +1,122 @@
 #include<iostream>
+#include<cstring>
+
+using std::cout;
+using std::cin;
+using std::endl;
+
+namespace NameCard_h
+{
+	//NameCard.h
+	namespace COMP_POS
+	{
+		enum {CLERK = 1, SENIOR, ASSIST, MANAGER};
+	}
+	
+	class NameCard
+	{
+	private:
+		char *name;
+		char *company;
+		char *callNum;
+		int rank;
+	public:
+		NameCard(char *inputName, char *inputCompany, char *inputCallNUm, int inputRank);
+		NameCard(const NameCard &copy);
+		void ShowNameCardInfo() const;
+		~NameCard();
+	};
+	
+	//NameCard.cpp
+	NameCard::NameCard(char *inputName, char *inputCompany, char *inputCallNum, int inputRank) : rank(inputRank)
+	{
+		int len;
+		len = strlen(inputName) + 1;
+		name = new char[len];
+		strcpy(name, inputName);
+		
+		len = strlen(inputCompany) + 1;
+		company = new char[len];
+		strcpy(company, inputCompany);
+		
+		len = strlen(inputCallNum) + 1;
+		callNum = new char[len];
+		strcpy(callNum, inputCallNum);
+	}
+	
+	NameCard::NameCard(const NameCard &copy) : rank(copy.rank)
+	{
+		name = new char[strlen(copy.name) + 1];
+		strcpy(name, copy.name);
+		
+		company = new char[strlen(copy.company) + 1];
+		strcpy(company, copy.company);
+		
+		callNum = new char[strlen(copy.callNum) + 1];
+		strcpy(callNum, copy.callNum);
+	}
+	
+	void NameCard::ShowNameCardInfo() const
+	{
+		cout<<"이름: "<<name<<endl;
+		cout<<"회사: "<<company<<endl;
+		cout<<"전화번호: "<<callNum<<endl;
+		cout<<"직급: ";
+		if(rank == 1)
+		{
+			cout<<"사원"<<endl; 
+		}
+		else if(rank == 2)
+		{
+			cout<<"주임"<<endl; 
+		}
+		else if(rank == 3)
+		{
+			cout<<"대리"<<endl; 
+		}
+		else if(rank == 4)
+		{
+			cout<<"과장"<<endl; 
+		}
+		cout<<endl;
+	}
+	
+	NameCard::~NameCard()
+	{
+		delete []name;
+		delete []company;
+		delete []callNum;
+	}
+}
+
+using namespace NameCard_h;
+
+void que5_1();
 
 int main(void)
 {
-	//문제 5-1부터 진 행 
+	int num = 0;
+	que5_1();
+	
+	cin>>num;
 	
 	return 0;
+}
+
+void que5_1()
+{
+	/*
+	문제 : 문제 4-3의 문제 2를 통해 NameCard 클래스를 정의하였다. 그런데 이 클래스도 생성자 내에서 메모리 공간을 동적 할당하기 때문에 복사 생성자가 필요한 클래스이다. 
+	이에 복사 생성자를 적절히 정의하고 복사 이후에 문제가 발생하지 않음을 다음 main함수를 통해 확인하자. 
+	*/
+	NameCard manClerk("Lee", "ABCEng", "010-1111-2222", COMP_POS::CLERK);
+	NameCard copy1 = manClerk;
+	NameCard manSENIOR("Hong", "OrangeEng", "010-3333-4444", COMP_POS::SENIOR);
+	NameCard copy2 = manSENIOR;
+	copy1.ShowNameCardInfo();
+	copy2.ShowNameCardInfo();
+	
+	return;
 }
 
 /*
@@ -33,6 +145,7 @@ int main(void)
  2) 이 경우 멤버 대 멤버 복사를 위해 복사 생성자가 정의되어 있지 않아도 디폴트 복사 생성자라는 것이 삽입되어 멤버 대 멤버 복사를 진행한다.
  	- 디폴트 복사 생성자는 위 예시처럼 SimpleClass(const SimpleClass &copy) : num1(copy.num1), num2(copy.num2)와 같은 형태로 삽입된다.
  3) 멤버 대 멤버 복사를 진행하려 할 때 많은 경우 복사 생성자를 정의하지 않아도 된다. 하지만, 반드시 복사 생성자를 정의해야 하는 경우도 있다. 
+ 
 <5-2. '깊은 복사'와 '얕은 복사'>
 1. 얕은 복사
  1) 멤버 대 멤버의 복사 (값만 복사)하는 경우를 얕은 복사라고 한다.
@@ -100,5 +213,48 @@ int main(void)
   		}
   	}
   	obj1, obj2가 참조하는 대상이 다르므로 문제 없이 실행  
-  
+  	
+<5-3. 복사 생성자의 호출 시점>
+1. 복사 생성자의 호출 시점
+ - 복사 생성자가 호출되는 시점은 크게 세 가지로 구분할 수 있다.
+ 1) 기존에 생성된 객체를 이용해 새로운 객체를 초기화하는 경우
+ 	ex) SimpleClass copy(3);
+	 	SimpleClass obj = copy;
+ 2) Call-by-value(값 전달)방식의 함수호출 과정에서 객체를 인자로 전달하는 경우
+ 	ex) SimpleFunc(SimpleClass obj);
+ 		...
+		int main(void) { ... SimpleFunc(obj); ... } (호출할 때 복사 생성자 호출)
+ 3) 참조형이 아닌 객체를 반환할 때
+ 	ex) SimpleFunc() { ... return obj; } (반환할 때 호출한 장소에서 복사생성자 호출
+ - 위 세 가지 공통점은 객체를 새로 생성해야 하며 생성과 동시에 동일한 자료형의 객체로 초기화 해야 하는 경우이다.
+ - 자세한 내용은 1번 사항을 제외하고 따로 설명하도록 한다. 
+2. Call-by-value(값 전달) 방식의 함수 호출 과정에서 객체를 인자로 전달하는 경우
+ 1) 해당 과정이 객체를 생성해야 하며 생성과 동시에 동일한 자료형의 객체로 초기화 해야 하는 이유 
+ 	- 매개변수는 함수가 호출되는 순간 메모리가 할당이 된다.
+ 	- 그리고, 메모리가 할당이 되면서 값을 전달받아 할당과 초기화가 동시에 일어난다.  
+ 2) 함수를 호출할 때  인자가 객체인 경우 객체의 복사본으로 초기화 해야 하므로 복사 생성자가 호출된다. 
+ 3) 물론, 이 경우에도 복사 생성자를 따로 정의를 안하면 문제가 되는 경우가 발생하므로 해당 경우에는 복사생성자를 따로 정의해야 한다. (한 번 실험해보고 싶다.) 
+ 4) 복사 생성자의 호출 주체는 매개변수이다. (함수를 호출하는 곳에서 전달하는 객체가 아니다.) 
+3. 객체를 반환하되, 참조형으로 반환하지 않는 경우  
+ 1) 객체를 반환할 때 함수를 호출한 곳에서 반환값을 사용하는 경우가 있으므로 메모리를 할당하여 반환하는 객체의 정보를 저장해야한다.
+ 	- 이 경우에 반환 값을 복사해서 함수를 호출한 곳에 전달하게 된다.
+	- 따라서, 복사 생성자를 호출하여 객체를 복사한다. 
+ 	ex) cout<<SimpleFunc(30)<<endl;
+ 2) 이렇게 반환할 때 임시로 반환 객체의 정보를 저장하는 공간을 '임시 객체'라고 한다. 
+4. 임시 객체에 대한 심화 탐구
+ 1) 임시 객체를 임의로 만드는 방법
+ 	- 클래스의 이름을 클래스 외부에서 사용하는 경우 임시 객체가 된다.
+	 	ex) class SimpleClass { ... };
+	 		...
+	 		int main(void) { SimpleClass(30); //이 부분이 임시 객체이다. } 
+ 2) 임시 객체가 소멸되는 시점
+ 	- 임시 객체는 이름이 없어 다음 행부터는 사용할 수 없으므로 바로 소멸된다.
+	- 단, 참조자로 참조한 경우는 다음 행부터도 사용할 수 있어 바로 소멸되지 않는다.
+		ex) const SimpleClass &ref = SimpleFunc(30) 
+ 3) 임시 객체를 이용해 새로운 객체를 초기화 하는 경우에 새로운 객체가 생성되는 것이 아닌 임시 객체에 이름이 붙는다!
+ 	- SimpleClass tempRef = SimpleFunc(obj) 이 문장에서 tempRef 객체가 생성되고 임시 객체를 사용해 초기화 한다고 생각할 수 있다.
+	- 그러나, C++에서는 이러한 경우에 객체의 생성 수를 줄여 효율성을 높이기 위해 객체를 추가로 생성하는 것이 아닌 반환된 임시객체에 이름을 할당한다.
+	- 어짜피, 임시 객체도 방금 생성한 객체이기 때문에 가능하다. 
+	
+//다음시간엔 배운 개념을 실험해보고 익혀보자  
 */
