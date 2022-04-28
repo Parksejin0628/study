@@ -89,14 +89,82 @@ namespace NameCard_h
 	}
 }
 
+namespace testClass_h
+{
+	//testClass.h
+	class testClass
+	{
+	private:
+		int num;
+		char *name;
+	public:
+		testClass(int num, char *name);
+		//testClass(const testClass &copy);
+		void showClassInfo() const;
+		~testClass();
+	};
+	
+	//testClass.cpp
+	testClass::testClass(int num, char *name) : num(num)
+	{
+		cout<<"nameAddress : "<<&name<<endl;
+		cout<<this<<" construct testClass"<<endl;
+		this->name = new char[strlen(name) + 1];
+		strcpy(this->name, name);
+	}
+	/*testClass::testClass(const testClass &copy) : num(copy.num), name(copy.name)
+	{
+		cout<<"nameAddress : "<<&name<<endl;
+		cout<<this<<" 복사 생성"<<endl;
+		/*name = new char[strlen(copy.name) + 1];
+		strcpy(name, copy.name);
+	}*/
+	void testClass::showClassInfo() const
+	{
+		cout<<"thisClass : "<<this<<endl;
+		cout<<"num : "<<num<<" name : "<<name<<endl;
+		
+		return; 
+	}
+	testClass::~testClass()
+	{
+		cout<<"nameAddress : "<<&name<<endl;
+		cout<<this<<" destruct testClass"<<endl;
+		delete []name;
+	}
+}
+
 using namespace NameCard_h;
+using namespace testClass_h; //include"testClass.h"
+
+testClass testFunc(testClass copy)
+{
+	testClass newObj = copy;
+	copy.showClassInfo();
+	
+	return newObj;
+}
 
 void que5_1();
 
 int main(void)
 {
 	int num = 0;
-	que5_1();
+	testClass obj(20, "parksejin");
+	testClass copy1 = obj;
+	testClass copy2 = obj;
+	
+	obj.showClassInfo();
+	copy1.showClassInfo();
+	copy2.showClassInfo();
+	 
+	//que5_1();
+	/*cout<<"함수 시작 전"<<endl;
+	obj.showClassInfo();
+	cout<<"함수 시작"<<endl; 
+	testFunc(obj).showClassInfo();
+	cout<<"함수 종료"<<endl;
+	obj.showClassInfo();*/
 	
 	cin>>num;
 	
@@ -256,5 +324,8 @@ void que5_1()
 	- 그러나, C++에서는 이러한 경우에 객체의 생성 수를 줄여 효율성을 높이기 위해 객체를 추가로 생성하는 것이 아닌 반환된 임시객체에 이름을 할당한다.
 	- 어짜피, 임시 객체도 방금 생성한 객체이기 때문에 가능하다. 
 	
-//다음시간엔 배운 개념을 실험해보고 익혀보자  
+<실험결과>
+1. 컴파일러의 성능덕분인지 얕은 복사를 해도 참조하는 변수가 알아서 참조 대상까지 복사했다. 
+2. 아니그러면 임시객체로 복사생성자가 호출될 때 참조하는 변수가 있으면 따로 복사생성자를 정의해야하는지가 의문이다.
+ -> 아마 그래야 할 것으로 보인다. 
 */
