@@ -1,4 +1,6 @@
 #include<iostream>
+#include<cstring>
+
 using std::cin;
 using std::cout;
 using std::endl;
@@ -68,7 +70,71 @@ namespace Car_h
 	
 } 
 
+namespace MyFriend_h
+{
+	//MyFriend.h
+	class MyFriendInfo
+	{
+	private:
+		char * name;
+		int age;
+	public:
+		MyFriendInfo(char* name, int age);
+		void ShowMyFriendInfo();
+		~MyFriendInfo();
+	};
+	
+	class MyFriendDetailInfo : public MyFriendInfo
+	{
+	private:
+		char * addr;
+		char * phone;
+	public:
+		MyFriendDetailInfo(char *name, int age, char* addr, char* phone);
+		void ShowMyFriendDetailInfo();	
+		~MyFriendDetailInfo();
+	};
+	
+	//MyFriend.cpp
+	//MyFriendInfo
+	MyFriendInfo::MyFriendInfo(char* name, int age) : age(age)
+	{
+		this->name = new char[strlen(name)+1];
+		strcpy(this->name, name);
+	}
+	void MyFriendInfo::ShowMyFriendInfo()
+	{
+		cout<<"이름 : "<<name<<endl;
+		cout<<"나이 : "<<age<<endl;
+	}
+	MyFriendInfo::~MyFriendInfo()
+	{
+		delete []name;
+	}
+	
+	//MyFriendDetailInfo
+	MyFriendDetailInfo::MyFriendDetailInfo(char *name, int age, char* addr, char* phone) : MyFriendInfo(name, age)
+	{
+		this->addr = new char[strlen(addr) + 1];
+		strcpy(this->addr, addr);
+		this->phone = new char[strlen(phone) + 1];
+		strcpy(this->phone, phone);
+	}
+	void MyFriendDetailInfo::ShowMyFriendDetailInfo()
+	{
+		ShowMyFriendInfo();
+		cout<<"주소: "<<addr<<endl;
+		cout<<"전화: "<<phone<<endl<<endl; 
+	}
+	MyFriendDetailInfo::~MyFriendDetailInfo()
+	{
+		delete []addr;
+		delete []phone;
+	}
+}
+
 using namespace Car_h; //#include"Car.h"
+using namespace MyFriend_h; //#include"MyFriend.h" 
 
 void que7_1();
 
@@ -96,14 +162,24 @@ void que7_1()
 	HybridCar hybridCar(20, 40);
 	HybridWaterCar hybridWaterCar(10, 40, 70);
 	
-	cout<<"일반 차 기름량 : ";
-	normalCar.GetGasGauge();
-	cout<<"하이브리드 차 기름량 : ";
-	hybridCar.GetGasGauge();
-	cout<<"하이브리드 차 연료량 : "; 
-	hybridCar.GetElecGauge();
-	cout<<"하이브리드 워터차 연료량 : ";
+	cout<<"일반 차 기름량 : "<<normalCar.GetGasGauge()<<endl;
+	cout<<"하이브리드 차 기름량 : "<<hybridCar.GetGasGauge()<<endl;
+	cout<<"하이브리드 전기량 : "<<hybridCar.GetElecGauge()<<endl; 
+	cout<<"하이브리드 워터차 연료량"<<endl;
 	hybridWaterCar.ShowCurrentGauge(); 
+	
+	/*
+		<문제 2>
+		다음 클래스 MyFriendInfo, MyFriendDetailInfo에 적절한 생성자와 소멸자를 정의한 후 이의 확인을 위한 코드를 작성해보자. 
+	*/
+	MyFriendInfo myFriendInfo("최광민", 22);
+	MyFriendDetailInfo myFriendDetailInfo("조송연", 22, "봉일천", "010-2222-3333");
+	
+	myFriendInfo.ShowMyFriendInfo();
+	cout<<endl;
+	myFriendDetailInfo.ShowMyFriendInfo();
+	cout<<endl;
+	myFriendDetailInfo.ShowMyFriendDetailInfo(); 
 	
 	return;
 }
