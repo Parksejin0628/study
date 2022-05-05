@@ -1,10 +1,111 @@
 #include<iostream>
+using std::cin;
+using std::cout;
+using std::endl;
+
+namespace Car_h
+{
+	//Car.h	
+	class Car
+	{
+	private:
+		int gasolineGauge;
+	public:
+		Car(int gasoline = 0);
+		int GetGasGauge() const;
+	};
+	
+	class HybridCar : public Car
+	{
+	private:
+		int electricGauge;
+	public:
+		HybridCar(int electric = 0, int gasoline = 0);
+		int GetElecGauge() const;
+	};
+	
+	class HybridWaterCar : public HybridCar
+	{
+	private:
+		int waterGauge;
+	public:
+		HybridWaterCar(int water = 0, int electric = 0, int gasoline = 0);
+		void ShowCurrentGauge() const;	
+	};
+	
+	//Car.cpp
+	//Car
+	Car::Car(int gasoline) : gasolineGauge(gasoline)
+	{
+		
+	}
+	int Car::GetGasGauge() const
+	{
+		return gasolineGauge;
+	}
+	
+	//HybridCar
+	HybridCar::HybridCar(int electric, int gasoline) : Car(gasoline), electricGauge(electric)
+	{
+		
+	}
+	int HybridCar::GetElecGauge() const
+	{
+		return electricGauge;
+	}
+	
+	//HybridWaterCar
+	HybridWaterCar::HybridWaterCar(int water, int electric, int gasoline) : HybridCar(electric, gasoline), waterGauge(water)
+	{
+		
+	}
+	void HybridWaterCar::ShowCurrentGauge() const
+	{
+		cout<<"잔여 가솔린: "<<GetGasGauge()<<endl;
+		cout<<"잔여 전기량: "<<GetElecGauge()<<endl;
+		cout<<"잔여 워터량: "<<waterGauge<<endl; 
+	}
+	
+} 
+
+using namespace Car_h; //#include"Car.h"
+
+void que7_1();
 
 int main(void)
 {
+	int end = 0;
 	
+	que7_1();
+	
+	
+	cin>>end;
 	
 	return 0;
+}
+
+void que7_1()
+{
+	/*
+		<문제1>
+		앞서 상속관계에 놓여있는 클래스의 생성자 정의 및 호출 방식에 대해 설명하였다. 이 내용을 바탕으로 다음 클래스에 적절한 생성자를 삽입해보자.
+		참고로 Car 클래스는 가솔린으로 동작하는 자동차를, HybridCar 클래스는 가솔린과 전기로 동작하는 자동차를, HybridWaterCar 클래스는 가솔린과 전기뿐만 아니라, 물도 동시에 연료로 사용될 수 있는 가상의 자동차를 표현한 것이다. 
+		그리고 이의 확인을 위해 정의한 클래스를 사용하는 코드를 만들어보자. 
+	*/
+	Car normalCar(30);
+	HybridCar hybridCar(20, 40);
+	HybridWaterCar hybridWaterCar(10, 40, 70);
+	
+	cout<<"일반 차 기름량 : ";
+	normalCar.GetGasGauge();
+	cout<<"하이브리드 차 기름량 : ";
+	hybridCar.GetGasGauge();
+	cout<<"하이브리드 차 연료량 : "; 
+	hybridCar.GetElecGauge();
+	cout<<"하이브리드 워터차 연료량 : ";
+	hybridWaterCar.ShowCurrentGauge(); 
+	
+	return;
 }
 
 /*
