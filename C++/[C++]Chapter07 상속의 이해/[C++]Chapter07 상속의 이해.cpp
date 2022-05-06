@@ -133,17 +133,117 @@ namespace MyFriend_h
 	}
 }
 
-using namespace Car_h; //#include"Car.h"
-using namespace MyFriend_h; //#include"MyFriend.h" 
+namespace Square_h
+{
+	//Square.h
+	class Rectangle
+	{
+	private:
+		int width;
+		int height;
+	public:
+		Rectangle(int width, int height);
+		void ShowAreaInfo() const;
+	};
+	class Square : public Rectangle
+	{
+	public:
+		Square(int length);
+	};
+	
+	//Square.cpp
+	//Rectangle
+	Rectangle::Rectangle(int width, int height) : width(width), height(height)
+	{
+		
+	}
+	void Rectangle::ShowAreaInfo() const
+	{
+		cout<<"면적: "<<width*height<<endl;
+	}
+	//Square
+	Square::Square(int length) : Rectangle(length, length)
+	{
+		
+	}
+}
+
+namespace Book_h
+{
+	//Book.h
+	class Book
+	{
+	private:
+		char * title;	// 책의 제목 
+		char * isbn;	// 국제표준도서번호  
+		int price;		// 책의 정가 
+	public:
+		Book(char * title, char * isbn, int price);
+		void ShowBookInfo() const;
+		~Book();
+	};
+	class Ebook : public Book
+	{
+	private:
+		char * DRMKey;
+	public:
+		Ebook(char * title, char * isbn, int price, char * DRMKey);
+		void ShowEBookInfo() const;
+		~Ebook();
+	};
+	
+	//Book.cpp
+	//Book
+	Book::Book(char * title, char * isbn, int price) : price(price)
+	{
+		this->title = new char[strlen(title) + 1];
+		strcpy(this->title, title);
+		this->isbn = new char[strlen(isbn) + 1];
+		strcpy(this->isbn, isbn);
+	}
+	void Book::ShowBookInfo() const
+	{
+		cout<<endl<<"제목: "<<title<<endl;
+		cout<<"ISBN: "<<isbn<<endl;
+		cout<<"가격: "<<price<<endl; 
+	}
+	Book::~Book()
+	{
+		delete []title;
+		delete []isbn;
+	}
+	
+	//Ebook
+	Ebook::Ebook(char * title, char * isbn, int price, char * DRMKey) : Book(title, isbn, price)
+	{
+		this->DRMKey = new char[strlen(DRMKey) + 1];
+		strcpy(this->DRMKey, DRMKey);
+	}
+	void Ebook::ShowEBookInfo() const
+	{
+		ShowBookInfo();
+		cout<<"인증키: "<<DRMKey<<endl;
+	}
+	Ebook::~Ebook()
+	{
+		delete []DRMKey;
+	}
+}
+
+using namespace Car_h; 		// #include"Car.h"
+using namespace MyFriend_h; // #include"MyFriend.h" 
+using namespace Square_h; 	// #include"Square.h"
+using namespace Book_h; 	// #include"Book.h"
 
 void que7_1();
+void que7_2(); 
 
 int main(void)
 {
 	int end = 0;
 	
 	que7_1();
-	
+	que7_2();
 	
 	cin>>end;
 	
@@ -180,6 +280,35 @@ void que7_1()
 	myFriendDetailInfo.ShowMyFriendInfo();
 	cout<<endl;
 	myFriendDetailInfo.ShowMyFriendDetailInfo(); 
+	
+	return;
+}
+
+void que7_2()
+{
+	/*
+	문제 1
+	정사각형을 의미하는 Square 클래스와 직사각형을 의미하는 Rectangle 클래스를 정의하고자 한다.
+	그런데 정사각형은 직사각형의 일종이므로 다음의 형태로 클래스의 상속관계를구성하고자 한다.
+	class Rectangle / class Square : public Rectangle
+	이에 다음 코드와 함께 실행이 가능하도록 클래스를 완성해보자. 
+	*/
+	Rectangle rec(4, 3);
+	rec.ShowAreaInfo();
+	
+	Square sqr(7);
+	sqr.ShowAreaInfo();
+	/*
+	문제 2
+	'책'을 의미하는 Book 클래스와 '전자 책'을 의미하는 Ebook 클래스를 정의하고자 한다. 
+	그런데 '전자 책'도 '책'의 일종이므로, 다음의 형태로 클래스의 상속관계를 구성하고자 한다. (책 참고)
+	다음 코드와 함께 실행이 가능하도록 클래스를 완성해보자. 
+	*/
+	Book book("좋은 C++", "555-12345-890-0", 20000);
+	book.ShowBookInfo();
+	cout<<endl;
+	Ebook ebook("좋은 C++ ebook", "555-12345-890-1", 10000, "fdx9w0i8kiw");
+	ebook.ShowEBookInfo();
 	
 	return;
 }
@@ -241,5 +370,45 @@ void que7_1()
 4. 유도클래스의 생성/소멸 과정의 유의점
  1) 유도클래스의 생성 과정에서는 항상 기초클래스의 멤버 초기화가 유도클래스보다 먼저 실행된다.
  2) 유도클래스의 소멸 과정에서는 항상 유도클래스의 소멸자가 기초클래스의 소멸자보다 먼저 실행된다. 
+ 
+<7.3. protected 선언과 세 가지 형태의 상속>
+1. protected 선언의 의미
+ 1) protected는 public과 private를 이은 세번째 접근제어지시자이다.
+ 2) protected 접근제어 지시자의 의미는 'protected로 선언된 멤버변수는 이를 상속하는 유도 클래스에서만 접근이 가능하다.'
+ 	> 즉, 해당 클래스와 이를 상속하는 유도클래스만 접근할 수 있게된다.
+	> private에서 상속을 예외로 둔 것이다.
+	> private와 public의 중간이라고 보면된다.
+ 3) 하지만, 기초클래스와 유도클래스 사이에서도 정보은닉은 지켜지는 것이 좋기에 최소화하려고 노력하는 것이 좋다.
+ 
+2. 세 가지 형태의 상속
+ - 상속을 할 때는 세 가지 형태로 상속이 가능하다.
+ 1) public 상속 : private는 접근불가로 상속하고 나머지는 그냥 그대로 상속한다.
+  	> 즉, 기초 클래스의 접근제어지시자가 모두 보존되는 것이다. (단, 기초클래스의 private 멤버는 접근이 불가한 형태로 상속한다.) 
+	> 특별한 경우를 제외하고 대부분의 상속은 public 상속이다.
+ 2) protected 상속 : protected보다 접근의 범위가 넓은 멤버는 protected로 변경시켜서 상속한다.
+ 	> 즉, 기초클래스의 public 멤버변수를 protected 멤버 변수로 상속받는다는 의미이다. (단, 기초클래스의 private 멤버는 접근이 불가한 형태로 상속한다.) 
+ 3) private 상속 : private보다 접근의 범위가 넓은 멤버는 private로 변경시켜서 상속한다.
+ 	> 즉, 기초클래스의 모든 멤버변수를 private 멤버 변수로 상속받는다는 의미이다. (단, 기초클래스의 private 멤버는 접근이 불가한 형태로 상속한다.) 
+ 	> private 상속이 이루어진 클래스를 상속할 경우 모든 멤버가 이미 private이기에 접근이 불가한 형태로 상속이 되고 사실상 의미 없는 상속이 된다. 
 
+<7.4. 상속을 위한 조건>
+1. 상속의 기본 조건 IS-A 관계
+ 1) 상속의 기본 조건인 IS-A 관계를 성립하지 못한다면 상속을 하지 않는 것만 못하게 된다.
+ 2) 유도클래스는 기초클래스의 모든 것을 가지고 자신만의 추가적인 특성이 더해지기에 IS-A관계가 필수적이다.
+ 3) IS-A관계는 '유도클래스 IS A 기초클래스'조건을 성립한다는 의미로 유도클래스가 일종의 기초클래스 (유도클래스가 기초클래스에 포함)이어야 한다.
+ 	ex) 스마트폰은 전화기이다. (스마트폰 IS A 전화기) 여기서는 스마트폰이 유도클래스, 전화기가 기초클래스가 되는 것이다.
+	ex) 노트북은 전자기기이다. (노트북 IS A 전자기기) 여기서는 노트북이 유도클래스, 전자기기가 기초클래스가 되는 것이다.
+ 4) 이러한 관계는 상속의 깊이가 아무리 깊어도 가장 얕은 단계의 기초클래스와 가장 깊은 단계의 유도클래스 사이에서도 성립되어야 한다.
+ 	ex) 스마트폰은 전화기이다. / 전화기는 전자기기이다. / 스마트폰은 전자기기이다. (모두성립)
+
+2. 상속이 가능한 HAS-A 관계
+ 1) 언뜻 보면 HAS-A 관계 즉, 상속하는 대상을 포함하는 것도 가능한 것처럼 보인다.
+ 	ex) 경찰 HAS A 총 여기서 경찰이 유도클래스, 총이 기초클래스가 된다. 
+ 2) 가능은 하겠지만, HAS-A 단계는 다른 방식으로도 표현이 가능하며 상속을 사용하면 오히려 문제점이 생긴다.
+ 3) HAS-A 관계로 이루어진 상속관계는 유연성과 확장성 모두 떨어지기 때문에 문제가 발생한다.
+ 	> 이는 상속으로 묶인 두 개의 클래스가 강한 연관성을 띄기 때문이다. 
+ 	ex) 경찰->총 상속관계에서 총을 들지 않은 경찰을 표현하려면 큰 수정이 필요하기에 유연성이 떨어진다.
+	ex) 경찰->총 상속관계에서 전자봉을 든 경찰을 표현하려면 다중상속까지 고려하는 큰 공사가 필요하기에 확장성도 떨어진다.
+ 4) 결국 상속은 IS-A 관계에서만 사용하는 것이 좋다.
+ 	> 전문가의 의견에 따르면 IS-A / HAS-A 관계를 제외하고는 절대 상속을 사용하지 말라고 강조한다. 
 */ 
