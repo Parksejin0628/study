@@ -1,13 +1,156 @@
 #include<iostream>
+#include<cstring>
 using std::cin;
 using std::cout;
 using std::endl;
 
+void que8_1();
+
+namespace Employee_h
+{
+	//Employee.h
+	class EmployeeHandler;
+	class Employee;
+	class PermanentWorker;
+	
+	
+	class EmployeeHandler
+	{
+	private:
+		Employee* empList[50];
+		int empNum;
+	public:	
+		EmployeeHandler();
+		void AddEmployee(Employee* emp);
+		void ShowAllSalaryInfo() const;
+		void ShowTotalSalary() const;
+		~EmployeeHandler();
+	}; 
+	
+	class Employee
+	{
+	private:
+		char name[100];
+	public:	
+		Employee(char * name);
+		void ShowYourName() const;
+		virtual int GetPay() const;
+		virtual void ShowSalaryInfo() const;
+	};
+	
+	class PermanentWorker : public Employee
+	{
+	private:
+		int salary;
+	public:	
+		PermanentWorker(char * name, int money);
+		virtual int GetPay() const;
+		virtual void ShowSalaryInfo() const;
+	};
+	
+	//Employee.cpp
+	//EmployeeHandler
+	EmployeeHandler::EmployeeHandler() : empNum(0)
+	{
+		
+	}
+	void EmployeeHandler::AddEmployee(Employee* emp)
+	{
+		empList[empNum++] = emp;
+	}
+	void EmployeeHandler::ShowAllSalaryInfo() const
+	{
+		for(int i=0; i<empNum; i++)
+		{
+			empList[i]->ShowSalaryInfo();
+		}
+	}
+	void EmployeeHandler::ShowTotalSalary() const
+	{
+		int sum = 0;
+		for(int i=0; i<empNum; i++)
+		{
+			sum += empList[i]->GetPay();
+		}
+		cout<<"salary sum: "<<sum<<endl;
+	}
+	EmployeeHandler::~EmployeeHandler()
+	{
+		for(int i=0; i<empNum; i++)
+		{
+			delete empList[i];
+		}
+	}
+	
+	//Employee
+	Employee::Employee(char * name)
+	{
+		strcpy(this->name, name);
+	}
+	void Employee::ShowYourName() const
+	{
+		cout<<"name : "<<name<<endl;
+	}
+	int Employee::GetPay() const
+	{
+		return 0;
+	}
+	//PermanentWorker
+	PermanentWorker::PermanentWorker(char * name, int money) : Employee(name), salary(money)
+	{
+		
+	}
+	int PermanentWorker::GetPay() const
+	{
+		return salary;
+	}
+	void PermanentWorker::ShowSalaryInfo() const
+	{
+		ShowYourName();
+		cout<<"salary: "<<GetPay()<<endl<<endl;
+	}
+}
+
+using namespace Employee_h; //include"Employee.h"
+
 int main(void)
 {
-	
+	que8_1();
 	
 	return 0;
+}
+
+void que8_1()
+{
+	/*
+	[문제]
+	책에 있는 예제 EmployeeManager4.cpp를 확장하여 다음 특성에 해당하는 ForeignSalesWorker클래스를 추가로 정의해보자.
+	'영업직 직원 중 일부는 오지산간으로 시장개척을 진행하고 있다. 일부는 아마존에서, 또 일부는 테러의 위험이 있는 지역에서 영업활동을 진행 중에 있다.
+	따라서 이러한 직원들을 대상으로 별도의 위험수당을 지급하고자 한다.'
+	위험수당의 지급방식은 '위험의 노출도'에 따라서 다음과 같이 나뉘며, 한 번 결정된 직원의 '위험 노출도'는 변경되지 않는다고 가정한다. (const 멤버변수의 선언을 의미한다.)
+	 - 리스크 A : 영업직의 기본급여와 인센티브 합계 총액의 30%를 추가로 지급한다.
+	 - 리스크 B : 영업직의 기본급여와 인센티브 합계 총액의 20%를 추가로 지급한다.
+	 - 리스크 C : 영업직의 기본급여와 인센티브 합계 총액의 10%를 추가로 지급한다.
+	다음 코드가 동작하도록 ForeignSalesWorker 클래스를 정의하며, Employee 클래스는 객체 생성이 불가능한 추상 클래스로 정의한다. 
+	*/
+	// ForeignSalesWorker 클래스 추가부터 시작하면 된다. 
+	EmployeeHandler handler;
+	
+	ForeignSalesWorker * fseller1 = new ForeignSalesWorker("Hong", 1000, 0.1, RISK_LEVEL::RISK_A);
+	fseller1->AddSalesResult(7000);
+	handler.AddEmployee(fseller1); 
+	
+	ForeignSalesWorker * fseller2 = new ForeignSalesWorker("Yoon", 1000, 0.1, RISK_LEVEL::RISK_B);
+	fseller2->AddSalesResult(7000);
+	handler.AddEmployee(fseller2); 
+	
+	ForeignSalesWorker * fseller3 = new ForeignSalesWorker("Lee", 1000, 0.1, RISK_LEVEL::RISK_C);
+	fseller3->AddSalesResult(7000);
+	handler.AddEmployee(fseller3); 
+	
+	handler.ShowAllSalaryInfo();
+	
+	return;
 }
 
 /*
@@ -64,12 +207,47 @@ int main(void)
  	> 가리키는 객체에 따라 원하는 다른 함수를 호출해야 유연성과 확장성이 확보되지만, 자료형만 따르기 때문이다.
 	> 이는 가상함수 개념의 등장배경이 되었다. 
 3. 가상함수(virtual Function)
+ 1) 항상 자료형을 따라가는 클래스 포인터 변수의 멤버 호출의 단점을 보완하기 위해 탄생한 개념이다.
+ 2) 함수를 가상함수로 선언하면 포인터의 자료형을 기반으로 호출 대상을 선정하는 것이 아닌 가리키는 대상을 기반으로 호출 대상을 선정하게 된다.
+	ex) First *fptr = new Third()이고, MyFunc()가 가상함수인 경우 Third의 MyFunc를 호출하게 된다.
+ 3) 이러한 가상함수의 선언은 virtual 키워드의 선언을 통해서 이루어진다.
+ 	> 멤버함수 앞에 virtual 키워드를 추가한다.
+ 	> 함수의 선언부에만 virtual 키워드를 추가한다. 
+	ex) virtual void MyFunc() { ... }
+ 4) 가상함수가 선언된 뒤 해당 함수를 오버라이딩하는 함수도 자동으로 가상함수가 된다.
+ 	> 하지만, 가상함수라는 것을 명시하기 위해 유도클래스에서 virtual을 추가하도록 하자. 
 4. 순수 가상함수, 추상 클래스(Pure Virtual Function, Abstract Class)
+ 1) 기초 클래스 중에서는 기초 클래스로서의 의미만 가질 뿐 객체의 생성을 위한 클래스가 아닌 것이 있다.
+ 	> 이런 클래스를 대상으로 객체를 선언하는 실수가 발생할 수 있다.
+ 2) 이런 클래스에서는 실수를 막기 위해 가상함수를 '순수 가상함수(Pure Virtual Function)'으로 선언하는 것이 좋다.
+ 	> 순수 가상함수는 함수의 몸체가 정의되지 않은 함수를 의미한다.
+	> 함수 선언 끝에 = 0을 붙여 표현한다.
+		ex) virtual int GetPay() const = 0;
+ 3) 하나 이상의 순수 가상함수를 가지는 클래스를 추상 클래스(abstract class)라고 한다.
+ 	> 추상 클래스는 문법적으로 객체생성을 불가능하게 하기에 실수를 방지할 수 있다.
+	> 호출을 돕는 의미만을 가지는 함수를 좀 더 명확히 명시할 수 있게 된다. 
 5. 다형성(Polymorphism)
+ 1) 여태까지 다룬 가상함수의 호출 관계에서 보인 특성을 가리켜 '다형성(polymorphism)'이라고 한다.
+ 2) 다형성은 동질이상을 의미한다.
+ 	> 모습은 같은데 형태는 다르다는 의미를 가진다.
+	> C++의 관점으로 말하면 문장은 같은데 결과는 다르다는 것을 의미한다.
+	> virtual로 가리키는 대상에 따라 같은 문장도 다른 결과를 도출해내기에 다형성이라고 한다.
+		ex) First *fptr = new First() 혹은 new Third() / fptr->MyFunc() 여기서 처음에 포인터변수가 무엇을 가리키냐에 따라 같은 문장이지만 다른 결과를 도출해내기에 다형성의 예시가 된다. 
+6. 상속의 이유 
+ 1) 상속을 통해 연관된 일련의 클래스에 대해 공통적인 규약을 정의할 수 있다.
+ 	> 쉽게 말해 IS-A관계로 표현 가능한 클래스들에 공통적인 규약, 특징들을 정의할 수 있게 해준다.
+ 2) 이러한 상속을 통해 모든 클래스의 객체를 하나의 기초 클래스로 묶어 바라봄으로써 유연성과 확장성을 늘려준다.
+ 	ex) 책 예시에서 사용하는 PermanentWorker, TemporaryWorker, SalesWorker 모두 Employee로 바라보고 프로그램을 만듦으로써 유연성과 확장성을 확보하였다. 
 
 <8.3. 가상 소멸자와 참조자의 참조 가능성>
 1. 가상 소멸자
+ 1) 소멸자 또한 포인터 변수의 자료형을 따라가므로 유도 클래스의 소멸자는 제대로 호출이 안될 수 있다.
+ 2) 따라서, virtual 키워드를 통해 소멸자를 가상함수로 정의함으로써 유도 클래스의 소멸자도 제대로 호출될 수 있도록 한다. 
 2. 참조자의 참조 가능성  
+ 1) 참조자도 포인터 변수처럼 멤버함수를 접근한다.
+ 	> 기초클래스로 참조자를 선언할 경우 유도클래스도 참조할 수 있게 된다.
+	> 기본적으로 멤버호출은 선언한 자료형을 따른다.
+	> 단, virtual로 가상함수화 시켰을 경우 가리키는 대상의 멤버를 호출한다. 
 
 
 */
