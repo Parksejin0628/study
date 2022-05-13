@@ -8,11 +8,15 @@ void que8_1();
 
 namespace Employee_h
 {
+	namespace RISK_LEVEL
+	{
+		enum RiskLevel {RISK_A = 3, RISK_B = 2, RISK_C = 1};
+	}
+	
 	//Employee.h
 	class EmployeeHandler;
 	class Employee;
 	class PermanentWorker;
-	
 	
 	class EmployeeHandler
 	{
@@ -34,8 +38,8 @@ namespace Employee_h
 	public:	
 		Employee(char * name);
 		void ShowYourName() const;
-		virtual int GetPay() const;
-		virtual void ShowSalaryInfo() const;
+		virtual int GetPay() const = 0;
+		virtual void ShowSalaryInfo() const = 0;
 	};
 	
 	class PermanentWorker : public Employee
@@ -44,6 +48,29 @@ namespace Employee_h
 		int salary;
 	public:	
 		PermanentWorker(char * name, int money);
+		virtual int GetPay() const;
+		virtual void ShowSalaryInfo() const;
+	};
+	
+	class SalesWorker : public PermanentWorker
+	{
+	private:
+		int salesResult;
+		double bonusRatio;
+	public:
+		SalesWorker(char * name, int money, double ratio);
+		void AddSalesResult(int value);
+		virtual int GetPay() const;
+		virtual void ShowSalaryInfo() const;
+		int GetBonus() const;
+	};
+	
+	class ForeignSalesWorker : public SalesWorker
+	{
+	private:
+		const RISK_LEVEL::RiskLevel risk;
+	public:
+		ForeignSalesWorker(char *name, int money, double ratio, RISK_LEVEL::RiskLevel risk);
 		virtual int GetPay() const;
 		virtual void ShowSalaryInfo() const;
 	};
@@ -91,10 +118,7 @@ namespace Employee_h
 	{
 		cout<<"name : "<<name<<endl;
 	}
-	int Employee::GetPay() const
-	{
-		return 0;
-	}
+	
 	//PermanentWorker
 	PermanentWorker::PermanentWorker(char * name, int money) : Employee(name), salary(money)
 	{
@@ -109,13 +133,55 @@ namespace Employee_h
 		ShowYourName();
 		cout<<"salary: "<<GetPay()<<endl<<endl;
 	}
+	//SalesWorker
+	SalesWorker::SalesWorker(char * name, int money, double ratio) : PermanentWorker(name, money), salesResult(0), bonusRatio(ratio)
+	{
+		
+	}
+	void SalesWorker::AddSalesResult(int value)
+	{
+		salesResult += value;
+	}
+	int SalesWorker::GetPay() const
+	{
+		return PermanentWorker::GetPay() + GetBonus();
+	}
+	void SalesWorker::ShowSalaryInfo() const
+	{
+		ShowYourName();
+		cout<<"salary: "<<GetPay()<<endl<<endl;
+	}
+	int SalesWorker::GetBonus() const
+	{
+		return (int)(salesResult * bonusRatio);
+	}
+	//ForeignSalesWorker
+	ForeignSalesWorker::ForeignSalesWorker(char * name, int money, double ratio, RISK_LEVEL::RiskLevel risk) : SalesWorker(name, money, ratio), risk(risk)
+	{
+		
+	}
+	int ForeignSalesWorker::GetPay() const
+	{
+		return SalesWorker::GetPay() + SalesWorker::GetPay() * (risk * 0.1);
+	}
+	void ForeignSalesWorker::ShowSalaryInfo() const
+	{
+		ShowYourName();
+		cout<<"salary: "<<SalesWorker::GetPay()<<endl;
+		cout<<"risk pay: "<<SalesWorker::GetPay() * (risk*0.1)<<endl;
+		cout<<"sum: "<<GetPay()<<endl<<endl;
+	}
 }
 
 using namespace Employee_h; //include"Employee.h"
 
 int main(void)
 {
+	int num = 0;
+	
 	que8_1();
+	
+	cin>>num;
 	
 	return 0;
 }
