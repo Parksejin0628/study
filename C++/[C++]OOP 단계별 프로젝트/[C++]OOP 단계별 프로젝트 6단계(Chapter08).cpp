@@ -9,7 +9,7 @@
  > 고객의 신용등급을 A, B, C로 나누고 계좌개설 시 이 정보를 등록한다.
  > A, B, C 등급별로 각각 기본이율에 7%, 4%, 2% 이율을 추가로 제공한다.
 4. 이자는 편의상 입금 시에 이자가 원금에 더해지는 방식으로 간주한다.
- > 단, 계좌개설 과정에서 초기 입금되는 금액은 이자를 계산하지 않는다.
+ > 단, 계좌개설 과정에서 초기 입금되는 금액은 이자를 계산하지 않는다. 
  > 계좌개설 후 별도의 입금과정을 거칠 때에만 이자가 발생하는 것으로 간주한다.
  > 이자의 계산과정에서 발생하는 소수점 이하의 금액은 무시한다.
 5. AccountHandler 클래스에서 메뉴의 선택, 데이터의 입력과정 변경을 제외하고 큰 변화가 없어야 한다. 
@@ -23,7 +23,7 @@ using std::cout;
 using std::endl;
 const int NAME_LEN = 20;
 
-
+ 
 /*
 	클래스 이름 : Client
 	클래스 유형 : Emtity 클래스
@@ -36,6 +36,9 @@ namespace Client_h
 	namespace funcNum
 	{
 		enum { OPEN = 1, DEPOSIT, WITHDRAW, CHECKMONEY, EXIT };
+		enum creditInfo { CREDIT_A = 7, CREDIT_B = 4, CREDIT_C = 1};
+		enum { NORMAL = 1, CREDIT = 2 };
+		
 	}
 
 	class Client
@@ -44,13 +47,32 @@ namespace Client_h
 		int accountID;
 		char *name;
 		int money;
+		
 	public:
 		Client(int accountID, char *name, int money);
 		Client(const Client &copy);
-		bool setMoney(int money);
+		int getMoney() const;
+		virtual bool setMoney(int money);
 		void showClientInfo() const;
 		bool checkID(int ID) const;
 		~Client();
+	};
+	
+	class NormalAccount : public Client
+	{
+	private:
+		int interestRate;
+	public:
+		NormalAccount(int iID, char* iName, int iMoney, int iInterestRate);
+		virtual bool setMoney(int money);
+	};
+	
+	class HighCreditAccount : public NormalAccount
+	{
+	private:
+		funcNum::creditInfo credit;
+	public:
+		HighCreditAccount(int ID, char *name, int money, int interestRate, funcNum::creditInfo credit);
 	};
 	
 	//client.cpp
@@ -90,9 +112,32 @@ namespace Client_h
 		}
 		return false;
 	}
+	int Client::getMoney() const
+	{
+		return money;
+	}
 	Client::~Client()
 	{
 		delete []name;
+	}
+	//normalAccount
+	NormalAccount::NormalAccount(int iID, char* iName, int iMoney, int iInterestRate) : Client(iID, iName, iMoney), interestRate(iInterestRate)
+	{
+		
+	}
+	bool NormalAccount::setMoney(int money)
+	{
+		if(money > 0)
+		{
+		money += (getMoney() + money) * (interestRate) / 100;
+		}
+		Client::setMoney(money);
+	}
+	
+	//HighCreditAccount
+	HighCreditAccount::HighCreditAccount(int ID, char *name, int money, int interestRate, funcNum::creditInfo credit) : NormalAccount(ID, name, money, interestRate + credit)
+	{
+		
 	}
 }
 using namespace Client_h; //#include"client.h"
@@ -148,15 +193,47 @@ namespace AccountHandler_h
 		int accountID;
 		char name[30];
 		int money;
-		cout<<"[계좌개설]"<<endl; 
+		int interestRate;
+		int credit;
+		funcNum::creditInfo creditRating;
+		int choice = 0; 
+		cout<<"[계좌종류 선택]"<<endl; 
+		cout<<"1. 보통예금계좌 2. 신용신뢰계좌"<<endl;
+		cout<<"선택: ";
+		cin>>choice;
+			
 		cout<<"개설할 계좌 번호 : ";
 		cin>>accountID;
 		cout<<"고객의 이름 : ";
 		cin>>name;
 		cout<<"입금할 금액 : ";
 		cin>>money;
-	
-		clients[clientIndex] = new Client(accountID, name, money);
+		cout<<"이자율 : ";
+		cin>>interestRate;
+		//Normal
+		if(choice == funcNum::NORMAL)
+		{
+			clients[clientIndex] = new NormalAccount(accountID, name, money, interestRate);
+			
+		}
+		else if(choice == funcNum::CREDIT)
+		{
+			cout<<"신용등급(1toA, 2toB, 3toC): ";
+			cin>>credit;
+			if(credit == 1)
+			{
+				creditRating = funcNum::CREDIT_A;
+			}
+			else if(credit == 2)
+			{
+				creditRating = funcNum::CREDIT_B;
+			}
+			else if(credit == 3)
+			{
+				creditRating = funcNum::CREDIT_C;
+			}
+			clients[clientIndex] = new HighCreditAccount(accountID, name, money, interestRate, creditRating);
+		}
 		clientIndex++;
 	
 		cout<<"성공적으로 개설되었습니다!"<<endl; 
