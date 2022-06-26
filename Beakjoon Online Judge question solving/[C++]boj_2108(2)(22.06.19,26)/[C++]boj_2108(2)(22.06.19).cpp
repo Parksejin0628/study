@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cmath>
 
 using std::cin;
 using std::cout;
@@ -33,6 +34,7 @@ Num::Num(int input_num_count) : num_index(0), sum(0), num_count(input_num_count)
 Num::~Num()
 {
 	delete []num;
+	delete []sortNum;
 }
 
 void Num::inputNum(int input_num)
@@ -45,18 +47,8 @@ void Num::inputNum(int input_num)
 	num[num_index] = input_num;
 	num_index++;
 	sum += input_num;
-	if(input_num > 0)
-	{
-		countNumber[input_num+4000]++;
-	}
-	else if(input_num < 0)
-	{
-		countNumber[input_num*-1]++;
-	}
-	else if(input_num == 0)
-	{
-		countNumber[0]++;
-	}
+	countNumber[input_num+4000]++;
+	
 	if(input_num < minNum)
 	{
 		minNum = input_num;
@@ -129,12 +121,15 @@ void Num::mergeSort(int start, int end)
 void Num::printAnswer()
 {
 	int maxCountNumber = 0;
-	int maxCountNumber_num = 0;
-	bool nest = false;
+	int maxCountNumber_num = -4001;
+	int average = round(sum/(double)num_index);
+	bool nest = true;
 	
 	//1. 산술평균
-	cout<<sum/num_index<<endl;
+	//cout<<"1. 산술평균 : ";
+	cout<<average<<endl;
 	//2. 중앙값
+	//cout<<"2. 중앙값 : ";
 	mergeSort(0, num_index - 1);
 	cout<<num[num_index/2]<<endl;
 	/*cout<<"정렬값 확인"<<endl;
@@ -144,26 +139,26 @@ void Num::printAnswer()
 	}
 	cout<<"정렬값 확인 끝"<<endl;*/
 	//3. 최빈값 
+	//cout<<"3. 최빈값 : "; 
 	for(int i=0; i<=8000; i++)
 	{
 		if(countNumber[i] > maxCountNumber)
 		{
 			maxCountNumber = countNumber[i];
-			maxCountNumber_num = i*-1;
+			maxCountNumber_num = i - 4000;
 			nest = false;
+			//cout<<"현재 최빈값 : "<<maxCountNumber_num<<endl;
 		}
 		else if(countNumber[i] == maxCountNumber && nest == false)
 		{
-			maxCountNumber_num = i*-1;
-			nest = true;
-		}
-		if(maxCountNumber_num < -4000)
-		{
 			maxCountNumber_num = i - 4000;
+			nest = true;
+			//cout<<"현재 최빈값 : "<<maxCountNumber_num<<endl;
 		}
 	}
 	cout<<maxCountNumber_num<<endl;
 	//4. 범위
+	//cout<<"4. 범위 : ";
 	cout<<maxNum - minNum<<endl; 
 }
 
