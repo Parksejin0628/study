@@ -6,10 +6,12 @@ using std::cin;
 using std::endl;
 
 void que1();
+void que2();
 
 int main(void)
 {
 	que1();
+	que2();
 
 	return 0;
 }
@@ -56,6 +58,39 @@ void que1()
 
 	result = pos1 != pos2;
 	cout << "!=연산 결과 : " << result << endl;
+
+}
+
+void que2()
+{
+	//문제 1, 2 동시 풀이
+	/*
+	<문제1 : 멤버함수의 형태로 오버로딩>
+	 - 부호 연산자로서 -는 단항 연산자이다. 이 연산자는 피연산자의 부호를 반전시킨 결과를 반환한다.
+	   Point 클래스를 대상으로 - 연산자를 오버로딩 해 보자. 다음 문장이 실행되면
+		> Point pos2 = -pos1;
+	   pos2의 멤버변수는 pos1의 멤버변수 갑소가 다른 부호의 값으로 초기화되도록 오버로딩 해보자.
+	<문제2 : 전역함수의 형태로 오버로딩>
+	 - ~연산자는 단항 연산자로서 비트단위 not의 의미를 갖는다. 즉, ~연산자는 비트단위로 1은 0으로, 0은 1로 바꾼다. 
+	   이에 우리는 Point 객체를 대상으로 다음과 같이 연산이 가능하도록 ~연산자를 오버로딩 하고자 한다.
+	    > Point pos2 = ~pos1;
+	   위의 ~ 연산의 결과로 반환된 객체의 xpos 멤버에는 pos1의 ypos 값이, 반환된 객체의 ypos 멤버에는 pos1의 xpos 값이 저장되어야 한다.
+	*/
+	Point pos1(2, 5);
+	Point pos2 = -pos1;
+
+	cout << "-단항 연산자 결과 : ";
+	pos2.printPos();
+
+	pos2 = ~pos2;
+	cout << "~단항 연산자 결과 : ";
+	pos2.printPos();
+
+	pos2 = -(-pos2);
+	cout << "+ 단항 연산자 2번 결과";
+	pos2.printPos();
+
+
 }
 
 /*

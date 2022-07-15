@@ -11,10 +11,13 @@ private:
 	int xpos, ypos;
 public:
 	Point(int xpos, int ypos);
-	Point operator+=(const Point &ref);
-	Point operator-=(const Point &ref);
+	Point operator+=(const Point &ref) const;
+	Point operator-=(const Point &ref) const;
+	Point& operator++();
+	Point& operator-() const;
 	friend Point operator-(const Point &pos1, const Point &pos2);
 	friend bool operator==(const Point &pos1, const Point &pos2);
 	friend bool operator!=(const Point &pos1, const Point &pos2);
+	friend Point& operator~(const Point &pos);
 	void printPos();
 };
