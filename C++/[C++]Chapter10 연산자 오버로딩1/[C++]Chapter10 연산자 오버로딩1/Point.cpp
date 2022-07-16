@@ -25,6 +25,15 @@ Point& Point::operator++()
 	return *this;
 }
 
+const Point& Point::operator++(int)
+{
+	const Point retobj(xpos, ypos);
+	xpos = xpos + 1;
+	ypos = ypos + 1;
+
+	return retobj;
+}
+
 Point& Point::operator-() const
 {
 	Point returnObj(-xpos, -ypos);
@@ -64,4 +73,10 @@ void Point::printPos()
 	cout << "(" << xpos << ", " << ypos << ")" << endl;
 
 	return;
+}
+
+Point& operator+(int num, const Point &pos)
+{
+	Point retobj(pos.xpos + num, pos.ypos + num);
+	return retobj;
 }
