@@ -7,6 +7,7 @@ using std::endl;
 
 void que1();
 void que2();
+void que3();
 
 int main(void)
 {
@@ -15,6 +16,7 @@ int main(void)
 
 	que1();
 	que2();
+	que3();
 
 	cpy = 3 + pos;
 	cout << "교환법칙 성립 시험";
@@ -100,6 +102,27 @@ void que2()
 	endl(cout);
 	// 이 왜 가능
 
+}
+
+void que3()
+{
+	/*
+	<문제 : 입력을 위한 >> 연산자의 오버로딩>
+	 - 아래의 함수가 데이터의 입력과 출력이 가능하도록 연산자를 오버로딩해보자
+	*/
+	Point pos1;
+	cout << "x, y 좌표 순으로 입력: ";
+	cin >> pos1;
+	cout << pos1;
+
+	Point pos2;
+	cout << "x, y 좌표 순으로 입력: ";
+	cin >> pos2;
+	cout << pos2;
+
+
+
+	return;
 }
 
 /*

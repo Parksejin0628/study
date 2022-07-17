@@ -1,5 +1,10 @@
 #include"Point.h"
 
+Point::Point() : xpos(0), ypos(0)
+{
+
+}
+
 Point::Point(int xpos, int ypos) : xpos(xpos), ypos(ypos)
 {
 
@@ -79,4 +84,18 @@ Point& operator+(int num, const Point &pos)
 {
 	Point retobj(pos.xpos + num, pos.ypos + num);
 	return retobj;
+}
+
+ostream& operator<<(ostream &os, const Point &pos)
+{
+	os << "[" << pos.xpos << ", " << pos.ypos << "]" << endl;
+
+	return os;
+}
+
+istream& operator>>(istream &is, Point &pos)
+{
+	is >> pos.xpos >> pos.ypos;
+
+	return is;
 }
