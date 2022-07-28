@@ -1,6 +1,6 @@
 #pragma once
-#include<iostream>
-#include<cstring>
+#include"common.h"
+
 #pragma warning(disable:4996)
 
 using std::cout;

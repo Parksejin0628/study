@@ -21,9 +21,24 @@
     <ClCompile Include="Person.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Police.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Gun.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Person.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Police.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
