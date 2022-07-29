@@ -1,12 +1,19 @@
 #include"Person.h"
 
-Person::Person(const char *myname, int myage)
+Person::Person(const char* myname, int myage) : age(myage)
 {
 	int len = strlen(myname) + 1;
 	name = new char[len];
 	strcpy(name, myname);
-	age = myage;
 }
+
+Person::Person() : age(0)
+{
+	int len = 20;
+	name = new char[len];
+	strcpy(name, "default name");
+}
+
 void Person::ShowPersonInfo() const
 {
 	cout << "ÀÌ¸§: " << name << endl;

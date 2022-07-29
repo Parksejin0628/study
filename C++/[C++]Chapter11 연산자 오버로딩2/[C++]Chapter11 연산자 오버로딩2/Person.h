@@ -1,5 +1,5 @@
 #pragma once
-#include"common.h"
+#include"Common.h"
 
 #pragma warning(disable:4996)
 
@@ -13,7 +13,8 @@ private:
 	char *name;
 	int age;
 public:
-	Person(const char *myname, int myage);
+	Person();
+	Person(const char* myname, int myage);
 	~Person();
 	void ShowPersonInfo() const;
 	Person& operator=(const Person& ref);

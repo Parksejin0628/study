@@ -1,10 +1,14 @@
 #include"Person.h"
-#include"common.h"
+#include"Common.h"
 #include"Police.h"
+#include"Arr.h"
+#include"ArrayObject_address.h"
+#include"ArrayObject_value.h"
 
-//다음에 공부할 때는 배열 클래스의 형태를 실제로 만들어보고 문제 11-2를 풀이하면 된다.
+//다음에 공부할 때는 11-2를 풀이하면 된다.
 
 void que1();
+void que2();
 
 int main(void)
 {
@@ -13,6 +17,34 @@ int main(void)
 	man2 = man1;
 	man1.ShowPersonInfo();
 	man2.ShowPersonInfo();
+	
+	Array arr(5);
+	arr[2] = 3;
+	arr[4] = 5;
+	cout << "배열 클래스 값들 : " << endl;
+	for (int i = 0; i < 5; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+
+	ArrayObject_value arrObj_val(3);
+	arrObj_val[0] = Person("ParkSejin", 22);
+	arrObj_val[1] = man1;
+	cout << "객체 클래스(값저장)" << endl;
+	for (int i = 0; i < 3; i++)
+	{
+		arrObj_val[i].ShowPersonInfo();
+	}
+
+	ArrayObject_address arrObj_add(3);
+	arrObj_add[0] = new Person("ParkSejin", 22);
+	arrObj_add[1] = new Person(man1);
+	cout << "객체 클래스(주소 저장)" << endl;
+	for (int i = 0; i < 3; i++)
+	{
+		arrObj_add[i]->ShowPersonInfo();
+	}
 
 	que1();
 
@@ -43,6 +75,14 @@ void que1()
 	police3.ShowPolice();
 
 	return;
+}
+
+void que2()
+{
+	/*
+	[문제1]
+	*/
+
 }
 
 /*
@@ -79,6 +119,7 @@ void que1()
 	- 즉, 선언과 초기화를 별도의 문장에서 진행하는 형태로 이루어진다.
 	- 이는 선언을 할 때 생성자가, 초기화를 할 때 대입 연산자가 호출되어 함수를 2번 이상 호출하게 한다.
  3) 위 같은 이유 때문에 이니셜라이저를 이용하면 함수의 호출 횟수가 줄어들어 성능향상이 된다.
+
 <11.2. 배열의 인덱스 연산자 오버로딩>
 1. 배열의 인덱스 연산자 오버로딩 및 배열 클래스
  1) []연산자도 다른 연산자와 비슷하게 연산자 오버로딩이 된다.

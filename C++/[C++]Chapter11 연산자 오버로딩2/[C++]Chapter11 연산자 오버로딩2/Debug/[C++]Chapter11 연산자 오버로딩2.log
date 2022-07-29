@@ -1,5 +1,2 @@
-﻿  Police.cpp
-D:\GitHub\study\study\C++\[C++]Chapter11 연산자 오버로딩2\[C++]Chapter11 연산자 오버로딩2\Police.cpp(23,10): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
-  main.cpp
-  코드를 생성하고 있습니다...
+﻿  Person.cpp
   [C++]Chapter11 연산자 오버로딩2.vcxproj -> D:\GitHub\study\study\C++\[C++]Chapter11 연산자 오버로딩2\Debug\[C++]Chapter11 연산자 오버로딩2.exe
