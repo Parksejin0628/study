@@ -36,6 +36,12 @@
     <ClCompile Include="ArrayObject_address.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="%28Example%29StablePointPtrArray.h">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundCheck2DIntArray.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Person.h">
@@ -57,6 +63,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="ArrayObject_address.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundCheck2DIntArray.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

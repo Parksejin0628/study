@@ -4,6 +4,8 @@
 #include"Arr.h"
 #include"ArrayObject_address.h"
 #include"ArrayObject_value.h"
+#include"(Example)StablePointPtrArray.h"
+#include"BoundCheck2DIntArray.h"
 
 //다음에 공부할 때는 11-2를 풀이하면 된다.
 
@@ -40,6 +42,7 @@ int main(void)
 	ArrayObject_address arrObj_add(3);
 	arrObj_add[0] = new Person("ParkSejin", 22);
 	arrObj_add[1] = new Person(man1);
+	arrObj_add[2] = new Person(man2);
 	cout << "객체 클래스(주소 저장)" << endl;
 	for (int i = 0; i < 3; i++)
 	{
@@ -47,6 +50,7 @@ int main(void)
 	}
 
 	que1();
+	que2();
 
 	return 0;
 }
@@ -81,9 +85,78 @@ void que2()
 {
 	/*
 	[문제1]
+	 - 예제 StablePointPtrArray.cpp의 65행, 66행에서 *(arr[i])가 아닌 arr[i]로 할 수 있도록
+	   Point 클래스를 대상으로 연산자 오버로딩을 진행해보자.
 	*/
+	cout << "문제11-2[1]" << endl;
+	BoundCheckPointPtrArray arr(3);
+	arr[0] = new Point(3, 4);
+	arr[1] = new Point(5, 6);
+	arr[2] = new Point(7, 8);
 
+	POINT_PTR address = arr[0];
+
+	for (int i = 0; i < arr.GetArrLen(); i++)
+		cout << arr[i];
+	delete arr[0];
+	delete arr[1];
+	delete arr[2];
+	/*
+	[문제2]
+	 - 2차원 배열접근에 대한 연산자 오버로딩을 진행하고자 한다.(실제로 이렇게까지 하지는 않는다.)
+	   'class BoundCheck2DIntArray { ... }' 이름으로 클래스를 정의하자.
+	   이 클래스는 BoundCheckIntArray(책 예제)클래스의 2차원 배열 버전이다.
+	   'BoundCheck2DIntArray arr2d(3, 4); 처럼 객체를 생성하면 세로와 가로의 길이가 각각 3과 4인
+	   int형 2차원 배열처럼 동작하는 arr2d 객체가 생성되는 것이다.
+	   즉, 'arr2d[n][m] = n + m'와 같은 형태로 데이터를 저장 및 참조할 수 있어야 한다.
+	   두 개의 []연산자를 동시에 오버로딩 하는 것은 허용되지 않기 때문에 
+	   arr2d[n][m] -> (arr2d.operator[](n))[m] 와 같이 해석되며
+	   따라서, ((반환 값).operator[](m); 와 같이 해석되어야 한다.
+	[풀이 접근]
+	 - 기존 이차원 배열의 원리 처럼 첫 번째 인덱스에서는 주소값을 반환하고 주소값을 받는 함수가
+	   값을 반환하도록 해야 할 것 같다.
+	   즉, operator[](int)는 주소값을, operator[](...) 주소값에 대한 자료형이 있던가..?
+	   자료형은 직접 정의하면 된다! 자료형을 직접 저장한 뒤 클래스의 멤버 변수로 삼으면 그만이다.
+	   BoundCheck2dIntArray 클래스에서 Arr클래스를 배열형태로 저장하면 전부 쉬워질 것 같다.
+	   operator[](int)에서 Arr을 반환하면 그만이니까
+	*/
+	BoundCheck2DIntArray arr2d(3, 4);
+	
+	cout << "문제11-2[2]" << endl;
+
+	for (int n = 0; n < 3; n++)
+	{
+		for (int m = 0; m < 4; m++)
+		{
+			arr2d[n][m] = n + m;
+		}
+	}
+
+	for (int n = 0; n < 3; n++)
+	{
+		for (int m = 0; m < 4; m++)
+		{
+			cout << arr2d[n][m] << ' ';
+		}
+		cout << endl;
+	}
+
+	return;
 }
+
+ostream& operator<<(ostream& os, const Point& pos)
+{
+	os << '[' << pos.xpos << ", " << pos.ypos << ']' << endl;
+	return os;
+}
+
+ostream& operator<<(ostream& os, const Point* pos)
+{
+	os << '[' << pos->xpos << ", " << pos->ypos << ']' << endl;
+	return os;
+}
+
+
 
 /*
 [Chapter11 연산자 오버로딩2]

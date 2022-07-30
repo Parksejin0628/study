@@ -1,5 +1,10 @@
 #include"Arr.h"
 
+Array::Array() : arrlen(0)
+{
+	
+}
+
 Array::Array(int len) : arrlen(len)
 {
 	arr = new int[len];
@@ -34,4 +39,12 @@ int Array::operator[](int idx) const
 	}
 
 	return arr[idx];
+}
+
+Array& Array::init(int len)
+{
+	arrlen = len;
+	arr = new int[arrlen];
+
+	return *this;
 }

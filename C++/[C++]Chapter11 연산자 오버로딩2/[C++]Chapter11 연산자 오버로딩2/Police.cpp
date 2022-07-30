@@ -20,7 +20,7 @@ Police::Police(const Police& ref) : handcuffs(ref.handcuffs)
 	}
 	else
 	{
-		pistol == NULL;
+		pistol = NULL;
 	}
 }
 

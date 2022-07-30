@@ -123,9 +123,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="%28Example%29StablePointPtrArray.h" />
     <ClCompile Include="Arr.cpp" />
     <ClCompile Include="ArrayObject_address.cpp" />
     <ClCompile Include="ArrayObject_value.cpp" />
+    <ClCompile Include="BoundCheck2DIntArray.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Person.cpp" />
@@ -135,6 +137,7 @@
     <ClInclude Include="Arr.h" />
     <ClInclude Include="ArrayObject_address.h" />
     <ClInclude Include="ArrayObject_value.h" />
+    <ClInclude Include="BoundCheck2DIntArray.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Person.h" />
