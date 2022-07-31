@@ -142,6 +142,7 @@
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="Police.h" />
+    <ClInclude Include="SmartPointer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
