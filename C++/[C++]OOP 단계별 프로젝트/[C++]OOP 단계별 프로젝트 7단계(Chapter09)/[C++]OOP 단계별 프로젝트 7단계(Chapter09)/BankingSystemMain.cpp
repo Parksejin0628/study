@@ -1,5 +1,5 @@
 /*
-[6단계 중점 사안]
+[8단계 중점 사안]
 1. Account 클래스를 상속하는 NormalAccount, HighCreditAccount 계좌 추가 정의
  > NormalAccount(보통예금계좌) : 평범하게 이자를 지급하는 계좌이다.
  > HighCreditAccount(신용신뢰계좌) : 신용도에 따라 추가로 이자를 지급하는 계좌이다.
