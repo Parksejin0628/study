@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="Common.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="SmartPtr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

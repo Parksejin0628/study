@@ -1,7 +1,11 @@
 #include"Common.h"
 #include"Point.h"
+#include"SmartPtr.h"
 
 void que1();
+void que2();
+
+
 template <typename T>
 void SwapData(T& pos1, T& pos2)
 {
@@ -27,6 +31,7 @@ T SumArray(T arr[], int len)
 int main(void)
 {
 	que1();
+	que2();
 
 	return 0;
 }
@@ -64,6 +69,25 @@ void que1()
 
 	double numF[10] = { 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9, 11 };
 	cout << "double형 합계 : " << SumArray<double>(numF, 10) << endl;
+
+	return;
+}
+
+void que2()
+{
+	/*
+	[문제]
+	 - 앞선 챕터 11에서 공부한 스마트 포인터를 템플릿 형태로 정의해 어떤 객체도 참조할 수 있는 포인터가 되도록 해보자.
+	*/
+	SmartPtr<Point> sptr1(new Point(1, 2));
+	SmartPtr<Point> sptr2(new Point(3, 4));
+	sptr1->ShowPosition();
+	sptr2->ShowPosition();
+	sptr1->SetPos(10, 20);
+	sptr2->SetPos(30, 40);
+	sptr1->ShowPosition();
+	sptr2->ShowPosition();
+
 
 	return;
 }
@@ -136,5 +160,42 @@ void que1()
 		> 이런식으로 특수 상황에 대처하기 위해 사용한다.
 		> 호출 때 add<char*>(...)를 한다면 위 함수가 대신 호출되는 것이다.
 		> <char *>는 생략해도 되지만 직관성을 위해 생략하지 않는 편이 좋다.
-
+<13.2. 클래스 템플릿(Class Template)>
+1. 클래스 템플릿
+ 1) 클래스 템플릿 정의
+	- 함수를 템플릿으로 정의하듯 클래스도 템플릿으로 정의가 가능하다. 이 때 템플릿으로 정의된 템플릿을 클래스 템플릿(Class template) 라고 한다.
+	- 정의 방법 : 함수와 유사하게 template<typename T>를 앞줄에 추가하고 나중에 정의할 자료형에 T를 사용하면 된다.
+		ex) template <typename T>
+			class Point
+			{
+			private:
+				T xpos, ypos;
+			public:
+				Point(T x=0, T y=0) : xpos(x), ypos(y) { }
+			};
+	- 이러한 템플릿으로 만들어진 클래스를 템플릿 클래스(template class)라고 한다.
+ 2) 유의점
+	- 템플릿 클래스를 호출할 때 역시 클래스 명 뒤에 자료형을 <자료형> 형태로 명시해야 한다.
+		ex) Point<int>(2, 3)
+	- 단, 템플릿 클래스를 호출할 때는 템플릿 함수와는 다르게 <자료형>을 생략할 수 없다.
+2. 클래스 템플릿의 선언과 정의의 분리
+ 1) 선언과 정의 분리하기
+	- 기존 클래스와 유사하게 멤버 함수를 클래스에 선언하고 외부에 정의하는 방식으로 선언과 정의를 분리할 수 있다.
+	- 외부에 정의할 때는 앞줄에 template <typename T>를 붙여 T가 무엇인지 정의하고, 클래스명뒤에<T>를 붙여야 한다.
+		ex) template <typename T>
+			T SimpleTemplate<T>::SimpleFunc(const T& ref)
+			{
+				...
+			}
+	- template<typename T>를 붙이는 이유는 클래스의 선언과 다른 곳에 분리되어 있기 때문에 컴파일러가 T에 대한 정보를 찾을 수 없기 때문이다.
+	- 클래스 뒤에 <T>를 붙이는 이유는 템플릿화된 클래스의 함수를 정의한다는 것을 명시하기 위해서이다.
+ 2) 파일 분리에 따른 문제점과 해결 방법
+	- 헤더파일과 소스파일을 나눌 경우 컴파일이 파일 단위로 되기 때문에 컴파일 과정에서 템플릿 클래스가 만들어질 때 헤더파일에서는 파일 정보를 알 수 없다.
+		> 헤더파일에는 멤버함수의 정의가 포함되어 있지 않기 때문이다.
+		> 컴파일 과정에서는 다른 파일을 참조하지 않는다.
+	- 이에 대한 해결방법은 크게 두 가지 이다.
+		> 헤더파일에 생성자, 멤버함수의 정의를 모두 넣는다.
+		> 해당 클래스를 사용하는 파일에 소스파일도 include한다.
+			ex) #include "PointTemplate.h"
+				#include "PointTemplate.cpp"
 */
