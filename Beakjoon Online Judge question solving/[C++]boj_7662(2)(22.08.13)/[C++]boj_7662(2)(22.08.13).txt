@@ -1,5 +1,5 @@
 문제 : 7662번 (난이도 골드 4)
-풀이시간 : 37m
+풀이시간 : 2h 22m
 
 풀이법
  - 일단, 이중 우선순위 큐는 같은 데이터를 최대 힙(Max Heap)과 최소 힙(Min Heap)을 통해 정렬한 후 한 곳에서 값을 삭제하면
@@ -28,4 +28,75 @@
 7    6 5    	put : rearIndex에 값을 넣은 뒤 자신의 인덱스를 index라고 하면 index/2와의 값비교 후 위치를 바꾸는 과정을 반복한다.
 get : rearIndex에 있는 값을 0번 위치로 옮긴 후 rearIndex -1, 그 후 자신의 인덱스를 index라고 하면 index와 index*2, index*2+1
 와 값을 비교하여 자신이 더 작은 경우 위치교환 반복
+
+[객체목록]
+<Data>
+한줄 설명 : 입력받는 값을 저장
+멤버 변수 : int num / bool delete
+멤버 함수
+ - 생성자(void) : 처음 배열 생성용
+ // - 생성자(Data copy) : 데이터 추가용
+ // - 대입 연산자(Data copy) : 데이터 추가용
+ - 대입 연산자(int inputNum) : 데이터 추가용
+ - bool deleteData() : 데이터 제거용
+ - int getNum() : num 가져오기
+
+<DoublePriorityQueue>
+한줄 설명 : 데이터를 이중 우선순위 큐를 통해 최댓값, 최솟값 정렬
+멤버 변수 : Data* newData / Data* maxQueue[1000100] / Data* minQueue[1000100] / Data* temp_swap;
+	  / int rearIndex_maxQueue / int rearIndex_minQueue / int parentIndex / int childIndex
+멤버 함수
+ - 생성자(void) : 초기화 및 배열 생성
+ - void inputNewData(int input) : 새로운 데이터를 추가한 뒤 maxQueue, minQueue 재정렬
+ - int maxPop(bool del) : maxQueue에서 우선순위가 제일 높은 데이터 제거
+ - int minPop(bool del) : minQueue에서 우선순위가 제일 높은 데이터 제거
+ - void init() : 모든 데이터 초기화
+ - bool printAnswer() : 정답인 최댓값과 최솟값 혹은 EMPTY 출력
+
+
+[Data의 멤버함수 정의]
+<생성자(void)>
+ - num = 0, delete = false로 초기화
+
+// <생성자(Data copy)>
+// - num = copy.num, delete = copy.delete
+
+<대입 연산자(int inputNum)>
+ - num = inputNum;
+
+<bool deleteData(bool del)>
+ - delete == false인 경우 delete true, return false;
+ - delete == true인 경우 return true;
+ - del = false인 경우 delete == false일 때 delete를 건들지 않는다.
+
+<int getNum()>
+ - return num
+
+
+[DoublePriorityQueue의 멤버함수 정의]
+<생성자(void)>
+ - rearIndex_maxQueue = 1;
+ - rearIndex_minQueue = 1;
+
+<void inputNewData(int input)>
+ - newData = new Data(input)
+ - maxQueue[rearIndex_maxQueue++] = newData, maxQueue 정렬
+ - minQueue[rearIndex_minQueue++] = newData, minQueue 정렬
+ - 정렬 방법은 childIndex = rearIndex, parentIndex = childIndex / 2; 를 한 뒤 두 인덱스 값을 비교 및 교환한다.
+   교환할 경우 childIndex = parentIndex, parentIndex = childIndex / 2; 로 바꾸며 반복한다.
+   단, parentIndex < 1인 경우 중단한다.
+
+<int maxPop(bool del)>
+ - Data* popData = maxQueue[1], int retNum = *maxQueue[1].getNum();
+ - maxQueue[1] = maxQueue[rearIndex_maxQueue--]
+ - parentIndex = 1, childIndex = parentIndex * 2를 한 뒤 parentIndex, childIndex 값을 비교한다.
+   만약 childIndex가 더 작은 경우 childIndex + 1을 한 뒤 다시 비교한다.
+   비교하여 교환해야 하는 경우 parentIndex = childIndex, childIndex = parentIndex * 2를 하며 비교를 반복한다.
+   단, childIndex >= rearIndex_maxQueue인 경우 중단한다.
+ - *popData.deleteData(del)가 ture인 경우 delete popData를 한 뒤 위 과정을 반복한다.
+ - retNum을 리턴한다.
+
+<int minPop(bool del)>
+ - maxPop()를 최소값으로 한다.
+
 
