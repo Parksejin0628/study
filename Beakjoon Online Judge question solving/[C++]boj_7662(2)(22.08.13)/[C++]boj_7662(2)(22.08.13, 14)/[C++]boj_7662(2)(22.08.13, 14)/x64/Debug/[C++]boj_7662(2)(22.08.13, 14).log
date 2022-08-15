@@ -1,8 +1,3 @@
 ﻿  main.cpp
-main.obj : error LNK2019: "public: __cdecl DoublePriorityQueue::DoublePriorityQueue(void)" (??0DoublePriorityQueue@@QEAA@XZ)main 함수에서 참조되는 확인할 수 없는 외부 기호
-main.obj : error LNK2019: "public: void __cdecl DoublePriorityQueue::inputNewData(int)" (?inputNewData@DoublePriorityQueue@@QEAAXH@Z)main 함수에서 참조되는 확인할 수 없는 외부 기호
-main.obj : error LNK2019: "public: int __cdecl DoublePriorityQueue::maxPop(bool)" (?maxPop@DoublePriorityQueue@@QEAAH_N@Z)main 함수에서 참조되는 확인할 수 없는 외부 기호
-main.obj : error LNK2019: "public: int __cdecl DoublePriorityQueue::minPop(bool)" (?minPop@DoublePriorityQueue@@QEAAH_N@Z)main 함수에서 참조되는 확인할 수 없는 외부 기호
-main.obj : error LNK2019: "public: void __cdecl DoublePriorityQueue::init(void)" (?init@DoublePriorityQueue@@QEAAXXZ)main 함수에서 참조되는 확인할 수 없는 외부 기호
-main.obj : error LNK2019: "public: void __cdecl DoublePriorityQueue::printAnswer(void)" (?printAnswer@DoublePriorityQueue@@QEAAXXZ)main 함수에서 참조되는 확인할 수 없는 외부 기호
-D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_7662(2)(22.08.13)\[C++]boj_7662(2)(22.08.13, 14)\x64\Debug\[C++]boj_7662(2)(22.08.13, 14).exe : fatal error LNK1120: 6개의 확인할 수 없는 외부 참조입니다.
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_7662(2)(22.08.13)\[C++]boj_7662(2)(22.08.13, 14)\[C++]boj_7662(2)(22.08.13, 14)\main.cpp(33): warning C4715: 'Data::deleteData': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  [C++]boj_7662(2)(22.08.13, 14).vcxproj -> D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_7662(2)(22.08.13)\[C++]boj_7662(2)(22.08.13, 14)\x64\Debug\[C++]boj_7662(2)(22.08.13, 14).exe

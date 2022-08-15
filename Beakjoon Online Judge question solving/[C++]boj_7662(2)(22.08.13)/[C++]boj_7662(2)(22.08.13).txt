@@ -50,7 +50,6 @@ get : rearIndex에 있는 값을 0번 위치로 옮긴 후 rearIndex -1, 그 후
  - void inputNewData(int input) : 새로운 데이터를 추가한 뒤 maxQueue, minQueue 재정렬
  - int maxPop(bool del) : maxQueue에서 우선순위가 제일 높은 데이터 제거
  - int minPop(bool del) : minQueue에서 우선순위가 제일 높은 데이터 제거
- - void init() : 모든 데이터 초기화
  - bool printAnswer() : 정답인 최댓값과 최솟값 혹은 EMPTY 출력
 
 
@@ -93,10 +92,15 @@ get : rearIndex에 있는 값을 0번 위치로 옮긴 후 rearIndex -1, 그 후
    만약 childIndex가 더 작은 경우 childIndex + 1을 한 뒤 다시 비교한다.
    비교하여 교환해야 하는 경우 parentIndex = childIndex, childIndex = parentIndex * 2를 하며 비교를 반복한다.
    단, childIndex >= rearIndex_maxQueue인 경우 중단한다.
- - *popData.deleteData(del)가 ture인 경우 delete popData를 한 뒤 위 과정을 반복한다.
+ - *popData.deleteData(del)가 true인 경우 delete popData를 한 뒤 위 과정을 반복한다.
  - retNum을 리턴한다.
 
 <int minPop(bool del)>
  - maxPop()를 최소값으로 한다.
+
+<void printAnswer()>
+ - maxPop(false), minPop(false)값을 받아 답을 출력한다.
+데이터가 하나다 (rearIndex_maxQueue가 2이다.) 상관 x (물론 deleteData검증 후)
+데이터가 없다. (rearIndex_maxQueue가 1이다.) EMPTY를 출력해야 한다.
 
 
