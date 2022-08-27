@@ -3,6 +3,10 @@
 using std::cout;
 using std::cin;
 using std::endl;
+
+int counting = 0;
+int nowcounting = 0;
+
 // pop에서 값 교환할 때 자식 둘 중 더 큰 자식과 교환하는 과정 해야된다.
 
 class Data
@@ -60,6 +64,7 @@ public:
 	{ }
 	void inputNewData(int input)
 	{
+		nowcounting = counting;
 		newData = new Data(input);
 		dataEmpty = false;
 		//maxQueue
@@ -69,6 +74,7 @@ public:
 		while (parentIndex > 0)
 		{
 			//testcode
+			counting++;
 			if (maxQueue[parentIndex]->getNum() < maxQueue[childIndex]->getNum())
 			{
 				temp_swap = maxQueue[parentIndex];
@@ -88,6 +94,7 @@ public:
 		minQueue[rearIndex_minQueue++] = newData;
 		while (parentIndex > 0)
 		{
+			counting++;
 			if (minQueue[parentIndex]->getNum() > minQueue[childIndex]->getNum())
 			{
 				temp_swap = minQueue[parentIndex];
@@ -101,8 +108,10 @@ public:
 				break;
 			}
 		}
-		cout << "데이터 입력 후 " << endl;
-		printArr();
+		//cout << "현재 인자 수 : " << rearIndex_maxQueue << endl;
+		//cout << "복잡도 : " << counting - nowcounting<<endl;
+		//cout << "데이터 입력 후 " << endl;
+		//printArr();
 
 		return;
 	}
@@ -115,6 +124,7 @@ public:
 		Data* popData = maxQueue[1];
 		int retNum = popData->getNum();
 		
+		nowcounting = counting;
 		while(rearIndex_maxQueue>1)
 		{
 			popData = maxQueue[1];
@@ -128,22 +138,18 @@ public:
 			childIndex = parentIndex * 2;
 			while (childIndex < rearIndex_maxQueue)
 			{
+				counting++;
+				if (childIndex + 1 < rearIndex_maxQueue && maxQueue[childIndex]->getNum() < maxQueue[childIndex + 1]->getNum())
+				{
+					childIndex++;
+				}
 				if (maxQueue[parentIndex]->getNum() < maxQueue[childIndex]->getNum())
 				{
 					temp_swap = maxQueue[parentIndex];
 					maxQueue[parentIndex] = maxQueue[childIndex];
 					maxQueue[childIndex] = temp_swap;
 					parentIndex = childIndex;
-					childIndex = parentIndex;
-				}
-				else if (childIndex + 1 < rearIndex_maxQueue && maxQueue[parentIndex]->getNum() < maxQueue[childIndex + 1]->getNum())
-				{
-					childIndex++;
-					temp_swap = maxQueue[parentIndex];
-					maxQueue[parentIndex] = maxQueue[childIndex];
-					maxQueue[childIndex] = temp_swap;
-					parentIndex = childIndex;
-					childIndex = parentIndex;
+					childIndex = parentIndex * 2;
 				}
 				else
 				{
@@ -151,18 +157,21 @@ public:
 				}
 			}
 			
+			
 			if (popData->deleteData(del))
 			{
-				cout << "maxPop실행 후(한번 더)" << endl;
-				printArr();
+				//cout << "maxPop실행 후(한번 더)" << endl;
+				//printArr();
 				delete popData;
 				popData = NULL;
 				continue;
 			}
-			cout << "maxPop실행 후(최종)" << endl;
-			printArr();
+			//cout << "maxPop실행 후(최종)" << endl;
+			//printArr();
 			break;
 		}
+		//cout << "현재 인자 수 : " << rearIndex_maxQueue << endl;
+		//cout << "복잡도 : " << counting - nowcounting << endl;
 		if (popData == NULL && del == false)
 		{
 			dataEmpty = true;
@@ -178,7 +187,7 @@ public:
 		}
 		Data* popData = minQueue[1];
 		int retNum = popData->getNum();
-
+		nowcounting = counting;
 		while(rearIndex_minQueue > 1)
 		{
 			popData = minQueue[1];
@@ -190,24 +199,21 @@ public:
 			}
 			parentIndex = 1;
 			childIndex = parentIndex * 2;
+
 			while (childIndex < rearIndex_minQueue)
 			{
+				counting++;
+				if (childIndex + 1 < rearIndex_minQueue && minQueue[childIndex]->getNum() > minQueue[childIndex + 1]->getNum())
+				{
+					childIndex++;
+				}
 				if (minQueue[parentIndex]->getNum() > minQueue[childIndex]->getNum())
 				{
 					temp_swap = minQueue[parentIndex];
 					minQueue[parentIndex] = minQueue[childIndex];
 					minQueue[childIndex] = temp_swap;
 					parentIndex = childIndex;
-					childIndex = parentIndex;
-				}
-				else if (childIndex + 1 < rearIndex_minQueue && minQueue[parentIndex]->getNum() > minQueue[childIndex + 1]->getNum())
-				{
-					childIndex++;
-					temp_swap = minQueue[parentIndex];
-					minQueue[parentIndex] = minQueue[childIndex];
-					minQueue[childIndex] = temp_swap;
-					parentIndex = childIndex;
-					childIndex = parentIndex;
+					childIndex = parentIndex * 2;
 				}
 				else
 				{
@@ -218,14 +224,16 @@ public:
 			{
 				delete popData;
 				popData = NULL;
-				cout << "minPop실행 후(한번 더)" << endl;
-				printArr();
+				//cout << "minPop실행 후(한번 더)" << endl;
+				//printArr();
 				continue;
 			}
-			cout << "minPop실행 후(최종)" << endl;
-			printArr();
+			//cout << "minPop실행 후(최종)" << endl;
+			//printArr();
 			break;
 		}
+		//cout << "현재 인자 수 : " << rearIndex_maxQueue << endl;
+		//cout << "복잡도 : " << counting - nowcounting << endl;
 		if (popData == NULL && del == false)
 		{
 			dataEmpty = true;
@@ -234,6 +242,8 @@ public:
 	}
 	void printAnswer()
 	{
+		//cout << "최종 배열상태" << endl;
+		//printArr();
 		int max = maxPop(false);
 		int min = minPop(false);
 
@@ -245,6 +255,8 @@ public:
 		{
 			cout << max << " " << min << endl;
 		}
+		//cout << "연산 횟수 : " << counting << endl;
+		
 
 		return;
 	}

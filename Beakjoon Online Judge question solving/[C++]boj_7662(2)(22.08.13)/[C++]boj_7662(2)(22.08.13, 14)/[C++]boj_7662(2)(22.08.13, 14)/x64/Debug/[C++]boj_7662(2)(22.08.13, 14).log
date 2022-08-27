@@ -1,3 +1,3 @@
 ﻿  main.cpp
-D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_7662(2)(22.08.13)\[C++]boj_7662(2)(22.08.13, 14)\[C++]boj_7662(2)(22.08.13, 14)\main.cpp(33): warning C4715: 'Data::deleteData': 모든 제어 경로에서 값을 반환하지는 않습니다.
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_7662(2)(22.08.13)\[C++]boj_7662(2)(22.08.13, 14)\[C++]boj_7662(2)(22.08.13, 14)\main.cpp(38): warning C4715: 'Data::deleteData': 모든 제어 경로에서 값을 반환하지는 않습니다.
   [C++]boj_7662(2)(22.08.13, 14).vcxproj -> D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_7662(2)(22.08.13)\[C++]boj_7662(2)(22.08.13, 14)\x64\Debug\[C++]boj_7662(2)(22.08.13, 14).exe
