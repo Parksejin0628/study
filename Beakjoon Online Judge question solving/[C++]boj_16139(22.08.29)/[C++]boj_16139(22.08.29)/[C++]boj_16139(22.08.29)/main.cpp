@@ -1,11 +1,14 @@
 #include<iostream>
-#include <iomanip>
+#include<cstdio>
+#include<cstring>
+#pragma warning(disable: 4996)
 
 using std::cin;
 using std::cout;
 using std::endl;
 
-void mergeSort(int start, int end, int* arr1, int* arr2)
+
+void mergeSort(int start, int end, char* arr1, char* arr2)
 {
 	if (!(start < end))
 	{
@@ -65,20 +68,19 @@ bool binarySearch(int num, int* arr, int arrSize)
 	int end = arrSize - 1;
 	int mid = (start + end) / 2;
 
-	while (start < end)
+	while (start <= end)
 	{
+		mid = (start + end) / 2;
 		//cout << "check" << endl;
 		//cout << "찾는 숫자 : " << num << endl;
 		//cout << "현재 체크 : " << arr[mid] << endl;
 		if (num < arr[mid])
 		{
 			end = mid - 1;
-			mid = (start + end) / 2;
 		}
 		else if (num > arr[mid])
 		{
 			start = mid + 1;
-			mid = (start + end) / 2;
 		}
 		else if (num == arr[mid])
 		{
@@ -94,35 +96,27 @@ bool binarySearch(int num, int* arr, int arrSize)
 
 int main(void)
 {
-	int cardCount = 0;
-	int* card;
-	int* sortArr;
+	int wordCount = 0;
 	int searchCount = 0;
-	int searchNum = 0;
+	char* words;
+	char* sortedArr;
+	char searchWord[500];
 
-	cin >> cardCount;
-	card = new int[cardCount];
-	sortArr = new int[cardCount];
+	scanf("%d %d", &wordCount, &searchCount);
 
-	for (int i = 0; i < cardCount; i++)
+	words = new char[wordCount];
+	sortedArr = new char[wordCount];
+
+	for (int i = 0; i < wordCount; i++)
 	{
-		cin >> card[i];
+		scanf("%s", words[i]);
 	}
-	mergeSort(0, cardCount - 1, card, sortArr);
-	/*cout << "[정렬 후 배열]" << endl;
-	for (int i = 0; i < cardCount; i++)
-	{
-		cout << card[i]<<" ";
-		if ((i + 1) % 10 == 0)
-			cout << endl;
-	}
-	cout << endl << endl;*/
-	cin >> searchCount;
+	mergeSort(0, wordCount - 1, words, sortedArr);
 	for (int i = 0; i < searchCount; i++)
 	{
-		cin >> searchNum;
-		cout << binarySearch(searchNum, card, cardCount)<<" ";
+		scanf("%s", searchWord);
 	}
+
 
 	return 0;
 }
