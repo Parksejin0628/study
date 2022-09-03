@@ -7,116 +7,132 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-
-void mergeSort(int start, int end, char* arr1, char* arr2)
+class Set
 {
-	if (!(start < end))
-	{
-		return;
-	}
-	int mid = (start + end) / 2;
-	mergeSort(start, mid, arr1, arr2);
-	mergeSort(mid + 1, end, arr1, arr2);
-	int i = start;
-	int j = mid + 1;
-	int k = start;
+private:
+	int* numbers;
+	int* sortedNum;
+	int numberCount;
 
-	for (; k <= end; k++)
+public:
+	Set(int count) : numberCount(count)
 	{
-		if (i > mid || j > end)
+		numbers = new int[numberCount];
+		sortedNum = new int[numberCount];
+	}
+	void inputNum()
+	{
+		for (int i = 0; i < numberCount; i++)
 		{
-			break;
+			scanf("%d", &numbers[i]);
 		}
-		if (arr1[i] > arr1[j])
+		mergeSort(0, numberCount - 1);
+	}
+	void mergeSort(int start, int end)
+	{
+		if (start >= end)	return;
+		int mid = (start + end) / 2;
+		mergeSort(start, mid);
+		mergeSort(mid + 1, end);
+		int i = start;
+		int j = mid + 1;
+		int k = start;
+
+		for (; k <= end; k++)
 		{
-			arr2[k] = arr1[j++];
+			if (i > mid || j > end)	break;
+			if (numbers[i] < numbers[j])
+			{
+				sortedNum[k] = numbers[i++];
+			}
+			else
+			{
+				sortedNum[k] = numbers[j++];
+			}
+		}
+		if (i > mid)
+		{
+			for (; k <= end; k++)
+			{
+				sortedNum[k] = numbers[j++];
+			}
 		}
 		else
 		{
-			arr2[k] = arr1[i++];
+			for (; k <= end; k++)
+			{
+				sortedNum[k] = numbers[i++];
+			}
 		}
-	}
-	if (i > mid)
-	{
-		for (; k <= end; k++)
+		for (k = start; k <= end; k++)
 		{
-			arr2[k] = arr1[j++];
+			numbers[k] = sortedNum[k];
 		}
-	}
-	else if(j > end)
-	{
-		for (; k <= end; k++)
-		{
-			arr2[k] = arr1[i++];
-		}
-	}
-	else
-	{
-		cout << "error!" << endl;
+
 		return;
 	}
-	for (k = start; k <= end; k++)
+	void showSet()
 	{
-		arr1[k] = arr2[k];
+		for (int i = 0; i < numberCount; i++)
+		{
+			if ((i + 1) % 10 == 0)
+			{
+				cout << endl;
+			}
+			cout << numbers[i] << " ";
+		}
+		cout << endl << endl;
 	}
-
-}
-
-bool binarySearch(int num, int* arr, int arrSize)
-{
-	int start = 0;
-	int end = arrSize - 1;
-	int mid = (start + end) / 2;
-
-	while (start <= end)
+	int compareSet(const Set& other)
 	{
-		mid = (start + end) / 2;
-		//cout << "check" << endl;
-		//cout << "찾는 숫자 : " << num << endl;
-		//cout << "현재 체크 : " << arr[mid] << endl;
-		if (num < arr[mid])
+		int thisIndex = 0;
+		int otherIndex = 0;
+		int overlap = 0;
+		while (thisIndex < numberCount && otherIndex < other.numberCount)
 		{
-			end = mid - 1;
+			if (numbers[thisIndex] == other.numbers[otherIndex])
+			{
+				//cout << "check : " << thisIndex << " " << otherIndex << endl;
+				overlap++;
+				thisIndex++;
+				otherIndex++;
+			}
+			else if (numbers[thisIndex] < other.numbers[otherIndex])
+			{
+				thisIndex++;
+			}
+			else if (numbers[thisIndex] > other.numbers[otherIndex])
+			{
+				otherIndex++;
+			}
 		}
-		else if (num > arr[mid])
-		{
-			start = mid + 1;
-		}
-		else if (num == arr[mid])
-		{
-			return true;
-		}
-		else
-		{
-			cout << "error!" << endl;
-		}
+		
+		//cout << "numberCount + other.numberCount = " << numberCount + other.numberCount << endl;
+		//cout << "overlap * 2 = " << overlap * 2 << endl;
+		return (numberCount + other.numberCount - (overlap * 2));
 	}
-	return false;
-}
+	~Set()
+	{
+		delete[]numbers;
+		delete[]sortedNum;
+	}
+};
 
 int main(void)
-{
-	int wordCount = 0;
-	int searchCount = 0;
-	char* words;
-	char* sortedArr;
-	char searchWord[500];
+ {
+	int set1Count = 0;
+	int set2Count = 0;
 
-	scanf("%d %d", &wordCount, &searchCount);
+	scanf("%d %d", &set1Count, &set2Count);
 
-	words = new char[wordCount];
-	sortedArr = new char[wordCount];
+	Set set1(set1Count);
+	Set set2(set2Count);
 
-	for (int i = 0; i < wordCount; i++)
-	{
-		scanf("%s", words[i]);
-	}
-	mergeSort(0, wordCount - 1, words, sortedArr);
-	for (int i = 0; i < searchCount; i++)
-	{
-		scanf("%s", searchWord);
-	}
-
+	set1.inputNum();
+	set2.inputNum();
+	//set1.showSet();
+	//set2.showSet();
+	printf("%d",set1.compareSet(set2));
 
 	return 0;
 }
