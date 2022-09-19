@@ -3,34 +3,42 @@
 #include<cstring>
 #pragma warning(disable: 4996)
 
-using std::cin;
-using std::cout;
-using std::endl;
-
-class Set
+class MergeSort
 {
 private:
-	int* numbers;
-	int* sortedNum;
-	int numberCount;
-
+	int* arr;
+	int* temp;
+	int arr_size;
+	int save_count;
+	int target;
 public:
-	Set(int count) : numberCount(count)
+	MergeSort(int arr_size, int k) : arr_size(arr_size), save_count(0), target(k)
 	{
-		numbers = new int[numberCount];
-		sortedNum = new int[numberCount];
+		arr = new int[arr_size];
+		temp = new int[arr_size];
 	}
-	void inputNum()
+	~MergeSort()
 	{
-		for (int i = 0; i < numberCount; i++)
+		if (save_count < target)
 		{
-			scanf("%d", &numbers[i]);
+			printf("-1\n");
 		}
-		mergeSort(0, numberCount - 1);
+		delete[]arr;
+		delete[]temp;
+	}
+	void inputArr()
+	{
+		for (int i = 0; i < arr_size; i++)
+		{
+			scanf("%d", &arr[i]);
+		}
 	}
 	void mergeSort(int start, int end)
 	{
-		if (start >= end)	return;
+		if (start >= end)
+		{
+			return;
+		}
 		int mid = (start + end) / 2;
 		mergeSort(start, mid);
 		mergeSort(mid + 1, end);
@@ -40,99 +48,54 @@ public:
 
 		for (; k <= end; k++)
 		{
-			if (i > mid || j > end)	break;
-			if (numbers[i] < numbers[j])
+			if (i > mid || j > end)
 			{
-				sortedNum[k] = numbers[i++];
+				break;
+			}
+			if (arr[i] <= arr[j])
+			{
+				temp[k] = arr[i++];
 			}
 			else
 			{
-				sortedNum[k] = numbers[j++];
+				temp[k] = arr[j++];
 			}
 		}
 		if (i > mid)
 		{
 			for (; k <= end; k++)
 			{
-				sortedNum[k] = numbers[j++];
+				temp[k] = arr[j++];
 			}
 		}
 		else
 		{
 			for (; k <= end; k++)
 			{
-				sortedNum[k] = numbers[i++];
+				temp[k] = arr[i++];
 			}
 		}
 		for (k = start; k <= end; k++)
 		{
-			numbers[k] = sortedNum[k];
+			save_count++;
+			if (save_count == target)
+			{
+				printf("%d\n", temp[k]);
+			}
+			arr[k] = temp[k];
 		}
-
-		return;
-	}
-	void showSet()
-	{
-		for (int i = 0; i < numberCount; i++)
-		{
-			if ((i + 1) % 10 == 0)
-			{
-				cout << endl;
-			}
-			cout << numbers[i] << " ";
-		}
-		cout << endl << endl;
-	}
-	int compareSet(const Set& other)
-	{
-		int thisIndex = 0;
-		int otherIndex = 0;
-		int overlap = 0;
-		while (thisIndex < numberCount && otherIndex < other.numberCount)
-		{
-			if (numbers[thisIndex] == other.numbers[otherIndex])
-			{
-				//cout << "check : " << thisIndex << " " << otherIndex << endl;
-				overlap++;
-				thisIndex++;
-				otherIndex++;
-			}
-			else if (numbers[thisIndex] < other.numbers[otherIndex])
-			{
-				thisIndex++;
-			}
-			else if (numbers[thisIndex] > other.numbers[otherIndex])
-			{
-				otherIndex++;
-			}
-		}
-		
-		//cout << "numberCount + other.numberCount = " << numberCount + other.numberCount << endl;
-		//cout << "overlap * 2 = " << overlap * 2 << endl;
-		return (numberCount + other.numberCount - (overlap * 2));
-	}
-	~Set()
-	{
-		delete[]numbers;
-		delete[]sortedNum;
 	}
 };
 
 int main(void)
  {
-	int set1Count = 0;
-	int set2Count = 0;
+	int arr_size;
+	int k;
+	scanf("%d %d", &arr_size, &k);
 
-	scanf("%d %d", &set1Count, &set2Count);
-
-	Set set1(set1Count);
-	Set set2(set2Count);
-
-	set1.inputNum();
-	set2.inputNum();
-	//set1.showSet();
-	//set2.showSet();
-	printf("%d",set1.compareSet(set2));
+	MergeSort mergeSort(arr_size, k);
+	mergeSort.inputArr();
+	mergeSort.mergeSort(0, arr_size - 1);
 
 	return 0;
 }
