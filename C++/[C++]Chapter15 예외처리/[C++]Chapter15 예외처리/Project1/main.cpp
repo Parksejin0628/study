@@ -101,4 +101,36 @@ int main(void)
 	- 이렇게 명시를 할 경우 함수의 정의만 보아도 적절한 try-catch문을 확인할 수 있기 때문에 유지/보수 면에서 유리하다고 볼 수 있다.
 	- throw () 이런 식으로 명시할 경우 어떠한 예외도 허용하지 않는다는 의미이다. 따라서, 예외가 발생할 경우 프로그램을 종료시킨다.
 		ex) int SimpleFunc(int num) throw ()
+
+<15.4. 예외상황을 표현하는 예외 클래스의 설계>
+1. 예외 클래스, 예외 객체
+ 1) 예외 객체 : 예외 발생을 알리는데 사용되는 객체
+	ex) throw obj에서 obj가 객체인 경우 예외 객체가 되는 것이다.
+	- 예외 객체는 굳이 복사할 필요가 없기에 참조자로써 받으면 좋다.
+		ex) catch(Exception &expn)
+	- 예외 객체는 C++의 예외처리 메커니즘에 의해 처리되기 때문에 코드상에서 직접 참조할 필요가 없다. 따라서, 임시 객체로 생성하는 것이 보통이다.
+		ex) throw Exception(information)  < 여기서 Exception자체가 클래스 명이다. 따라서, 임시 객체이다.
+ 2) 예외 클래스 : 예외 객체로써 사용하기 위해 정의된 클래스이다.
+	- 예외에 대한 정보를 담을 수 있다는 장점이 있다.
+	- 예외상황을 잘 표현할 수 있도록 정의하되 너무 복잡하지 않게 정의하는 것이 좋다.
+	- 예외의 표현을 위한 최소한의 기능만 담아서 정의하면 좋다.
+2. 예외 클래스의 특징
+ 1) 예외 클래스끼리의 상속
+	- 예외 클래스끼리도 상속을 이룰 수 있다.
+	- 상속을 이룸으로써 예외의 처리를 단순화 할 수 있다.
+		ex) Exception 클래스가 있고 이 클래스를 상속하는 AAAException, BBBException이 있다고 가정하면 catch문에는 Exception을 정의해놓고 상황에 따라 AAAException, BBBException을 보내면 된다.
+			catch(Exception &expn)
+ 2) 예외 클래스를 사용해 catch문을 연속으로 사용할 때 주의할 점
+	- 하나의 try 문에 여러개의 catch문을 사용할 경우 항상 코드상 상단에 있는 catch문부터 자료형과 catch문이 일치하는지 확인한다.
+	- 따라서, 상속을 사용할 때 기초클래스를 먼저 catch할 경우 유도클래스를 throw해도 유도클래스를 catch하는 곳에 도달할 수 없다.
+		ex) AAA가 기초, BBB와 CCC가 유도클래스라고 가정하자.
+			catch(Expn AAA) { ... }
+			catch(Expn BBB) { ... }
+			catch(Expn CCC) { ... } 
+			이 문장에서 AAA, BBB, CCC는 모두 catch(Expn AAA)에서 걸리게 된다.
+			따라서, BBB, CCC에 대한 예외처리를 따로 하기 위해서는
+			catch(Expn BBB) { ... }
+			catch(Expn CCC) { ... }
+			catch(Expn AAA) { ... } 
+			이런식으로 기초클래스를 뒤로 보내야 한다.
 */
