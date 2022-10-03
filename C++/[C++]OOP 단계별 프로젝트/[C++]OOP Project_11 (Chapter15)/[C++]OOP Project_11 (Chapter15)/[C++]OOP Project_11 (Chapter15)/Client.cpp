@@ -15,8 +15,10 @@ bool Client::setMoney(int money)
 {
 	if (this->money + money < 0)
 	{
+		cout << "check / Client_setMoney / false" << endl;
 		return false;
 	}
+	cout << "check / Client_setMoney / true" << endl;
 	this->money += money;
 	return true;
 }

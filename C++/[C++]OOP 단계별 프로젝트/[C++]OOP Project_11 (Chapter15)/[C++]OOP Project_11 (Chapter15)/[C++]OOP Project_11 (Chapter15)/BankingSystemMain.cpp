@@ -45,7 +45,6 @@ int main(void)
 			cout << "잘못된 선택입니다." << endl;
 		}
 	}
-	cin >> choice;
 
 	return 0;
 }

@@ -10,7 +10,6 @@ bool NormalAccount::setMoney(int money)
 	{
 		money += (getMoney() + money) * (interestRate) / 100;
 	}
-	Client::setMoney(money);
 
-	return true;
+	return Client::setMoney(money);
 }

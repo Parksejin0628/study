@@ -144,14 +144,18 @@ void AccountHandler::withdraw()
 		{
 			throw AccountException_underZero();
 		}
+		cout << "check / AccountHandler_withdraw / before throw" << endl;
+		cout << "check / AccountHandler_withdraw / accArr[index]->setMoney(-input) value : " << accArr[index]->setMoney(-input) << endl;
 		if (!accArr[index]->setMoney(-input))
 		{
+			cout << "check / AccountHandler_withdraw / after throw" << endl;
 			throw AccountException_moremoney(accArr[index]->getMoney());
 		}
 	}
 	catch (AccountException &expn)
 	{
 		input = expn.reInput();
+		accArr[index]->setMoney(-input);
 	}
 	cout << "성공적으로 처리되었습니다." << endl;
 
