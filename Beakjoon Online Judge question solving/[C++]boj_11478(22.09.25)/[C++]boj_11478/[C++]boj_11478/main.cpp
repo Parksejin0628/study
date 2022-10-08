@@ -26,11 +26,7 @@ public:
 		//cout << "check / F : Str / mid" << endl;
 		selectStr();
 		mergeSort(0, str_part_length - 1);
-		cout << "모든 부분 문자열 개수 : " << str_part_length << endl;
-		for (int i = 0; i < str_part_length; i++)
-		{
-			cout << str_part[i] << endl;
-		}
+		//cout << "모든 부분 문자열 개수 : " << str_part_length << endl;
 	}
 	~Str()
 	{
@@ -38,7 +34,6 @@ public:
 		for (int i = 0; i < str_part_length; i++)
 		{
 			delete[]str_part[i];
-			delete[]str_temp[i];
 		}
 		delete[]str_part;
 		delete[]str_temp;
@@ -50,8 +45,7 @@ public:
 		{
 			for (int j = i; j < strlen(str); j++)
 			{
-				str_part[str_part_length] = new char[str_len + 2];
-				str_temp[str_part_length] = new char[str_len + 2];
+				str_part[str_part_length] = new char[j-i + 3];
 				//cout << "check / F : selectStr / first" << endl;
 				for (int k = i; k <= j; k++)
 				{
@@ -81,30 +75,30 @@ public:
 			//cout << "check / F : mergeSort / while" << endl;
 			if (strcmp(str_part[i], str_part[j]) <= 0)
 			{
-				strcpy(str_temp[k++],str_part[i++]);
+				str_temp[k++] = str_part[i++];
 			}
 			else
 			{
-				strcpy(str_temp[k++], str_part[j++]);
+				str_temp[k++] = str_part[j++];
 			}
 		}
 		if (i > mid)
 		{
 			while (j <= end)
 			{
-				strcpy(str_temp[k++], str_part[j++]);
+				str_temp[k++] = str_part[j++];
 			}
 		}
 		else if (j > end)
 		{
 			while (i <= mid)
 			{
-				strcpy(str_temp[k++], str_part[i++]);
+				str_temp[k++] = str_part[i++];
 			}
 		}
 		for (k = start; k <= end; k++)
 		{
-			strcpy(str_part[k], str_temp[k]);
+			str_part[k] = str_temp[k];
 		}
 	}
 	int count_unique()
@@ -124,10 +118,10 @@ public:
 int main(void)
 {
 	char* input = new char[1003];
-	cin >> input;
+	scanf("%s", input);
 
 	Str str(input);
-	cout << str.count_unique();
+	printf("%d",str.count_unique());
 
 	delete[]input;
 
