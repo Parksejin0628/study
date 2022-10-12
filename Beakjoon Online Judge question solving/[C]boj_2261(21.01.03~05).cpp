@@ -1,5 +1,5 @@
 //Number of question : 2261
-//Difficulty : Platinum 3
+//Difficulty : Platinum 2
 //Time to solve : 5h 4m 6s
 //Simple review : Sooooo hard 
 
