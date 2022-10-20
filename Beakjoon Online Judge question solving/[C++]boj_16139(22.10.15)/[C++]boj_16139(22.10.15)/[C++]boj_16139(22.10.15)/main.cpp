@@ -3,10 +3,6 @@
 #include<cstring>
 #pragma warning(disable:4996)
 
-using std::cout;
-using std::cin;
-using std::endl;
-
 class SolvingQuestion
 {
 private:
@@ -41,12 +37,6 @@ public:
 	{
 		for (int i = 0; i < sentence_length; i++)
 		{
-			if (sentence[i] - 'a' < 0 || sentence[i] - 'a' > 26)
-			{
-				cout << "인덱스 : " << i << " 문자 : " << sentence[i];
-				cout << "범위 오류" << endl;
-				break;
-			}
 			if (i == 0)
 			{
 				for (int j = 0; j < 26; j++)
@@ -75,16 +65,6 @@ public:
 					}
 				}
 			}
-			/*printf("[%d]\n", i);
-			for (int j = 0; j < 26; j++)
-			{
-				printf("%c : %d    ", 'a' + j,  count_alphabet[j][i]);
-				if ((j+1) % 10 == 0)
-				{
-					//printf("\n");
-				}
-			}
-			printf("\n");*/
 		}
 	}
 	void printAnswer(char alphabet, int start, int end)
@@ -110,10 +90,8 @@ int main(void)
 	scanf("%d", &questionCount);
 	for (int i = 0; i < questionCount; i++)
 	{
-		//cout << "check : " << i <<" questionCount : "<< questionCount << endl;
 		fgetc(stdin);
 		scanf("%c %d %d", &alphabet, &section_start, &section_end);
-		//cout << "checkScanf / alphabet " <<alphabet << " section : " << section_start << " " << section_end << endl;
 		solvingQuestion.printAnswer(alphabet, section_start, section_end);
 	}
 
