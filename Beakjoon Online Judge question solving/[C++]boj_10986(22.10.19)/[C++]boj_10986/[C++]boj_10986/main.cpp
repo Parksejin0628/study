@@ -30,24 +30,20 @@ public:
 		long long num;
 		scanf("%lld", &num);
 		sum[0] = num;
-		//printf("sum : %lld, divisor : %lld, result : %lld\n",sum[0], divisor, sum[0] % divisor);
 		remainder[sum[0] % divisor]++;
 		for (int i = 1; i < input_count; i++)
 		{
 			scanf("%lld", &num);
 			sum[i] = sum[i - 1] + num;
-			//printf("sum : %lld, divisor : %lld, result : %lld\n",sum[i], divisor, sum[i] % divisor);
 			remainder[sum[i] % divisor]++;
 		}
 	}
 	void calAnswer()
 	{
 		answer += remainder[0];
-		//printf("remainder[0] : %lld\n", remainder[0]);
 		for (int i = 0; i < divisor; i++)
 		{
 			answer += remainder[i] * (remainder[i] - 1) / 2;
-			//printf("remainder[%d] : %lld\n",i, remainder[i]);
 		}
 	}
 	void printAnswer()
