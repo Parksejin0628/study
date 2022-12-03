@@ -175,6 +175,41 @@ Point& PntAdder(const Point &p1, const Point &p2)
 	
 	return *result;
 }
+
+/*
+복습 및 정리본
+[Chapter02 C언어 기반의 C++ 2]
+2.1. Chapter 02의 시작에 앞서
+ 1) const int num : num을 상수화
+ 2) const int *ptr = &val : 포인터 ptr으로 val값 수정 불가능
+ 3) int const *ptr = &val : 포인터 변수 ptr이 상수화
+
+2.2. 새로운 자료형 bool
+ 1) bool은 true / false를 저장하는 자료형이다.
+ 2) true : 참 / false : 거짓을 의미한다.
+ 3) true / false는 각각 1/0이 아닌 참과 거짓을 나타내는 1바이트 크기의 자료형일 뿐이다.
+
+2.3. 참조자(Reference)의 이해
+ 1) 참조자 : 변수를 선언할 때 변수 명 앞에 &를 붙여 선언한다. 이미 할당된 메모리 영역에 또 다른 이름을 선언하는 것이다.
+ 2) 참조자는 선언과 동시에 누군가를 참조해야하며 참조의 대상을 바꾸는 것도 불가능하다.
+ 3) 참조자는 상수를 선언하거나 NULL로 초기화할 수 없다.
+
+2.4. 참조자(Reference)와 함수
+ 1) 참조자는 C에서 Call-by-reference를 수행할 때 사용하던 포인터를 대체할 수 있다.
+ 2) const로 참조자를 선언하면 해당 참조자로는 값을 변경할 수 없다.
+ 3) 매개변수를 const참조자로 선언하면 함수 선언부만 보더라도 해당 함수에서 전달한 인자의 값을 변경하지 않는다는 것을 알릴 수 있으며 상수도 입력받을 수 있다.
+
+2.5. new & delete
+ 1) new와 delete는 기존 C언어의 malloc, free 역할을 수행한다. new, malloc이 다른 C++ 기능과 상호작용하기 때문에 malloc, free는 사용하지 않는다.
+ 2) new : 메모리 공간을 할당한다. int *ptr = new int 와 같이 사용한다. 배열은 int *ptr = new int[3]와 같이 사용한다.
+ 3) delete : 할당된 메모리 공간을 반환한다. delete ptr와 같이 사용한다. 배열은 delete []ptr와 같이 사용한다.
+
+2.6. C++에서 C언어의 표준함수 호출하기
+ 1) 기존 C언어에서 사용하던 라이브러리는 C언어 라이브러리에서 .h를 빼고 앞에 c를 붙인다.
+ 2) 예시 : include<stdio.h> -> include<cstdio>
+ 3) C라이브러리와의 호환성을 위해 이렇게 바꾸었으며 C++ 문법에 맞추어 라이브러리를 변경했기에 위와같은 형태로 라이브러리를 사용해야 한다.
+*/
+
 /*
 [C언어 기반의 C++ 2]
 2.1. Chapter 02의 시작에 앞서
