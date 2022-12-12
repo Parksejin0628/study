@@ -186,6 +186,38 @@ int BoxVolume(int length, int width, int height)
 	return length*width*height;
 }
 
+/*
+!!!복습 겸 핵심정리
+[Chapter 01 C언어 기반의 C++ 1]
+1-1. printf와 scanf를 대신하는 입출력방식
+ 1) C++에서는 입출력을 std::cout, std::cin을 통해 수행하며 이를 위해서는 #include<iostream>을 선언해야 한다.
+ 2) std::cout<<출력대상 형태로 출력을 할 수 있으며 <<를 계속 사용하여 여러 대상을 출력할 수 있다. 출력대상 위치에 endl를 넣으면 줄넘김이 된다.
+ 3) std::cin>>변수 형태로 입력을 할 수 있다.
+
+1-2. 함수 오버로딩 (Function Overloading)
+ 1) 함수 오버로딩 : C언어와 다르게 매개 변수의 선언 형태가 다른 경우 동일한 이름의 함수 정의도 허용한다.
+ 2) 매개변수 자료형이 다른 경우 : int myFunc(char c) / int myFunc(int n)는 다른 함수로 허용한다.
+ 3) 매개변수의 개수가 다른 경우 : int myFunc(int n) / int myFunc(int n1, int n2)는 다른 함수로 허용한다.
+
+1-3. 매개변수의 디폴트 값(Default Value)
+ 1) C++에서는 함수의 매개변수에 디폴트 값을 설정할 수 있다. 매개변수에 디폴트 값을 설정한 경우 인자가 전달되지 않으면 매개변수의 값이 디폴트 값이 된다.
+ 2) 디폴트 값이 설정되어 있다면 함수를 호출할 때 일부만 전달하거나 전부 전달하지 않아도 된다.
+ 3) 디폴트 값은 반드시 맨 오른쪽에 있는 매개변수부터 채워 넣어야 한다.
+  ex) int cal(int num1, int num2 = 7) (o) / int cal(int num1 = 5, int num2) (x)
+
+1-4. 인라인(inline) 함수
+ 1) 인라인 함수는 컴파일 과정에서 함수명 대신 함수 몸체가 대신 들어가는 형태의 함수이다. 매크로 함수를 떠올리면 된다.
+ 2) 장점 : 매크로 함수에 비해 정의가 훨씬 쉬우며 최적화도 잘되어 있다.
+ 3) 단점 : 매크로 함수와 다르게 자료형을 사전에 정의해야 해서 자료형 의존도가 높다.
+   >> 추후에 나오는 템플릿을 이용해 개선이 가능하다.
+
+1-5. 이름공간(namespace)
+ 1) 이름공간(namespace)는 라이브러리 사용 혹은 협업간에 이름이 충돌하는 것을 방지하기 위해 공간을 구분할 수 있게 해주는 문법이다.
+ 2) namespace안에 있는 함수나 변수는 namespace이름 :: 함수나변수 와 같은 형태로 접근이 가능하다.
+ 3) 이름 공간의 명시가 필요없다고 생각하는 경우 using 키워드를 통해 namespace이름:: 이 과정을 생략할 수 있다.
+  ex) using namespace std : std이름의 namespace에 접근할 때는 :: 접근 과정을 생략한다.
+  ex) using std::cout : std안에 있는 cout에 접근할 때는 :: 접근 과정을 생략한다.
+*/
 
 /*
 [Chapter 01 C언어 기반의 C++ 1]
@@ -218,10 +250,10 @@ int BoxVolume(int length, int width, int height)
   		int MyFunc(int n)
   - 매개변수의 개수가 다른 경우
     ex) int myFunc(int n)
-		int myFunc(int n1, int n2)
+		int myFunc(int n1, int n2)aozm
   - 즉, 매개변수의 자료형 또는 개수가 다른 경우 함수의 오버로딩이 가능하다.
   
-1-3. 매개변수의 디폴트 값(Defalut Value)
+1-3. 매개변수의 디폴트 값(Default Value)
  1) C++에서는 함수의 매개변수에 디폴트 값을 설정할 수 있다.
   > 함수를 호출할 때 인자를 전달하지 않는 경우 매개변수의 값이 설정한 디폴트 값으로 된다.
   > 따라서, 디폴트 값을 설정한다면 일부 혹은 전부 다 인자를 전달하지 않아도 된다.
