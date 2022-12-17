@@ -1,0 +1,38 @@
+문제 : 앱 (7579, 골드 3)
+풀이시간 : 48m
+
+[아이디어]
+문제 접근법은 이전에 풀어왔던 냅색관련 문제들과 비슷하게 접근하면 될 것 같다.
+앱의 메모리를 app[]에 저장해놨다 했을 때 i번째 앱에 대하여
+app[i]를 넣는 경우, 안 넣는 경우 두가지로 나눈다면 효과적일 것이다.
+searchCase를 계산하는 함수라고 했을 때
+
+searchCase(i+1, memory, cost)
+searchCase(i+1, memory - app[i].memory, cost + app[i].cost)
+둘 중 리턴 값이 낮은 값을 리턴하는 것이다.
+만약 memory - app[i].memory < 0인 경우 cost + app[i].cost를 리턴하면 되는거고
+만약 i+1 <= N인 경우 memory - app[i].memory가 안된다면 -1를 리턴하고 나중에 -1는 제외하게 만든다.
+
+이대로만 하면 2^n이라는 최악의 경우의 수가 나오긴 할 것이다.
+어렵네요
+
+dp[인덱스][요구메모리] 정도로 하면 되겠죠?
+일단, 한 번 프로그래밍을 짜보긴 합시다.
+
+searchCase는
+
+간단하게 알고리즘을 요약하면
+1. appCount, requiredMemory / apps[0~appCount-1].memory / apps[0~appCount-1].cost 입력받기
+2. searchCase(0, requiredMemory, 0) 호출 후 출력
+
+-int searchCase(int index, int memory)-
+1. memory<0인 경우 0 리턴
+2. index>=appCount인 경우 -1 리턴
+3. dp[index][memory] == 0인 경우 진행 아닌경우 dp[index][memory]출력
+4. searchCase(index+1, memory)와 searchCase(index+1, memory-apps[index].memory) + apps[index].cost 중
+   리턴값이 작은 값을 dp에 저장
+5. dp[index][memory] 리턴
+
+이렇게 하려고 했는데 최대 메모리가 너무너무크다..
+dp에 메모리를 넣는 것은 좋지 않은 방법인 듯 하다.
+그러면 dp에 코스트를 넣거나 인덱스만 넣는 1차원 배열로 생각해야 한다.
