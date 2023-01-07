@@ -1,0 +1,57 @@
+문제 : 아이들과 선물 상자(23757번, 실버 2)
+
+[문제 풀이]
+<알고리즘 순서>
+1. giftCount, childCount를 입력받는다.
+2. giftCount를 인수로 maxHeap를 선언한다.
+3. giftCount만큼 반복하며 input을 받고 gift.insert(input)을 호출한다.
+4. childCount만큼 반복하며 input을 입력받고 gift.give(input)을 호출한다.
+ 4.1. 이 때 0이 리턴될 경우 0을 출력하고 프로그램을 종료한다.
+5. 1을 출력한다.
+
+<클래스 설명>
+-MaxHeap-
+(멤버변수)
+int* gift : 선물 배열
+int giftCount : 선물 개수
+int queueIndex : queue 마지막 위치의 인덱스
+(멤버함수)
+MaxHeap(int count)
+void insert(int input)
+int give(int input)
+int remove()
+
+<함수 설명>
+-MaxHeap::MaxHeap(int count)-
+0. giftCount(count), queueIndex(1)
+1. gift = new int[count]
+
+-void MaxHeap::insert(int input)-
+1. int child = queueIndex, int parent = queueIndex / 2;
+2. gift[queueIndex++] = input;
+3. gift[parent] < gift[child]일 동안 다음을 반복
+ 3.1. temp = gift[parent] / gift[parent] = gift[child] / gift[child] = temp
+ 3.2. child = parent / parent = child / 2;
+ 3.3. child = 0인 경우 break;
+
+-int MaxHeap::remove()-
+1. ret = gift[1];
+2. gift[1] = gift[--queueIndex];
+3. parent = 1 / child = parent * 2;
+4. gift[child] < gift[child+1]인 경우 child++
+5. gift[parent] < gift[child]인 동안 다음을 반복한다.
+ 5.1. temp = gift[parent] / gift[parent] = gift[child] / gift[child] = temp
+
+
+[아이디어]
+이 문제에서는 두 개의 수열이 주어지고
+한 수열의 제일 높은 값에서 다른 수열의 값을 계속 뺄 수 있는지 물어보는 문제이다.
+문제에서 주어진 선물상자의 수열을 gift, 아이의 수열을 child라고 하면
+gift의 최대값을 계속해서 갱신하는 것이 중요하다.
+최대힙 구조로 gift를 저장한 뒤 최대값을 child에서 뺀 남은 값을 다시 힙에 넣어서 최대힙을 계속 유지하는 것이 중요하다.
+즉, gift[1]를 pop한 뒤 gift - child를 push하는 과정을 반복해야 한다.
+이 때 gift[1] < child인 경우 0을, child의 모든 수열을 통과하면 1을 반환하는 식으로 하면 된다.
+정리하자면
+1. gift를 입력받으면서 최대힙 구조를 만들어둔다.
+2. gift[1] >= child[i]인 경우 gift[1]를 pop한 뒤 gift[1] - child[i]값을 push한다.
+3. 위 과정에서 gift[1] < child[i]인 경우가 생기면 0, child배열 모두 위 과정을 통과하면 1를 반환한다.
