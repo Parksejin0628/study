@@ -12,6 +12,55 @@ int main(void)
 }
 
 /*
+[Chapter 14 템플릿(Template) 2]
+<14.1. Chapter 13에서 공부한 내용의 확장>
+1. 템플릿 클래스는 결국 이름이 독특한 객체일 뿐이다.
+2. 따라서, 템플릿 클래스를 자료형으로 하는 또 다른 템플릿 클래스도 가능하다.
+	ex) BoundCheckArray<Point<int>> ..
+3. 그 외에 객체에 적용할 수 있는 것들을 모두 적용할 수 있다.
+	> typedef로 이름 간편히 바꾸기
+		ex) typedef Point<int> Point_int;
+	> 일반함수의 인자로 받기
+		ex) Point<int> exampleFunction(const Point<int>&pos1)
+
+<14.2. 클래스 템플릿의 특수화(Class Template Specialization)>
+1. 함수 템플릿과 마찬가지로 특수화를 할 수 있다.
+2. template<>를 명시한 후 클래스명 뒤에 <자료형>을 붙여 특수화한다.
+	ex)	template<>
+		class exampleClass<int>
+		{
+			...
+		};
+3. 템플릿 매개변수가 많을 때 부분 특수화가 가능하다.
+	- 이때는 특수화가 아닌 자료형은 기존처럼 템플릿형으로 선언한다.
+		ex) template<typename T1, typename T2>인 클래스 템플릿이 있으면
+		template<typename T1>
+		class exampleClass<T1, int>
+		{
+			...
+		}
+
+<14.3. 템플릿 인자>
+1. template<typename T>에서 결정되지 않은 자료형 T를 템플릿 매개변수라고 한다.
+2. exampleFunction<int>(2, 3)에서 템플릿 매개변수로 전달되는 자료형 정보 int를 템플릿 인자라고 한다.
+3. 템플릿 매개변수에는 변수가 올 수 있다.
+	ex) template<typename T, int len>
+	- 단, 변수로 선언한 템플릿 매개변수는 템플릿 인자로 다른 값이 오면 다른 자료형으로 인식한다.
+	ex) <int, 5>와 <int, 7>은 다른 함수이다. 따라서, <int, 5>로 대입연산자 오버로딩할 경우 <int, 7>로 대입연산은 불가능하다.
+	- 변수로 선언한 템플릿 매개변수에는 디폴트 값을 지정할 수 있다.
+
+<14.4. 템플릿과 static>
+1. 함수 템플릿에 static 지역 변수를 선언한 경우 템플릿 인자가 같은(자료형이 같은) 템플릿 함수만 자료형을 공유한다.
+	- <int>함수의 static 변수와 <double>함수의 static변수는 다르다.
+2. 클래스 템플릿도 static 지역 변수가 있을 경우 템플릿 인자가 같은 클래스끼리만 static 변수를 공유한다.
+	- 이러한 이유는 자료형이 바뀜에 따라 이름이 독특한 함수를 여러 선언하는 것과 유사하기 때문이다.
+3. template<>는 템플릿의 일부 혹은 전부를 정의한다고 컴파일러에게 알리는 역할이다.
+	- <> 안에 템플릿 매개변수 T에 대한 정보가 필요하면 넣는 것이다.
+
+
+*/
+
+/*
 [Chapter14 템플릿(Template) 2]
 <14.1. Chapter 13에서 공부한 내용의 확장>
 1. 템플릿 클래스의 객체를 자료형으로 하는 템플릿 클래스  
@@ -54,7 +103,7 @@ int main(void)
 				...
 			}
 	- 결정되지 않은 자료형의 수가 2개 이상일 경우 전부 특수화를 하는 것이 아닌 부분만 특수화를 할 수 있는데 이것을 클래스 템플릿의 부분 특수화라고 한다.(class template partial specialization)
-		ex) template <typename T1>			결정되지 가않은 자료형인 T1을 명시하고
+		ex) template <typename T1>			결정되지 않은 자료형인 T1을 명시하고
 			class exapmleClass<T1, int>		2번째 자료형인 int만 특수화
 			> 이런 경우 두 번째 인수가 int인 경우 해당 특수화된 클래스를 정의하게 된다.
  2) 전체 특수화 vs 부분 특수화

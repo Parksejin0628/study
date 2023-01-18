@@ -92,6 +92,60 @@ void que2()
 	return;
 }
 
+/*
+[Chapter13 템플릿(Template) 1]
+<13.1. 템플릿(Template)에 대한 이해와 함수 템플릿>
+1. 함수 템플릿은 자료형이 결정되어 있지 않은 함수이다. 따라서, 호출시 자료형을 결정한다.
+	> 기본 형태(T의 이름은 상관없으며 typename -> class로 교체 가능)
+		template <typename T>
+		T add(T num1, T num2)
+		{
+			return num1 + num2;
+		}
+	> 호출 방식 : 함수명<자료형>(매개변수);
+		ex) add<double>(2.5, 9.5)
+2. 함수 템플릿 선언의 특징
+	> 매개변수에 템플릿 타입을 사용하지 않아도 된다.
+		ex)	template <typename T>
+			void ShowData(double num)
+			{
+				cout<<(T1)num<<endl;
+			}
+	> 템플릿 타입이 명시할 때 쉼표를 이용해 둘 이상도 가능하다.
+		ex)	template <typename T1, typename T2>
+			void print(T1 num1, T2 num2)
+			{
+				cout<<num1<<" "<<num2<<endl;
+			}
+3. 특정 자료형인 경우 다른 기능을 수행하고 싶다면 template<>를 선언하고 함수명 뒤에 <자료형>을 붙여 정의한다.
+	ex)	template <>
+		char* add<char*>(char* a, char* b)
+		{
+			strcat(a, b)
+			return a;
+		}
+
+<13.2. 클래스 템플릿(Class Template)>
+1. 함수 템플릿과 유사하게 클래스도 템플릿으로 정의가 가능하다.
+	> 기본 형태
+		template <typename T>
+		class Point
+		{
+		private:
+			T xpos, ypos;
+		public:
+			Point(T x=0, T y=0) : xpos(x), ypos(y) { }
+		}
+	> 호출 방식
+		Point<int>(2, 3)
+2. 기존 클래스처럼 선언은 클래스 안에서, 정의는 클래스 밖에서 할 수 있다. 단, T에 대한 정의와 클래스 명 뒤에 <T>가 붙어야 한다.
+	ex)	template <typename T>
+		T SimpleTemplate<T>::SimpleFunc(const T& ref)
+		{ ... }
+3. 헤더파일과 소스파일을 나눌 경우 컴파일 과정에서 헤더파일에 함수 몸통 부분이 와야하는데 (매크로처럼) 컴파일은 파일단위로 하기 때문에 (다른 파일을 참조하지 않기 때문에) 소스파일에 있는 템플릿 클래스가 만들어 질 수 없다.
+	> 헤더파일에 선언, 정의를 모두 넣는 방법이 있다.
+	> 정의에 대한 내용이 있는 소스파일을 include 한다.
+*/
 
 /*
 [Chatper13 템플릿(Template) 1]
@@ -99,7 +153,7 @@ void que2()
 1. 함수 템플릿
  1) 함수 템플릿
 	- 함수 템플릿은 함수를 만들어 내는 틀과 같다.
-	- 함수의 기능은 결정되어 있지 않지만 자료형은 결정되어 있지 않아 호출시 결정해야 한다.
+	- 함수의 기능은 결정되어 있지만 자료형은 결정되어 있지 않아 호출시 결정해야 한다.
  2) 기본 형태
 	- 함수 템플릿의 기본 형태는 다음과 같다.
 		template <typename T>
