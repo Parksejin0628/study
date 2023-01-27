@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "[Cs]Chapter03 데이터 보관하기/1.0.0": {
+        "runtime": {
+          "[Cs]Chapter03 데이터 보관하기.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "[Cs]Chapter03 데이터 보관하기/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
