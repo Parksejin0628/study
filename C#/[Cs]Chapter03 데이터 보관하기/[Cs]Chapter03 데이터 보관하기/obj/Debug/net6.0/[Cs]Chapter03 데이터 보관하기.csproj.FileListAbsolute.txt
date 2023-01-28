@@ -1,0 +1,15 @@
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\bin\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.exe
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\bin\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.deps.json
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\bin\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.runtimeconfig.json
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\bin\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.dll
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\bin\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.pdb
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.csproj.AssemblyReference.cache
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.AssemblyInfoInputs.cache
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.AssemblyInfo.cs
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.csproj.CoreCompileInputs.cache
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.dll
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\refint\[Cs]Chapter03 데이터 보관하기.dll
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.pdb
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\[Cs]Chapter03 데이터 보관하기.genruntimeconfig.cache
+C:\Users\ParkSejin\Documents\GitHub\study\C#\[Cs]Chapter03 데이터 보관하기\[Cs]Chapter03 데이터 보관하기\obj\Debug\net6.0\ref\[Cs]Chapter03 데이터 보관하기.dll
