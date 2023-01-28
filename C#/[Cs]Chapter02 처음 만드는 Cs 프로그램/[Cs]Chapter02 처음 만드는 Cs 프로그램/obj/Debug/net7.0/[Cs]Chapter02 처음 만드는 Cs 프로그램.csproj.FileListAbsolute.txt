@@ -1,0 +1,30 @@
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.exe
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.deps.json
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.runtimeconfig.json
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.dll
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.pdb
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.csproj.AssemblyReference.cache
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.AssemblyInfoInputs.cache
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.AssemblyInfo.cs
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.csproj.CoreCompileInputs.cache
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.dll
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\refint\[Cs]Chapter02 처음 만드는 Cs 프로그램.dll
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.pdb
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.genruntimeconfig.cache
+D:\GitHub\study\study\Beakjoon Online Judge question solving\[C++]boj_23757(22.12.12)\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\ref\[Cs]Chapter02 처음 만드는 Cs 프로그램.dll
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.exe
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.deps.json
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.runtimeconfig.json
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.dll
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\bin\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.pdb
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.csproj.AssemblyReference.cache
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.AssemblyInfoInputs.cache
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.AssemblyInfo.cs
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.csproj.CoreCompileInputs.cache
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.dll
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\refint\[Cs]Chapter02 처음 만드는 Cs 프로그램.dll
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.pdb
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\[Cs]Chapter02 처음 만드는 Cs 프로그램.genruntimeconfig.cache
+D:\GitHub\study\study\C#\[Cs]Chapter02 처음 만드는 Cs 프로그램\[Cs]Chapter02 처음 만드는 Cs 프로그램\obj\Debug\net7.0\ref\[Cs]Chapter02 처음 만드는 Cs 프로그램.dll

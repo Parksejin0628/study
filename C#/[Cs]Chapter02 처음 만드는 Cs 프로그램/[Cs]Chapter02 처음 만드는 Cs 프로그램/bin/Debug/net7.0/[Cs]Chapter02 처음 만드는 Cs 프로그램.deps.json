@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "[Cs]Chapter02 처음 만드는 Cs 프로그램/1.0.0": {
+        "runtime": {
+          "[Cs]Chapter02 처음 만드는 Cs 프로그램.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "[Cs]Chapter02 처음 만드는 Cs 프로그램/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
