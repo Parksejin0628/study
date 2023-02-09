@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\park5\\.nuget\\packages\\": {}
+    "C:\\Users\\ParkSejin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램.csproj",
+      "projectUniqueName": "C:\\Users\\ParkSejin\\Documents\\GitHub\\study\\C#\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램.csproj",
       "projectName": "[Cs]Chapter02 처음 만드는 Cs 프로그램",
-      "projectPath": "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램.csproj",
-      "packagesPath": "C:\\Users\\park5\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\obj\\",
+      "projectPath": "C:\\Users\\ParkSejin\\Documents\\GitHub\\study\\C#\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램.csproj",
+      "packagesPath": "C:\\Users\\ParkSejin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ParkSejin\\Documents\\GitHub\\study\\C#\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\[Cs]Chapter02 처음 만드는 Cs 프로그램\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\park5\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ParkSejin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
