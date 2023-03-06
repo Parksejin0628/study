@@ -57,6 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\LifeCycle.cs" />
+    <Compile Include="Assets\Script\KeyDown.cs" />
+    <Compile Include="Assets\Script\Moving.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
