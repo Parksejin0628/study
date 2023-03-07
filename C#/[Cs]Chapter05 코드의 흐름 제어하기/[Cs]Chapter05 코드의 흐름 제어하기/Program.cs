@@ -53,6 +53,92 @@ namespace Chapter05
             Console.WriteLine("과연 점프가 될까요?");
         JUMP:
             Console.WriteLine("점프 완료");
+            SolvingQuestion1();
+            SolvingQuestion2();
+            SolvingQuestion3();
+            SolvingQuestion4();
+        }
+
+        public static void SolvingQuestion1()
+        {
+            for(int i=0; i<5; i++)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    Console.Write("*");
+                }
+                Console.WriteLine();
+            }
+
+            return;
+        }
+
+        public static void SolvingQuestion2()
+        {
+            for(int i=0; i<5; i++)
+            {
+                for (int j = 0; j < 5 - i; j++)
+                {
+                    Console.Write("*");
+                }
+                Console.WriteLine();
+            }
+            return;
+        }
+
+        public static void SolvingQuestion3()
+        {
+            int i = 0, j = 0;
+
+            while(i < 5)
+            {
+                j = 0;
+                do
+                {
+                    Console.Write("*");
+                    j++;
+                } while (j <= i);
+                Console.WriteLine();
+                i++;
+            }
+            i = 0;
+            j = 0;
+            while (i < 5)
+            {
+                j = 0;
+                while (j < 5 - i)
+                {
+                    Console.Write("*");
+                    j++;
+                }
+                Console.WriteLine();
+                i++;
+            }
+            return;
+        }
+
+        public static void SolvingQuestion4()
+        {
+            int repeat = 0;
+
+            Console.Write("반복 횟수를 입력하세요 : ");
+            repeat = Convert.ToInt32(Console.ReadLine());
+            if (repeat <= 0)
+            {
+                Console.WriteLine("0보다 작거나 같은 수는 입력할 수 없습니다.");
+            }
+
+            for(int i=0; i<repeat; i++)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    Console.Write("*");
+                }
+                Console.WriteLine();
+            }
+            
+
+            return;
         }
     }
 }
@@ -138,6 +224,7 @@ namespace Chapter05
     - 레이블은 위치를 나타내는 존재로 세미콜론이 아닌 콜론을 붙여 사용한다.
   3) 예시
     goto JUMP; 문장1 JUMP: 문장2 코드가 있을 경우 문장1은 생략되고 JUMP:로 이동하여 문장2가 실행된다.
+ 4. return, throw는 추후에 다룬다.
 
 
 */
