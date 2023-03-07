@@ -354,6 +354,7 @@
 "Assets/Script/KeyDown.cs"
 "Assets/Script/LifeCycle.cs"
 "Assets/Script/Moving.cs"
+"Assets/Script/TargetMoving.cs"
 -langversion:9.0
 
 /deterministic

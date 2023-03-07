@@ -10,7 +10,7 @@ public class Moving : MonoBehaviour
     void Update()
     {
         Vector3 vec = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * SPEED;
-        transform.Translate(vec);
+        transform.Translate(vec * Time.deltaTime);
     }
 }
 /*
@@ -18,6 +18,9 @@ public class Moving : MonoBehaviour
  - transform.Translate() : 전달한 벡터 값을 현재 위치 값에 더하는 함수이다.
  - Vector3 는 x, y, z값을 가지는 객체이다.
     > 선언 방식 : Vetcor3 vector = new Vector(1, 2, 3);
+ - Time.deltaTime을 사용하면 컴퓨터 성능과 상관없이 동일한 위치를 이동할 수 있다.
+    > Time.deltaTime 값은 프레임이 커지면 작아지고, 프레임이 작아지면 커진다.
+    > Translate에는 벡터에 곱하고 Vector함수는 스피드(시간) 매개변수에 곱한다.
 
 
 
