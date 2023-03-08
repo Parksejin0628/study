@@ -1,2 +1,25 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+
+
+
+/*
+[Chapter06 메소드로 코드 간추리기]
+<6.1 메소드란?>
+1. 메소드 : 일련의 코드를 하나의 이름 아래 묶은 것
+    1) 선언 형식
+        - 한정자 반환형식 메소드이름(매개변수)
+        - 한정자는 private, public과 같은 속성을 수식하는 것을 의미한다.
+            ex) public static int Plus(int a, int b) 에서 public static이 한정자, int가 반환형, Plus가 메소드이름, int a int b가 매개변수이다.
+    2) 메소드가 함수, 프로시저, 서브루틴 등과 다른 점은 '클래스 안'에 존재한다는 것이다.
+2. 매개변수와 인수의 차이점
+    - 인수 : 메소드를 호출한 곳에서 매개변수에 '넘기는 값' 이다.
+    - 매개변수 : 호출자로부터 전달받는 값을 '받는 변수' 이다.
+3. static 한정자 : static 한정자를 지정함으로써 메소드를 클래스 자체에 소속하도록 한다.
+    - 이는 인스턴스(객체)를 만들지 않고도 해당 메소드를 호출할 수 있다는 의미이다.
+
+
+
+
+
+
+*/
