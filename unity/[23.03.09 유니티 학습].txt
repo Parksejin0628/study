@@ -1,0 +1,32 @@
+[23.03.09 유니티 학습]
+ - RigidBody 컴포넌트를 추가하면 물리효과를 받을 수 있다. (중력 등)
+ - RigidBody의 구성요소
+	> Mass : 무게
+	> Drag : 공기저항
+	> Angular Drag : 회전에 대한 저항
+	> Use Gravity : 중력의 영향을 받는지 결정
+	> Is Kinematic : 외부 물리 효과를 무시한다. (스크립트 영향만 받는다)
+		>> 고정된 장애물 같은 것을 만들 때 유용하다.
+ - Collider : 충돌의 영역을 구성한다. (물리효과와 관련)
+	> 충돌 기준이 눈에 보이는 것이 아닌 눈에 보이지 않은 Collider를 기준으로 하게 된다.
+	> Meterial에는 물리 재질(Physics Material)이 들어간다.
+ - Meterial을 통해 눈에 보이는 재질을 결정할 수 있다.
+	> Meterial을 생성하고 오브젝트에 적용함으로써 오브젝트의 재질을 설정할 수 있다.
+ - Meterial의 구성 요소
+	> Albedo : 겉 모습 관련 요소 처리? 텍스쳐를 가져다 놓으면 그림을 겉에 적용시킬 수 있다.
+	> Metalic : 금속재질 처럼 보이는 정도를 얼마나 할 것이냐
+	> Smoothness : 빛 반사를 얼마나 하느냐
+	> Tiling : 텍스쳐 반복 타일 개수를 결정한다.
+	> Emission : 텍스쳐 스스로 얼마나 빛을 내는지, 발광(밝기)를 조절한다.
+		>> 그러나 물리적으로 빛을 주는 것은 아니고 빛을 내는 것 처럼 보이게 하는 것이다.
+ -Physics Material : 물리적인 재질을 다루며 탄성과 마찰 등을 다룬다.
+	> Collider의 Meterial에 들어간다.
+ - Physics Material 의 구성 요소
+	> Bounciness : 탄성력 (0~1f)
+	> Bounciness Combine : 한 번 탄성 된 뒤 다음 탄성을 계산하는 방식이다.
+		ex) Average를 할 경우 한 번 튈 때마다 튀는 정도가 중간씩 줄어들 것이다.
+		ex) Maximum을 할 경우 탄성력은 줄지 않는다.
+	> Friction : 마찰력
+		>> Dynamic Friction : 움직일 때 필요한 마찰력
+		>> Static Friction : 정지해 있을 때의 마찰력
+	> Friction Combine : 다음 마찰력을 계산하는 방식
