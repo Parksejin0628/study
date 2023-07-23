@@ -45,7 +45,7 @@ namespace OperatorStudy
  *      - 연산자 : ?.
  *      - 사용법 : 객체?.멤버
  *      - 수행 기능 : 객체가 null인 경우 null 반환, 그렇지 않은 경우 ?. 뒤에 있는 멤버를 반환한다.
- *          ex) Foo foo; int? bar; bar = foo?.mㄷmber; 라는 식이 있을 때 foo가 null인 경우 bar = null가 되는 것이고 foo가 null이 아닌 경우 bar = foo.member이 되는 것이다.
+ *          ex) Foo foo; int? bar; bar = foo?.member; 라는 식이 있을 때 foo가 null인 경우 bar = null가 되는 것이고 foo가 null이 아닌 경우 bar = foo.member이 되는 것이다.
  *  2. ?[]도 ?.와 동일한 기능을 수행하나 컬렉션 객체의 첨자를 이용한 참조에만 사용된다. (배열처럼)
  *      ex) a?[0] 라는 문장이 있으면 a가 null인 경우 null 반환, null이 아닌 경우 a[0]을 반환하는 것이다.
  * <4.9 비트 연산자>

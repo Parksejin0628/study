@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ParkSejin\\Documents\\GitHub\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자.csproj": {}
+    "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ParkSejin\\Documents\\GitHub\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자.csproj": {
+    "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ParkSejin\\Documents\\GitHub\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자.csproj",
+        "projectUniqueName": "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자.csproj",
         "projectName": "[Cs]Chapter04 데이터를 가공하는 연산자",
-        "projectPath": "C:\\Users\\ParkSejin\\Documents\\GitHub\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자.csproj",
-        "packagesPath": "C:\\Users\\ParkSejin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ParkSejin\\Documents\\GitHub\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\obj\\",
+        "projectPath": "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자.csproj",
+        "packagesPath": "C:\\Users\\park5\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter04 데이터를 가공하는 연산자\\[Cs]Chapter04 데이터를 가공하는 연산자\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ParkSejin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\park5\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
