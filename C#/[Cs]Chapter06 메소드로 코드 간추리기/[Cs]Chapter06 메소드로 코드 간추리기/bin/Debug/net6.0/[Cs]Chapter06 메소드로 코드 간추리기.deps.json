@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "[Cs]Chapter06 메소드로 코드 간추리기/1.0.0": {
+        "runtime": {
+          "[Cs]Chapter06 메소드로 코드 간추리기.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "[Cs]Chapter06 메소드로 코드 간추리기/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
