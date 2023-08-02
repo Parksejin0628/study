@@ -1,0 +1,20 @@
+문제 : 프로그래머스 '달리기 경주'
+난이도 : Level 1
+풀이 시간 :
+
+[풀이 아이디어]
+선수 이름과 순위를 담은 구조체(Players)를 만든다.
+순위에 따른 플레이어를 입력받으면서 선수 이름과 순위를 담는다.
+그 후 Players를 이름 순에 맞춰 정렬한다.
+calling할 경우 Players에서 이분 탐색을 통해 플레이어의 순위를 찾아낸 후 그 앞 순위와 순서를 바꾸고 각 클래스의 순위도 바꾼다.
+
+[풀이]
+0. Player[] player = new Player[players.length] / answer = players;
+1. players를 순회한다.(i = 0 ~ players.length - 1)
+ 1.1. 순회하면서 구조체 Player의 rank = i+1, name = player[i]
+2. Player를 name순으로 정렬한다.
+ 2.1. Merge Sort로 정렬한다.
+3. callings를 순회한다.(i = 0 ~ callings.length - 1)
+ 3.1. rank = SearchPlayerRank(name : " ");를 통해 callings[i]의 순위를 찾아낸다.
+ 3.2. swap_arr(ref answer, rank, rank+1);
+4. answer를 출력한다.
