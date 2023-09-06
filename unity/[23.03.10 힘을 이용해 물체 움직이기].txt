@@ -1,0 +1,10 @@
+[23.03.10 힘을 이용해 물체 움직이기]
+ - 힘을 이용해 물체를 움직이기 위해서는 Rigidbody 컴포넌트가 중요하다.
+ - GetComponent<T>()를 통해 T타입 컴포넌트의 정보를 가져올 수 있다.
+ - Rigidbody의 velocity는 현재 이동속도를 백터값으로 저장한 값이다.
+	ex) rigidbody.velocity = Vector3.left 를 통해 오브젝트의 속도를 왼쪽으로 할 수 있다.
+ - RigidBody 관련 코드는 FixedUpdate에 작성하도록 권장되어있다.
+ - RigidBody의 AddForce(Vector3, ForceMode)는 오브젝트의 백터방향으로 힘을 주는 함수이다.
+	ex) rigidbdoy.AddForce(Vector3.up * 5, ForceMode.Impulse)	
+	>> ForceMode는 Impulse를 가장 많이 쓴다.
+ - RigidBody의 AddTorque(Vecotr3)는 인수로 준 벡터를 축으로 회전력을 주는 함수이다.
