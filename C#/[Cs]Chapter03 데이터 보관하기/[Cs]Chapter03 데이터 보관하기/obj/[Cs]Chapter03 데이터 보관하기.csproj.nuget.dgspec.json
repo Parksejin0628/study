@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기.csproj": {}
+    "C:\\GitHub\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기.csproj": {
+    "C:\\GitHub\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기.csproj",
+        "projectUniqueName": "C:\\GitHub\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기.csproj",
         "projectName": "[Cs]Chapter03 데이터 보관하기",
-        "projectPath": "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기.csproj",
-        "packagesPath": "C:\\Users\\park5\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\study\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\obj\\",
+        "projectPath": "C:\\GitHub\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기.csproj",
+        "packagesPath": "C:\\Users\\ParkSejin\\.nuget\\packages\\",
+        "outputPath": "C:\\GitHub\\study\\C#\\[Cs]Chapter03 데이터 보관하기\\[Cs]Chapter03 데이터 보관하기\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\park5\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ParkSejin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
