@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 #define endl "\n"
 #define rep(i, a, b) for(auto i = a; i < b; ++i)
@@ -29,62 +30,39 @@ constexpr bool ndebug = false;
 typedef long long ll;
 typedef unsigned long long ull;
 
-#define MOD 1000000007
+int c, n;
+int dp[21][10001];
+int promotionCost[21];
+int promotionCustomer[21];
 
-int n;
-ll dp[101][4][10];
-ll answer;
-
-
-int main(){
+int main()
+{
     FAST_IO;
-
-    cin>>n;
-    if(n==1)
+    cin>>c>>n;
+    REP(i, 1, n)
     {
-        cout<<"10";
-        return 0;
-    }
-    REP(i, 0, 8)
-    {
-        dp[2][1][i] = 1;
-    }
-    REP(i, 1, 9)
-    {
-        dp[2][2][i] = 1;
-    }
-    REP(i, 3, n)
-    {
-        REP(j, 0, 9)
-        {
-            if(j+1 <= 9)
+        cin>>promotionCost[i]>>promotionCustomer[i];
+        REP(j, 0, 10000)
+        {   
+            if(j>=promotionCost[i])
             {
-                dp[i][0][j] = dp[i-1][1][j+1];
-                dp[i][1][j] = (dp[i-1][2][j+1] + dp[i-1][3][j+1])%MOD;
+                dp[i][j] = max(promotionCustomer[i] + dp[i][j-promotionCost[i]], dp[i-1][j]);
             }
-            if(j-1 >= 0)
+            else
             {
-                dp[i][2][j] = dp[i-1][0][j-1] + (dp[i-1][1][j-1]) % MOD;
-                dp[i][3][j] = dp[i-1][2][j-1];
+                dp[i][j] = dp[i-1][j];
             }
         }
     }
-    REP(i, 0, 9)
+    REP(j, 0, 10000)
     {
-        REP(j, 0, 3)
+        if(dp[n][j] >= c)
         {
-            answer += dp[n][j][i];
-            answer %= MOD;
+            cout<<j;
+            break;
         }
     }
-    cout<<answer;
     
-
 
     return 0;
 }
-
-
-
-
-

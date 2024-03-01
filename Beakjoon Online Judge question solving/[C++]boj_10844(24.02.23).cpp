@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 #define endl "\n"
 #define rep(i, a, b) for(auto i = a; i < b; ++i)
@@ -29,62 +30,48 @@ constexpr bool ndebug = false;
 typedef long long ll;
 typedef unsigned long long ull;
 
-#define MOD 1000000007
+#define MOD 1000000000
 
-int n;
-ll dp[101][4][10];
+ll dp[101][10];
 ll answer;
+int n;
 
-
-int main(){
+int main()
+{
     FAST_IO;
-
     cin>>n;
-    if(n==1)
+    REP(i, 1, n)
     {
-        cout<<"10";
-        return 0;
-    }
-    REP(i, 0, 8)
-    {
-        dp[2][1][i] = 1;
-    }
-    REP(i, 1, 9)
-    {
-        dp[2][2][i] = 1;
-    }
-    REP(i, 3, n)
-    {
-        REP(j, 0, 9)
+        rep(j, 0, 10)
         {
-            if(j+1 <= 9)
+            if(i==1)
             {
-                dp[i][0][j] = dp[i-1][1][j+1];
-                dp[i][1][j] = (dp[i-1][2][j+1] + dp[i-1][3][j+1])%MOD;
+                if(j==0)
+                {
+                    continue;
+                }
+                dp[i][j] = 1;
+                continue;
             }
             if(j-1 >= 0)
             {
-                dp[i][2][j] = dp[i-1][0][j-1] + (dp[i-1][1][j-1]) % MOD;
-                dp[i][3][j] = dp[i-1][2][j-1];
+                dp[i][j] += dp[i-1][j-1];
             }
+            if(j+1 <= 9)
+            {
+                dp[i][j] += dp[i-1][j+1];
+            }
+            dp[i][j]%=MOD;
         }
     }
-    REP(i, 0, 9)
+    rep(i, 0, 10)
     {
-        REP(j, 0, 3)
-        {
-            answer += dp[n][j][i];
-            answer %= MOD;
-        }
+        answer += dp[n][i];
+        answer%=MOD;
     }
     cout<<answer;
-    
 
+    
 
     return 0;
 }
-
-
-
-
-
