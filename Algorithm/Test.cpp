@@ -31,16 +31,11 @@ typedef unsigned long long ull;
 
 int main(){
     FAST_IO;
-    int n, m, k;
-    cin>>n>>m>>k;
-    rep(i, 0, n)
-    {
-        
-    }
-    rep(i, 0, m+k)
-    {
+    vector<int> a[30];
+    a[2].push_back(3);
 
-    }
+
+    cout<<a[2].size();
     
     return 0;
 }
